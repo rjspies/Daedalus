@@ -27,7 +27,7 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("keystore/release.keystore")
+            storeFile = file("keystore/release.jks")
             storePassword = System.getenv("DAEDALUS_STORE_PASSWORD")
             keyAlias = System.getenv("DAEDALUS_SIGNING_KEY")
             keyPassword = System.getenv("DAEDALUS_SIGNING_KEY_PASSWORD")

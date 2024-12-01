@@ -1,0 +1,52 @@
+default:
+  image: fabernovel/android:api-34-v1.8.0
+  tags:
+    - loki
+
+stages:
+  - linter
+  - build
+  - test
+  - wrap_up
+
+workflow:
+  auto_cancel:
+    on_new_commit: conservative
+    on_job_failure: all
+
+linter:
+  stage: linter
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script:
+    - ./gradlew detekt
+    - ./gradlew lintKotlin
+    - ./gradlew lint
+
+build:
+  stage: build
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script:
+    - mkdir app/keystore
+    - touch app/keystore/release.jks
+    - echo "${DAEDALUS_KEYSTORE}" | base64 -d > app/keystore/release.jks
+    - ./gradlew assemble
+
+test:
+  stage: test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script: ./gradlew testDebugUnitTest
+
+wrap_up:
+  stage: wrap_up
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script: echo "Caching"
+  cache:
+    key:
+      files:
+        - gradle/wrapper/gradle-wrapper.properties
+    paths:
+      - gradle/wrapper
