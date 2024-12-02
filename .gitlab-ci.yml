@@ -5,6 +5,7 @@ default:
 
 stages:
   - ci
+  - deploy_pages
 
 workflow:
   auto_cancel:
@@ -24,3 +25,15 @@ ci:
     - echo "${DAEDALUS_KEYSTORE}" | base64 -d > app/keystore/release.jks
     - ./gradlew assemble
     - ./gradlew testDebugUnitTest
+
+deploy_pages:
+  image: ruby:3.2
+  stage: deploy_pages
+  pages: true
+  script:
+    - gem install bundler
+    - bundle install
+    - bundle exec jekyll build -d website
+  artifacts:
+    paths:
+      - website
