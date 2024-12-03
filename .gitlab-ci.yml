@@ -33,7 +33,7 @@ deploy_pages:
   script:
     - gem install bundler
     - bundle install
-    - bundle exec jekyll build -d public
+    - bundle exec jekyll build -s website -d public
   artifacts:
     paths:
       - public
