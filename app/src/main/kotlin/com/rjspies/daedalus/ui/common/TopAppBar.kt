@@ -11,6 +11,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.rjspies.daedalus.R
 
@@ -34,11 +35,11 @@ fun TopAppBar(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = { navigator.popBackStack() },
+                        onClick = navigator::popBackStack,
                         content = {
                             Icon(
                                 painter = painterResource(R.drawable.arrow_left_fill),
-                                contentDescription = null, // TODO
+                                contentDescription = stringResource(R.string.common_top_app_bar_icon_back_navigation_content_description),
                             )
                         },
                     )
