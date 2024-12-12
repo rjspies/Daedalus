@@ -18,11 +18,11 @@ fun PrivacyPolicyScreen(scaffoldPadding: PaddingValues, navigator: DestinationsN
     TopAppBar(
         title = stringResource(R.string.settings_legal_item_imprint),
         navigator = navigator,
-        modifier = Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding()), // TODO WTF
+        modifier = Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding()),
     ) {
         LegalsWebView(
             item = LegalsWebViewItem.PrivacyPolicy,
-            modifier = Modifier.padding(scaffoldPadding),
+            modifier = Modifier.padding(it),
         )
     }
 }

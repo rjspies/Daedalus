@@ -44,6 +44,7 @@ fun LegalsWebView(
                 }
             },
             update = {
+                it.clearCache(true)
                 it.loadUrl(BASE_URL + File.separator + item.endpoint)
             },
         )

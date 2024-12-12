@@ -18,11 +18,11 @@ fun ImprintScreen(scaffoldPadding: PaddingValues, navigator: DestinationsNavigat
     TopAppBar(
         title = stringResource(R.string.settings_legal_item_imprint),
         navigator = navigator,
-        modifier = Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding()), // TODO WTF
+        modifier = Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding()),
     ) {
         LegalsWebView(
             item = LegalsWebViewItem.Imprint,
-            modifier = Modifier.padding(scaffoldPadding),
+            modifier = Modifier.padding(it),
         )
     }
 }
