@@ -50,6 +50,7 @@ ioInsertKoin-koinAndroidxCompose = { group = "io.insert-koin", name = "koin-andr
 androidxCore-coreSplashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
 androidxComposeUi-uiTextGoogleFonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "compose" }
 ioInsertKoin-koinTestJunit4 = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
-ioGithubRaamcostaComposeDestinations-animationsCore = { group = "io.github.raamcosta.compose-destinations", name = "animations-core", version.ref = "composeDestinations"}
-ioGithubRaamcostaComposeDestinations-ksp = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "composeDestinations"}
-androidxWebkit-webkit = { group = "androidx.webkit", name = "webkit", version = "1.12.1"}
+ioGithubRaamcostaComposeDestinations-animationsCore = { group = "io.github.raamcosta.compose-destinations", name = "animations-core", version.ref = "composeDestinations" }
+ioGithubRaamcostaComposeDestinations-ksp = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "composeDestinations" }
+androidxWebkit-webkit = { group = "androidx.webkit", name = "webkit", version = "1.12.1" }
+ioGithubKevinnzou-composeWebview = { group = "io.github.kevinnzou", name = "compose-webview", version = "0.33.6" }
