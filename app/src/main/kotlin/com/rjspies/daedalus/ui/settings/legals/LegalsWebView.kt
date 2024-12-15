@@ -32,7 +32,7 @@ fun LegalsWebView(
         WebView(
             state = webViewState,
             onCreated = {
-                it.setBackgroundColor(Color.TRANSPARENT)
+                it.clearCache(true)
             },
         )
     }
