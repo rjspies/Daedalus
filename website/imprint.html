@@ -10,17 +10,19 @@
         }
 
         :root {
-          --text: #000;
+          --text: #1C1C14;
+          --background: #410002;
         }
 
         body {
-            background-color: transparent;
+            background-color: var(--background);
             color: var(--text);
         }
 
         @media (prefers-color-scheme: dark) {
           :root {
-            --text: #fff;
+            --text: #E5E3D6;
+            --background: #14140C;
           }
         }
     </style>
