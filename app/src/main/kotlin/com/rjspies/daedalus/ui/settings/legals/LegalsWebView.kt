@@ -53,7 +53,9 @@ fun LegalsWebView(
     }
 }
 
-enum class LegalsWebViewItem(val endpoint: String) {
+enum class LegalsWebViewItem(
+    val endpoint: String,
+) {
     Imprint("imprint.html"),
     PrivacyPolicy("privacy_policy.html"),
 }
