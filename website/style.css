@@ -12,7 +12,6 @@ body {
     --md-ref-typeface-brand: 'Cardo';
     --md-ref-typeface-plain: "Athiti";
     --text: #1C1C14;
-    --background: #FCFAEC;
 }
 
 body {
@@ -23,6 +22,5 @@ body {
 @media (prefers-color-scheme: dark) {
     :root {
         --text: #E5E3D6;
-        --background: #14140C;
     }
 }

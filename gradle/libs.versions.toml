@@ -13,7 +13,7 @@ ksp = "2.0.21-1.0.28"
 # App config
 compileSdk = "35"
 targetSdk = "35"
-minSdk = "26"
+minSdk = "29"
 versionName = "1.2"
 versionCodeOffset = "200000"
 namespace = "com.rjspies.daedalus"
