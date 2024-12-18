@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Cardo');
+@import url('https://fonts.googleapis.com/css?family=Athiti');
+
+html,
+body {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+:root {
+    --md-ref-typeface-brand: 'Cardo';
+    --md-ref-typeface-plain: "Athiti";
+    --text: #1C1C14;
+    --background: #FCFAEC;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #E5E3D6;
+        --background: #14140C;
+    }
+}
