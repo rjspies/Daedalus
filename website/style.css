@@ -9,14 +9,20 @@ body {
 }
 
 :root {
-    --md-ref-typeface-brand: 'Cardo';
-    --md-ref-typeface-plain: "Athiti";
     --text: #1C1C14;
 }
 
 body {
     background-color: var(--background);
     color: var(--text);
+    font-family: "Athiti";
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: "Cardo";
 }
 
 @media (prefers-color-scheme: dark) {
