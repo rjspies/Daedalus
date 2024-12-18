@@ -16,7 +16,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun PrivacyPolicyScreen(scaffoldPadding: PaddingValues, navigator: DestinationsNavigator, viewModel: PrivacyPolicyViewModel = koinViewModel()) {
     TopAppBar(
-        title = stringResource(R.string.settings_legal_item_imprint),
+        title = stringResource(R.string.settings_legal_item_privacy_policy),
         navigator = navigator,
         modifier = Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding()),
     ) {
