@@ -93,7 +93,6 @@ dependencies {
     implementation(libs.androidxRoom.roomRuntime)
     implementation(libs.androidxConstraintlayout.constraintlayoutCompose)
     implementation(libs.ioGithubRaamcostaComposeDestinations.animationsCore)
-    implementation(libs.androidxWebkit.webkit)
     implementation(libs.ioGithubKevinnzou.composeWebview)
     ksp(libs.androidxRoom.roomCompiler)
     ksp(libs.ioGithubRaamcostaComposeDestinations.ksp)

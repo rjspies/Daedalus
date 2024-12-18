@@ -16,13 +16,12 @@ import androidx.compose.ui.Modifier
 import com.kevinnzou.web.WebView
 import com.kevinnzou.web.rememberWebViewState
 import com.rjspies.daedalus.ui.common.horizontalSpacingM
-import java.io.File
 
-private const val BASE_URL = "https://daedalus-6fd2ac.gitlab.io"
+const val BASE_URL_LEGALS = "https://daedalus-6fd2ac.gitlab.io"
 
 @Composable
 fun LegalsWebView(
-    item: LegalsWebViewItem,
+    url: String,
     modifier: Modifier = Modifier,
     scrollState: ScrollState = rememberScrollState(),
 ) {
@@ -33,7 +32,7 @@ fun LegalsWebView(
             .horizontalSpacingM()
             .then(modifier),
     ) {
-        val webViewState = rememberWebViewState(BASE_URL + File.separator + item.endpoint)
+        val webViewState = rememberWebViewState(url)
 
         AnimatedVisibility(
             visible = webViewState.isLoading,
@@ -51,11 +50,4 @@ fun LegalsWebView(
             },
         )
     }
-}
-
-enum class LegalsWebViewItem(
-    val endpoint: String,
-) {
-    Imprint("imprint.html"),
-    PrivacyPolicy("privacy_policy.html"),
 }

@@ -10,18 +10,18 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.ui.common.TopAppBar
 import com.rjspies.daedalus.ui.settings.legals.LegalsWebView
-import com.rjspies.daedalus.ui.settings.legals.LegalsWebViewItem
+import org.koin.androidx.compose.koinViewModel
 
 @Destination
 @Composable
-fun ImprintScreen(scaffoldPadding: PaddingValues, navigator: DestinationsNavigator) {
+fun ImprintScreen(scaffoldPadding: PaddingValues, navigator: DestinationsNavigator, viewModel: ImprintViewModel = koinViewModel()) {
     TopAppBar(
         title = stringResource(R.string.settings_legal_item_imprint),
         navigator = navigator,
         modifier = Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding()),
     ) {
         LegalsWebView(
-            item = LegalsWebViewItem.Imprint,
+            url = viewModel.url,
             modifier = Modifier.padding(it),
         )
     }

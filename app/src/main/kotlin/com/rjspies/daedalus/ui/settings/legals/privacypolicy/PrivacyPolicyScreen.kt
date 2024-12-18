@@ -10,18 +10,18 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.ui.common.TopAppBar
 import com.rjspies.daedalus.ui.settings.legals.LegalsWebView
-import com.rjspies.daedalus.ui.settings.legals.LegalsWebViewItem
+import org.koin.androidx.compose.koinViewModel
 
 @Destination
 @Composable
-fun PrivacyPolicyScreen(scaffoldPadding: PaddingValues, navigator: DestinationsNavigator) {
+fun PrivacyPolicyScreen(scaffoldPadding: PaddingValues, navigator: DestinationsNavigator, viewModel: PrivacyPolicyViewModel = koinViewModel()) {
     TopAppBar(
         title = stringResource(R.string.settings_legal_item_imprint),
         navigator = navigator,
         modifier = Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding()),
     ) {
         LegalsWebView(
-            item = LegalsWebViewItem.PrivacyPolicy,
+            url = viewModel.url,
             modifier = Modifier.padding(it),
         )
     }
