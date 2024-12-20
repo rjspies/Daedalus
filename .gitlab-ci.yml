@@ -24,7 +24,7 @@ ci:
     - touch app/keystore/release.jks
     - echo "${DAEDALUS_KEYSTORE}" | base64 -d > app/keystore/release.jks
     - ./gradlew assemble
-    - ./gradlew testDebugUnitTest
+    - ./gradlew test
 
 deploy_pages:
   image: ruby:3.2

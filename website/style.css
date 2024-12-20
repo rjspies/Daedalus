@@ -1,5 +1,65 @@
-@import url('https://fonts.googleapis.com/css?family=Cardo');
-@import url('https://fonts.googleapis.com/css?family=Athiti');
+@font-face {
+    font-family: Athiti;
+    src: url("fonts/athiti_extra_light.ttf");
+    font-weight: lighter;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Athiti;
+    src: url("fonts/athiti_light.ttf");
+    font-weight: lighter;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Athiti;
+    src: url("fonts/athiti_regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Athiti;
+    src: url("fonts/athiti_medium.ttf");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Athiti;
+    src: url("fonts/athiti_semi_bold.ttf");
+    font-weight: bolder;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Athiti;
+    src: url("fonts/athiti_bold.ttf");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Cardo;
+    src: url("fonts/cardo_regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Cardo;
+    src: url("fonts/cardo_bold.ttf");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Cardo;
+    src: url("fonts/cardo_italic.ttf");
+    font-weight: normal;
+    font-style: italic;
+}
 
 html,
 body {

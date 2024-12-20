@@ -88,7 +88,6 @@ dependencies {
     implementation(libs.androidxComposeMaterial3.material3)
     implementation(libs.ioInsertKoin.koinAndroidxCompose)
     implementation(libs.comPatrykandpatrickVico.composeM3)
-    implementation(libs.androidxComposeUi.uiTextGoogleFonts)
     implementation(libs.androidxRoom.roomKtx)
     implementation(libs.androidxRoom.roomRuntime)
     implementation(libs.androidxConstraintlayout.constraintlayoutCompose)

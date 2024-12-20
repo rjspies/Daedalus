@@ -1,28 +1,60 @@
 package com.rjspies.daedalus.ui
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.googlefonts.Font
-import androidx.compose.ui.text.googlefonts.GoogleFont
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import com.rjspies.daedalus.R
-
-val provider = GoogleFont.Provider(
-    providerAuthority = "com.google.android.gms.fonts",
-    providerPackage = "com.google.android.gms",
-    certificates = R.array.com_google_android_gms_fonts_certs,
-)
 
 val bodyFontFamily = FontFamily(
     Font(
-        googleFont = GoogleFont("Athiti"),
-        fontProvider = provider,
+        resId = R.font.athiti_extra_light,
+        weight = FontWeight.ExtraLight,
+        style = FontStyle.Normal,
+    ),
+    Font(
+        resId = R.font.athiti_light,
+        weight = FontWeight.Light,
+        style = FontStyle.Normal,
+    ),
+    Font(
+        resId = R.font.athiti_regular,
+        weight = FontWeight.Normal,
+        style = FontStyle.Normal,
+    ),
+    Font(
+        resId = R.font.athiti_medium,
+        weight = FontWeight.Medium,
+        style = FontStyle.Normal,
+    ),
+    Font(
+        resId = R.font.athiti_semi_bold,
+        weight = FontWeight.SemiBold,
+        style = FontStyle.Normal,
+    ),
+    Font(
+        resId = R.font.athiti_bold,
+        weight = FontWeight.Bold,
+        style = FontStyle.Normal,
     ),
 )
 
 val displayFontFamily = FontFamily(
     Font(
-        googleFont = GoogleFont("Cardo"),
-        fontProvider = provider,
+        resId = R.font.cardo_regular,
+        weight = FontWeight.Normal,
+        style = FontStyle.Normal,
+    ),
+    Font(
+        resId = R.font.cardo_bold,
+        weight = FontWeight.Bold,
+        style = FontStyle.Normal,
+    ),
+    Font(
+        resId = R.font.cardo_italic,
+        weight = FontWeight.Normal,
+        style = FontStyle.Italic,
     ),
 )
 
