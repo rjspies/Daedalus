@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.orgJmailenKotlinter)
     alias(libs.plugins.orgJetbrainsKotlinPluginCompose)
     alias(libs.plugins.orgJetbrainsKotlinPluginParcelize)
+    alias(libs.plugins.deMannodermausAndroidJunit5)
 }
 
 android {
@@ -96,6 +97,9 @@ dependencies {
     ksp(libs.androidxRoom.roomCompiler)
     ksp(libs.ioGithubRaamcostaComposeDestinations.ksp)
     testImplementation(libs.ioInsertKoin.koinTestJunit4)
+    testImplementation(libs.ioKotest.kotestAssertionsCore)
+    testImplementation(libs.orgJunitJupiter.junitJupiterApi)
+    testRuntimeOnly(libs.orgJunitJupiter.junitJupiterEngine)
 }
 
 fun generateVersionCode(): Int {
@@ -111,8 +115,14 @@ fun generateVersionCode(): Int {
     return versionCode
 }
 
-tasks.create("version") {
-    doLast {
-        println(libs.versions.versionName.get())
+tasks {
+    create("version") {
+        doLast {
+            println(libs.versions.versionName.get())
+        }
+    }
+
+    withType<Test>().configureEach {
+        useJUnitPlatform()
     }
 }

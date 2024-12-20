@@ -6,8 +6,8 @@ import com.rjspies.daedalus.ui.settings.legals.BASE_URL_LEGALS
 import java.io.File
 
 @VisibleForTesting
-const val ENDPOINT = "privacy_policy.html"
+const val ENDPOINT_PRIVACY_POLICY = "privacy_policy.html"
 
 class PrivacyPolicyViewModel : ViewModel() {
-    val url = BASE_URL_LEGALS + File.separator + ENDPOINT
+    val url = BASE_URL_LEGALS + File.separator + ENDPOINT_PRIVACY_POLICY
 }

@@ -5,6 +5,7 @@ compose = "1.7.6"
 room = "2.6.1"
 koin = "4.0.0"
 composeDestinations = "1.11.7"
+junit5 = "5.11.2"
 
 # Raise these two together
 kotlin = "2.0.21"
@@ -32,6 +33,7 @@ orgJmailenKotlinter = { id = "org.jmailen.kotlinter", version = "5.0.1" }
 comGoogleDevtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 orgJetbrainsKotlinPluginCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 orgJetbrainsKotlinPluginParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version = "1.11.2.0" }
 
 [libraries]
 
@@ -52,3 +54,6 @@ ioInsertKoin-koinTestJunit4 = { group = "io.insert-koin", name = "koin-test-juni
 ioGithubRaamcostaComposeDestinations-animationsCore = { group = "io.github.raamcosta.compose-destinations", name = "animations-core", version.ref = "composeDestinations" }
 ioGithubRaamcostaComposeDestinations-ksp = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "composeDestinations" }
 ioGithubKevinnzou-composeWebview = { group = "io.github.kevinnzou", name = "compose-webview", version = "0.33.6" }
+ioKotest-kotestAssertionsCore = { group = "io.kotest", name = "kotest-assertions-core", version = "5.9.1" }
+orgJunitJupiter-junitJupiterApi = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
+orgJunitJupiter-junitJupiterEngine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit5" }
