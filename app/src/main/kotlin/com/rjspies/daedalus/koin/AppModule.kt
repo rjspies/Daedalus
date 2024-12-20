@@ -12,6 +12,8 @@ import com.rjspies.daedalus.ui.history.WeightHistoryViewModel
 import com.rjspies.daedalus.ui.insertweight.InsertWeightUseCase
 import com.rjspies.daedalus.ui.insertweight.InsertWeightViewModel
 import com.rjspies.daedalus.ui.settings.SettingsViewModel
+import com.rjspies.daedalus.ui.settings.legals.imprint.ImprintViewModel
+import com.rjspies.daedalus.ui.settings.legals.privacypolicy.PrivacyPolicyViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -35,4 +37,6 @@ val appModule = module {
     viewModel { SettingsViewModel(get()) }
     factory { InsertWeightUseCase(get()) }
     viewModel { InsertWeightViewModel(get(), get()) }
+    viewModel { ImprintViewModel() }
+    viewModel { PrivacyPolicyViewModel() }
 }

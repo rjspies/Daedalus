@@ -5,6 +5,7 @@ compose = "1.7.6"
 room = "2.6.1"
 koin = "4.0.0"
 composeDestinations = "1.11.7"
+junit5 = "5.11.2"
 
 # Raise these two together
 kotlin = "2.0.21"
@@ -13,7 +14,7 @@ ksp = "2.0.21-1.0.28"
 # App config
 compileSdk = "35"
 targetSdk = "35"
-minSdk = "26"
+minSdk = "29"
 versionName = "1.2"
 versionCodeOffset = "200000"
 namespace = "com.rjspies.daedalus"
@@ -32,6 +33,7 @@ orgJmailenKotlinter = { id = "org.jmailen.kotlinter", version = "5.0.1" }
 comGoogleDevtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 orgJetbrainsKotlinPluginCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 orgJetbrainsKotlinPluginParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version = "1.11.2.0" }
 
 [libraries]
 
@@ -48,7 +50,10 @@ comJakewhartonTimer-timber = { group = "com.jakewharton.timber", name = "timber"
 comPatrykandpatrickVico-composeM3 = { group = "com.patrykandpatrick.vico", name = "compose-m3", version = "1.16.0" }
 ioInsertKoin-koinAndroidxCompose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 androidxCore-coreSplashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
-androidxComposeUi-uiTextGoogleFonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "compose" }
 ioInsertKoin-koinTestJunit4 = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
-ioGithubRaamcostaComposeDestinations-animationsCore = { group = "io.github.raamcosta.compose-destinations", name = "animations-core", version.ref = "composeDestinations"}
-ioGithubRaamcostaComposeDestinations-ksp = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "composeDestinations"}
+ioGithubRaamcostaComposeDestinations-animationsCore = { group = "io.github.raamcosta.compose-destinations", name = "animations-core", version.ref = "composeDestinations" }
+ioGithubRaamcostaComposeDestinations-ksp = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "composeDestinations" }
+ioGithubKevinnzou-composeWebview = { group = "io.github.kevinnzou", name = "compose-webview", version = "0.33.6" }
+ioKotest-kotestAssertionsCore = { group = "io.kotest", name = "kotest-assertions-core", version = "5.9.1" }
+orgJunitJupiter-junitJupiterApi = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
+orgJunitJupiter-junitJupiterEngine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit5" }

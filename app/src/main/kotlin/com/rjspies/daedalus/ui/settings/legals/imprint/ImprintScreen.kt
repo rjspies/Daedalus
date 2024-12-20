@@ -1,0 +1,28 @@
+package com.rjspies.daedalus.ui.settings.legals.imprint
+
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.rjspies.daedalus.R
+import com.rjspies.daedalus.ui.common.TopAppBar
+import com.rjspies.daedalus.ui.settings.legals.LegalsWebView
+import org.koin.androidx.compose.koinViewModel
+
+@Destination
+@Composable
+fun ImprintScreen(scaffoldPadding: PaddingValues, navigator: DestinationsNavigator, viewModel: ImprintViewModel = koinViewModel()) {
+    TopAppBar(
+        title = stringResource(R.string.settings_legal_item_imprint),
+        navigator = navigator,
+        modifier = Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding()),
+    ) {
+        LegalsWebView(
+            url = viewModel.url,
+            modifier = Modifier.padding(it),
+        )
+    }
+}
