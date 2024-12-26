@@ -8,8 +8,8 @@ composeDestinations = "1.11.7"
 junit5 = "5.11.2"
 
 # Raise these two together
-kotlin = "2.0.21"
-ksp = "2.0.21-1.0.28"
+kotlin = "2.1.0"
+ksp = "2.1.0-1.0.29"
 
 # App config
 compileSdk = "35"
@@ -26,7 +26,6 @@ javaVendor = "ORACLE"
 [plugins]
 
 comAndroidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-comAndroidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 ioGitlabArturboschDetekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.7" }
 orgJetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 orgJmailenKotlinter = { id = "org.jmailen.kotlinter", version = "5.0.1" }
