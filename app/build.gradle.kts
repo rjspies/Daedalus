@@ -93,6 +93,8 @@ dependencies {
     implementation(libs.androidxConstraintlayout.constraintlayoutCompose)
     implementation(libs.ioGithubRaamcostaComposeDestinations.animationsCore)
     implementation(libs.ioGithubKevinnzou.composeWebview)
+    implementation(libs.devChrisbanesHaze.hazeAndroid)
+    implementation(libs.devChrisbanesHaze.hazeMaterials)
     ksp(libs.androidxRoom.roomCompiler)
     ksp(libs.ioGithubRaamcostaComposeDestinations.ksp)
     testImplementation(libs.ioInsertKoin.koinTestJunit4)
