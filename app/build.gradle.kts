@@ -1,6 +1,5 @@
 import org.gradle.internal.jvm.inspection.JvmVendor
 import org.gradle.jvm.toolchain.internal.DefaultJvmVendorSpec
-import java.io.ByteArrayOutputStream
 
 plugins {
     alias(libs.plugins.comAndroidApplication)
@@ -103,12 +102,10 @@ dependencies {
 }
 
 fun generateVersionCode(): Int {
-    val standardOutput = ByteArrayOutputStream()
-    project.exec {
+    val executionOutput = providers.exec {
         commandLine("git", "rev-list", "--count", "HEAD")
-        this.standardOutput = standardOutput
     }
-    val commitCount = standardOutput.toString().trim().toInt()
+    val commitCount = executionOutput.standardOutput.asText.get().trim().toInt()
     val offset = libs.versions.versionCodeOffset.get().toInt()
     val versionCode = commitCount + offset
     logger.debug("Generating version code = $versionCode")
