@@ -1,12 +1,20 @@
 package com.rjspies.daedalus.ui
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
@@ -17,6 +25,12 @@ import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.ui.insertweight.AddWeightDialog
+import dev.chrisbanes.haze.HazeProgressive
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.haze
+import dev.chrisbanes.haze.hazeChild
+import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
+import dev.chrisbanes.haze.materials.HazeMaterials
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -60,15 +74,41 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
             )
         },
         content = {
+            val hazeState = remember { HazeState() }
+
             DestinationsNavHost(
-                navController = navigationController,
                 navGraph = NavGraphs.mainNavigationGraph,
+                modifier = Modifier.haze(hazeState),
+                navController = navigationController,
                 dependenciesContainerBuilder = {
                     dependency(it)
                     dependency(navigator)
+                    dependency(hazeState)
                 },
                 engine = rememberAnimatedNavHostEngine(rootDefaultAnimations = RootNavGraphDefaultAnimations.ACCOMPANIST_FADING),
             )
+
+            StatusBarBlur(it, hazeState)
         },
+    )
+}
+
+@OptIn(ExperimentalHazeMaterialsApi::class)
+@Composable
+private fun StatusBarBlur(scaffoldPadding: PaddingValues, hazeState: HazeState) {
+    val height = with(LocalDensity.current) { scaffoldPadding.calculateTopPadding().toPx() }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(scaffoldPadding.calculateTopPadding())
+            .hazeChild(hazeState, HazeMaterials.ultraThin()) {
+                progressive = HazeProgressive.verticalGradient(
+                    easing = LinearEasing,
+                    startIntensity = 1f,
+                    endIntensity = .2f,
+                    endY = height,
+                )
+            },
     )
 }
