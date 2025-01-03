@@ -4,7 +4,8 @@
     "config:recommended"
   ],
   "reviewers": [
-    "rjspies"
+    "rjspies",
+    "24745517"
   ],
   "branchPrefix": "Renovate/",
   "rebaseWhen": "behind-base-branch",
