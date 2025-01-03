@@ -3,9 +3,11 @@
   "extends": [
     "config:recommended"
   ],
+  "assignees": [
+    "@rjspies"
+  ],
   "reviewers": [
-    "rjspies",
-    "24745517"
+    "@rjspies"
   ],
   "branchPrefix": "Renovate/",
   "rebaseWhen": "behind-base-branch",
