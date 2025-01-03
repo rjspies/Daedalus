@@ -12,6 +12,7 @@
   "commitMessagePrefix": "Renovate: ",
   "dependencyDashboard": true,
   "prCreation": "immediate",
+  "prHourlyLimit": 0,
   "packageRules": [
     {
       "description": "Automerge everything",
