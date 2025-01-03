@@ -16,6 +16,7 @@ ci:
   stage: ci
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
   script:
     - ./gradlew detekt
     - ./gradlew lintKotlin
@@ -29,6 +30,7 @@ ci:
 deploy_pages:
   image: ruby:3.2
   stage: deploy_pages
+  when: manual
   pages: true
   script:
     - gem install bundler
