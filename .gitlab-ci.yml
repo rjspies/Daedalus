@@ -28,7 +28,7 @@ ci:
     - ./gradlew test
 
 deploy_pages:
-  image: ruby:3.2
+  image: ruby:3.4
   stage: deploy_pages
   when: manual
   pages: true
