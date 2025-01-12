@@ -27,8 +27,8 @@ import com.rjspies.daedalus.R
 import com.rjspies.daedalus.ui.insertweight.AddWeightDialog
 import dev.chrisbanes.haze.HazeProgressive
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
-import dev.chrisbanes.haze.hazeChild
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import org.koin.androidx.compose.koinViewModel
@@ -78,7 +78,7 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
 
             DestinationsNavHost(
                 navGraph = NavGraphs.mainNavigationGraph,
-                modifier = Modifier.haze(hazeState),
+                modifier = Modifier.hazeSource(hazeState),
                 navController = navigationController,
                 dependenciesContainerBuilder = {
                     dependency(it)
@@ -102,11 +102,11 @@ private fun StatusBarBlur(scaffoldPadding: PaddingValues, hazeState: HazeState) 
         modifier = Modifier
             .fillMaxWidth()
             .height(scaffoldPadding.calculateTopPadding())
-            .hazeChild(hazeState, HazeMaterials.ultraThin()) {
+            .hazeEffect(hazeState, HazeMaterials.regular()) {
                 progressive = HazeProgressive.verticalGradient(
                     easing = LinearEasing,
                     startIntensity = 1f,
-                    endIntensity = .2f,
+                    endIntensity = 0f,
                     endY = height,
                 )
             },
