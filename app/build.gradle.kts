@@ -115,7 +115,7 @@ fun generateVersionCode(): Int {
 }
 
 tasks {
-    create("version") {
+    register("version") {
         doLast {
             println(libs.versions.versionName.get())
         }
