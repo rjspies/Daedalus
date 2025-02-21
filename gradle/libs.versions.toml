@@ -27,7 +27,7 @@ javaVendor = "ORACLE"
 [plugins]
 
 comAndroidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-ioGitlabArturboschDetekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.7" }
+ioGitlabArturboschDetekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.8" }
 orgJetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 orgJmailenKotlinter = { id = "org.jmailen.kotlinter", version = "5.0.1" }
 comGoogleDevtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
