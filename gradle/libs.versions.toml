@@ -33,7 +33,7 @@ orgJmailenKotlinter = { id = "org.jmailen.kotlinter", version = "5.0.1" }
 comGoogleDevtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 orgJetbrainsKotlinPluginCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 orgJetbrainsKotlinPluginParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version = "1.11.3.0" }
+deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version = "1.12.0.0" }
 
 [libraries]
 
