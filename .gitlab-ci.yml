@@ -35,6 +35,8 @@ cd:
       artifacts: true
   rules:
     - when: manual
+  script:
+    - echo "foo"
   release:
     name: "Foo"
     description: "Bar"
