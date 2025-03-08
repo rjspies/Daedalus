@@ -5,6 +5,7 @@ default:
 
 stages:
   - ci
+  - cd
   - deploy_pages
 
 workflow:
@@ -26,6 +27,24 @@ ci:
     - echo "${DAEDALUS_KEYSTORE}" | base64 -d > app/keystore/release.jks
     - ./gradlew assemble
     - ./gradlew test
+
+cd:
+  stage: cd
+  needs:
+    - job: ci
+      artifacts: true
+  rules:
+    - when: manual
+  release:
+    name: "Foo"
+    description: "Bar"
+    tag_name: "foo"
+    ref: '$CI_COMMIT_SHA'
+    assets:
+      links:
+        - name: "asset1"
+          url: "https://example.com/assets/1"
+          filepath: "app/build/outputs/apk/release/app-release.apk"
 
 deploy_pages:
   image: ruby:3.4
