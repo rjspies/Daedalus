@@ -34,9 +34,10 @@ cd:
     - job: ci
       artifacts: true
   rules:
-    - when: manual
+    - when: always
   script:
     - echo "foo"
+    - wget
     - curl --location --output /usr/local/bin/release-cli "https://gitlab.com/api/v4/projects/gitlab-org%2Frelease-cli/packages/generic/release-cli/latest/release-cli-linux-amd64"
     - chmod +x /usr/local/bin/release-cli
     - release-cli -v
