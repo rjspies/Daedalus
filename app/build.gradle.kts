@@ -121,6 +121,12 @@ tasks {
         }
     }
 
+    register("versionCode") {
+        doLast {
+            println(generateVersionCode())
+        }
+    }
+
     withType<Test>().configureEach {
         useJUnitPlatform()
     }
