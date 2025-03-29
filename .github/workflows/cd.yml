@@ -46,7 +46,6 @@ jobs:
       - name: Upload APK to release
         uses: svenstaro/upload-release-action@v2
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: app/build/outputs/apk/release/app-release.apk
           release_name: ${{ steps.version.outputs.version }}
           asset_name: "Daedalus ${{ steps.version.outputs.version }}"
