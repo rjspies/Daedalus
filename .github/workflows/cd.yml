@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
 jobs:
   cd:
+    permissions:
+      contents: write
     runs-on: self-hosted
     steps:
       - name: Checkout repository
