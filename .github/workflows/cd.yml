@@ -48,7 +48,7 @@ jobs:
       - name: Upload APK to release
         uses: svenstaro/upload-release-action@v2
         with:
-          file: app/build/outputs/apk/release/app-release.apk
+          file: "${{ github.workspace }}/app/build/outputs/apk/release/app-release.apk"
           release_name: ${{ steps.version.outputs.version }}
           asset_name: "Daedalus ${{ steps.version.outputs.version }}"
 
