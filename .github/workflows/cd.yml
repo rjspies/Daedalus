@@ -45,13 +45,6 @@ jobs:
         run: echo "version=$(./gradlew version -q)" >> $GITHUB_OUTPUT
         id: version
 
-      - name: Upload APK to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          file: "${{ github.workspace }}/app/build/outputs/apk/release/app-release.apk"
-          release_name: ${{ steps.version.outputs.version }}
-          asset_name: "Daedalus ${{ steps.version.outputs.version }}"
-
       - name: Get current date
         run: echo "builddate=$(date +"%Y-%m-%dT%H-%M-%S")" >> $GITHUB_OUTPUT
         id: date
@@ -62,3 +55,11 @@ jobs:
           tag_prefix: ""
           github_token: ${{ github.token }}
           custom_tag: Release/V${{ steps.version.outputs.version }}_${{ steps.date.outputs.builddate }}
+
+      - name: Upload APK to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: "${{ github.workspace }}/app/build/outputs/apk/release/app-release.apk"
+          release_name: "Daedalus ${{ steps.version.outputs.version }} 🎉"
+          asset_name: "Daedalus ${{ steps.version.outputs.version }}"
+          tag: Release/V${{ steps.version.outputs.version }}_${{ steps.date.outputs.builddate }}
