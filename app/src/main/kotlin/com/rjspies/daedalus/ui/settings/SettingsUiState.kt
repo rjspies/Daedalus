@@ -5,5 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class SettingsUiState(
-    val legals: List<SettingItem> = emptyList(),
+    val settingItems: List<SettingItem> = emptyList(),
 ) : UiState
