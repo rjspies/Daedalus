@@ -9,11 +9,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
-import com.rjspies.daedalus.ui.destinations.TypedDestination
+import com.ramcosta.composedestinations.spec.TypedDestinationSpec
 
 @Composable
 fun NavigationBar(
-    currentDestination: TypedDestination<*>,
+    currentDestination: TypedDestinationSpec<*>,
     navigate: (destination: DirectionDestinationSpec) -> Unit,
 ) {
     NavigationBar {
