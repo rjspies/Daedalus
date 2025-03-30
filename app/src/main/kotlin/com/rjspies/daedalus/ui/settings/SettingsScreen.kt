@@ -42,7 +42,7 @@ fun SettingsScreen(
     navigator: DestinationsNavigator,
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val legals = uiState.legals
+    val legals = uiState.settingItems
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(Spacings.M),

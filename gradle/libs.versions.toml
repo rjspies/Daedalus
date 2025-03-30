@@ -53,7 +53,6 @@ androidxCore-coreSplashscreen = { group = "androidx.core", name = "core-splashsc
 ioInsertKoin-koinTestJunit4 = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
 ioGithubRaamcostaComposeDestinations-animationsCore = { group = "io.github.raamcosta.compose-destinations", name = "animations-core", version.ref = "composeDestinations" }
 ioGithubRaamcostaComposeDestinations-ksp = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "composeDestinations" }
-ioGithubKevinnzou-composeWebview = { group = "io.github.kevinnzou", name = "compose-webview", version = "0.33.6" }
 ioKotest-kotestAssertionsCore = { group = "io.kotest", name = "kotest-assertions-core", version = "5.9.1" }
 orgJunitJupiter-junitJupiterApi = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
 orgJunitJupiter-junitJupiterEngine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit5" }
