@@ -21,7 +21,7 @@ versionCodeOffset = "200000"
 namespace = "com.rjspies.daedalus"
 
 # Project config
-java = "17"
+java = "21"
 javaVendor = "ORACLE"
 
 [plugins]
