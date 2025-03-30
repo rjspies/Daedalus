@@ -1,3 +1,5 @@
+import de.fayard.refreshVersions.core.StabilityLevel
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -21,3 +23,9 @@ plugins {
 
 rootProject.name = "Daedalus"
 include(":app")
+
+refreshVersions {
+    rejectVersionIf {
+        candidate.stabilityLevel != StabilityLevel.Stable
+    }
+}
