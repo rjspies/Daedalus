@@ -42,8 +42,7 @@ import com.rjspies.daedalus.ui.common.horizontalSpacingM
 import com.rjspies.daedalus.ui.common.verticalSpacingM
 import org.koin.androidx.compose.koinViewModel
 
-@MainNavigationGraph(start = true)
-@Destination
+@Destination<MainNavigationGraph>(start = true)
 @Composable
 fun WeightDiagramScreen(
     viewModel: WeightDiagramViewModel = koinViewModel(),

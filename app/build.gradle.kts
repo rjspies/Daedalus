@@ -91,7 +91,7 @@ dependencies {
     implementation(libs.androidxRoom.roomKtx)
     implementation(libs.androidxRoom.roomRuntime)
     implementation(libs.androidxConstraintlayout.constraintlayoutCompose)
-    implementation(libs.ioGithubRaamcostaComposeDestinations.animationsCore)
+    implementation(libs.ioGithubRaamcostaComposeDestinations.core)
     implementation(libs.devChrisbanesHaze.hazeAndroid)
     implementation(libs.devChrisbanesHaze.hazeMaterials)
     ksp(libs.androidxRoom.roomCompiler)

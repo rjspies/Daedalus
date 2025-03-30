@@ -2,11 +2,11 @@ package com.rjspies.daedalus.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.ramcosta.composedestinations.generated.destinations.SettingsScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.WeightDiagramScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.WeightHistoryScreenDestination
 import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
 import com.rjspies.daedalus.R
-import com.rjspies.daedalus.ui.destinations.SettingsScreenDestination
-import com.rjspies.daedalus.ui.destinations.WeightDiagramScreenDestination
-import com.rjspies.daedalus.ui.destinations.WeightHistoryScreenDestination
 
 enum class TopLevelDestination(
     val destination: DirectionDestinationSpec,

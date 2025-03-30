@@ -1,6 +1,5 @@
 package com.rjspies.daedalus.ui
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,10 +18,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
 import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.animations.defaults.RootNavGraphDefaultAnimations
-import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
+import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.navigation.dependency
+import com.ramcosta.composedestinations.rememberNavHostEngine
+import com.ramcosta.composedestinations.utils.currentDestinationAsState
 import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
+import com.ramcosta.composedestinations.utils.startDestination
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.ui.insertweight.AddWeightDialog
 import dev.chrisbanes.haze.HazeProgressive
@@ -33,7 +34,6 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
     val navigationController = rememberNavController()
@@ -59,14 +59,14 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
             )
         },
         bottomBar = {
-            val currentDestination = navigationController.appCurrentDestinationAsState().value ?: NavGraphs.mainNavigationGraph.startAppDestination
+            val currentDestination = navigationController.currentDestinationAsState().value ?: NavGraphs.root.startDestination
             NavigationBar(
                 currentDestination = currentDestination,
                 navigate = {
                     navigator.navigate(it) {
                         restoreState = true
                         launchSingleTop = true
-                        popUpTo(NavGraphs.mainNavigationGraph.startRoute) {
+                        popUpTo(NavGraphs.root.startRoute) {
                             saveState = true
                         }
                     }
@@ -77,7 +77,7 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
             val hazeState = remember { HazeState() }
 
             DestinationsNavHost(
-                navGraph = NavGraphs.mainNavigationGraph,
+                navGraph = NavGraphs.root,
                 modifier = Modifier.hazeSource(hazeState),
                 navController = navigationController,
                 dependenciesContainerBuilder = {
@@ -85,7 +85,7 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                     dependency(navigator)
                     dependency(hazeState)
                 },
-                engine = rememberAnimatedNavHostEngine(rootDefaultAnimations = RootNavGraphDefaultAnimations.ACCOMPANIST_FADING),
+                engine = rememberNavHostEngine(),
             )
 
             StatusBarBlur(it, hazeState)

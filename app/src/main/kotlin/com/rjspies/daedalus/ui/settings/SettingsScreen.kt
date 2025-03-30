@@ -27,6 +27,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
 import com.rjspies.daedalus.R
+import com.rjspies.daedalus.ui.MainNavigationGraph
 import com.rjspies.daedalus.ui.common.HorizontalSpacerM
 import com.rjspies.daedalus.ui.common.Spacings
 import com.rjspies.daedalus.ui.common.VerticalSpacerM
@@ -34,7 +35,7 @@ import com.rjspies.daedalus.ui.common.horizontalSpacingM
 import org.koin.androidx.compose.koinViewModel
 import kotlinx.parcelize.Parcelize
 
-@Destination
+@Destination<MainNavigationGraph>
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel = koinViewModel(),
