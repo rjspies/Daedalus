@@ -17,7 +17,7 @@ androidGradlePlugin = "8.9.1"
 compose = "1.7.8"
 room = "2.6.1"
 koin = "4.0.3"
-composeDestinations = "1.11.9"
+composeDestinations = "2.1.0"
 junit5 = "5.12.1"
 haze = "1.5.2"
 
