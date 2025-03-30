@@ -5,6 +5,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import com.patrykandpatrick.vico.compose.common.ProvideVicoTheme
+import com.patrykandpatrick.vico.compose.common.VicoTheme
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -82,6 +84,7 @@ private val darkScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDark,
 )
 
+
 @Composable
 fun DaedalusTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -92,9 +95,25 @@ fun DaedalusTheme(
         else -> lightScheme
     }
 
+    val vicoTheme = VicoTheme(
+        candlestickCartesianLayerColors = VicoTheme.CandlestickCartesianLayerColors(
+            bullish = colorScheme.tertiary,
+            neutral = colorScheme.tertiary,
+            bearish = colorScheme.tertiary,
+        ),
+        columnCartesianLayerColors = listOf(colorScheme.tertiary),
+        lineCartesianLayerColors = listOf(colorScheme.tertiary),
+        lineColor = colorScheme.tertiary.copy(alpha = .3f),
+        textColor = colorScheme.onBackground,
+    )
+
     MaterialTheme(
         colorScheme = colorScheme,
         typography = DaedalusTypography,
-        content = content,
+        content = {
+            ProvideVicoTheme(vicoTheme) {
+                content()
+            }
+        },
     )
 }
