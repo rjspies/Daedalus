@@ -4,10 +4,10 @@
     "config:recommended"
   ],
   "assignees": [
-    "René Jörg Spies"
+    "rjspies"
   ],
   "reviewers": [
-    "René Jörg Spies"
+    "rjspies"
   ],
   "branchPrefix": "Renovate/",
   "rebaseWhen": "behind-base-branch",
