@@ -1,6 +1,5 @@
 package com.rjspies.daedalus.ui.diagram
 
-//import com.rjspies.daedalus.data.WeightChartEntry
 import android.graphics.Typeface
 import android.text.Layout
 import androidx.compose.foundation.layout.Box
@@ -19,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,6 +37,7 @@ import com.patrykandpatrick.vico.core.cartesian.Scroll
 import com.patrykandpatrick.vico.core.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.core.cartesian.axis.VerticalAxis
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModelProducer
+import com.patrykandpatrick.vico.core.cartesian.data.CartesianLayerRangeProvider
 import com.patrykandpatrick.vico.core.cartesian.data.lineSeries
 import com.patrykandpatrick.vico.core.cartesian.marker.DefaultCartesianMarker
 import com.patrykandpatrick.vico.core.common.Fill
@@ -104,22 +105,14 @@ fun WeightDiagramScreen(
 
 @Composable
 private fun Chart(entries: List<WeightChartEntry>) {
-//    val lineProducer = remember(entries) { ChartEntryModelProducer(entries) }
-//    val axisFormatter = remember { WeightDateAxisFormatter }
-//    val valuesOverrider = remember(entries) { AxisValuesOverrider.fixed(minY = 0f, maxY = entries.maxOf { it.y } * 1.1f) }
-//    val axisLabel = axisLabelComponent()
     val vicoScrollState = rememberVicoScrollState(initialScroll = Scroll.Absolute.End)
-//    val persistentMarker = rememberPersistentMarker(entries.indices)
-//
-    LaunchedEffect(entries) {
-        vicoScrollState.animateScroll(Scroll.Relative.x(vicoScrollState.maxValue.toDouble()))
-    }
-
     val modelProducer = remember { CartesianChartModelProducer() }
     val textComponent = rememberTextComponent(
         color = MaterialTheme.colorScheme.onTertiary,
         background = rememberShapeComponent(
-            fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
+            fill = Fill(Color.Transparent.toArgb()),
+            strokeFill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
+            strokeThickness = 1.dp,
             shape = MarkerCorneredShape(CorneredShape.Corner.Rounded),
         ),
         padding = Insets(
@@ -128,6 +121,9 @@ private fun Chart(entries: List<WeightChartEntry>) {
         ),
         typeface = Typeface.MONOSPACE,
         textAlignment = Layout.Alignment.ALIGN_CENTER,
+    )
+    val axisTextComponent = rememberTextComponent(
+        color = MaterialTheme.colorScheme.onBackground,
     )
     val shapeComponent = rememberShapeComponent(
         fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
@@ -138,6 +134,7 @@ private fun Chart(entries: List<WeightChartEntry>) {
         fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
         shape = DashedShape(CorneredShape.Pill),
     )
+    val maxY = remember(entries) { entries.map { it.y }.average() * 2.0 }
 
     LaunchedEffect(entries) {
         modelProducer.runTransaction {
@@ -147,16 +144,31 @@ private fun Chart(entries: List<WeightChartEntry>) {
         }
     }
 
+    LaunchedEffect(entries) {
+        vicoScrollState.animateScroll(Scroll.Relative.x(vicoScrollState.maxValue.toDouble()))
+    }
+
     CartesianChartHost(
         chart = rememberCartesianChart(
-            startAxis = VerticalAxis.rememberStart(),
+            startAxis = VerticalAxis.rememberStart(
+                label = axisTextComponent,
+            ),
             bottomAxis = HorizontalAxis.rememberBottom(
+                label = axisTextComponent,
                 valueFormatter = { _, value, _ ->
-                    entries[value.toInt()].dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+                    if (value.toInt() in entries.indices) {
+                        entries[value.toInt()].dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+                    } else {
+                        ""
+                    }
                 },
                 itemPlacer = HorizontalAxis.ItemPlacer.segmented(),
             ),
-            layers = arrayOf(rememberLineCartesianLayer()),
+            layers = arrayOf(
+                rememberLineCartesianLayer(
+                    rangeProvider = CartesianLayerRangeProvider.fixed(maxY = maxY),
+                ),
+            ),
             marker = remember {
                 DefaultCartesianMarker(
                     label = textComponent,
@@ -169,52 +181,4 @@ private fun Chart(entries: List<WeightChartEntry>) {
         modelProducer = modelProducer,
         scrollState = vicoScrollState,
     )
-
-//    com.patrykandpatrick.vico.compose.chart.Chart(
-//        chart = lineChart(
-//            axisValuesOverrider = valuesOverrider,
-//            persistentMarkers = persistentMarker,
-//        ),
-//        chartModelProducer = lineProducer,
-//        startAxis = rememberStartAxis(label = axisLabel),
-//        bottomAxis = rememberBottomAxis(
-//            valueFormatter = axisFormatter,
-//            label = axisLabel,
-//        ),
-//        marker = rememberMarker(),
-//        isZoomEnabled = true,
-//        runInitialAnimation = false,
-//        chartScrollState = chartScrollState,
-//        chartScrollSpec = rememberChartScrollSpec(initialScroll = InitialScroll.End),
-//    )
 }
-
-//@Composable
-//private fun rememberPersistentMarker(indices: IntRange): Map<Float, Marker> {
-//    val label = axisLabelComponent()
-//    val indicator = shapeComponent(
-//        shape = Shapes.pillShape,
-//        color = MaterialTheme.colorScheme.secondary,
-//    )
-//    val guideline = axisGuidelineComponent()
-//
-//    return remember(indices) {
-//        if (indices.count() == 1) {
-//            indices.associate {
-//                it.toFloat() to object : MarkerComponent(
-//                    label = label,
-//                    indicator = indicator,
-//                    guideline = guideline,
-//                ) {
-//                    init {
-//                        indicatorSizeDp = INDICATOR_SIZE_DP
-//                    }
-//                }
-//            }
-//        } else {
-//            emptyMap()
-//        }
-//    }
-//}
-
-private const val INDICATOR_SIZE_DP = 6f
