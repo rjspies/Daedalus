@@ -84,7 +84,6 @@ private val darkScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDark,
 )
 
-
 @Composable
 fun DaedalusTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

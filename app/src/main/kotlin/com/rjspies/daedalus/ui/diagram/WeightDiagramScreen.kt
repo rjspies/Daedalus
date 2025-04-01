@@ -107,33 +107,10 @@ fun WeightDiagramScreen(
 private fun Chart(entries: List<WeightChartEntry>) {
     val vicoScrollState = rememberVicoScrollState(initialScroll = Scroll.Absolute.End)
     val modelProducer = remember { CartesianChartModelProducer() }
-    val textComponent = rememberTextComponent(
-        color = MaterialTheme.colorScheme.onTertiary,
-        background = rememberShapeComponent(
-            fill = Fill(Color.Transparent.toArgb()),
-            strokeFill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
-            strokeThickness = 1.dp,
-            shape = MarkerCorneredShape(CorneredShape.Corner.Rounded),
-        ),
-        padding = Insets(
-            horizontalDp = 8f,
-            verticalDp = 2f,
-        ),
-        typeface = Typeface.MONOSPACE,
-        textAlignment = Layout.Alignment.ALIGN_CENTER,
-    )
-    val axisTextComponent = rememberTextComponent(
-        color = MaterialTheme.colorScheme.onBackground,
-    )
-    val shapeComponent = rememberShapeComponent(
-        fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
-        shape = CorneredShape.Pill,
-        strokeThickness = 6.dp,
-    )
-    val lineComponent = rememberLineComponent(
-        fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
-        shape = DashedShape(CorneredShape.Pill),
-    )
+    val axisText = rememberAxisText()
+    val markerText = rememberMarkerText()
+    val markerShape = rememberMarkerShape()
+    val markerLine = rememberMarkerLine()
     val maxY = remember(entries) { entries.map { it.y }.average() * 2.0 }
 
     LaunchedEffect(entries) {
@@ -151,10 +128,10 @@ private fun Chart(entries: List<WeightChartEntry>) {
     CartesianChartHost(
         chart = rememberCartesianChart(
             startAxis = VerticalAxis.rememberStart(
-                label = axisTextComponent,
+                label = axisText,
             ),
             bottomAxis = HorizontalAxis.rememberBottom(
-                label = axisTextComponent,
+                label = axisText,
                 valueFormatter = { _, value, _ ->
                     if (value.toInt() in entries.indices) {
                         entries[value.toInt()].dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
@@ -171,9 +148,9 @@ private fun Chart(entries: List<WeightChartEntry>) {
             ),
             marker = remember {
                 DefaultCartesianMarker(
-                    label = textComponent,
-                    indicator = { shapeComponent },
-                    guideline = lineComponent,
+                    label = markerText,
+                    indicator = { markerShape },
+                    guideline = markerLine,
                 )
             },
             fadingEdges = remember { FadingEdges() },
@@ -182,3 +159,38 @@ private fun Chart(entries: List<WeightChartEntry>) {
         scrollState = vicoScrollState,
     )
 }
+
+@Composable
+private fun rememberMarkerShape() = rememberShapeComponent(
+    fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
+    shape = CorneredShape.Pill,
+    strokeThickness = 6.dp,
+)
+
+@Composable
+private fun rememberMarkerText() = rememberTextComponent(
+    color = MaterialTheme.colorScheme.onTertiary,
+    background = rememberShapeComponent(
+        fill = Fill(Color.Transparent.toArgb()),
+        strokeFill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
+        strokeThickness = 1.dp,
+        shape = MarkerCorneredShape(CorneredShape.Corner.Rounded),
+    ),
+    padding = Insets(
+        horizontalDp = 8f,
+        verticalDp = 2f,
+    ),
+    typeface = Typeface.MONOSPACE,
+    textAlignment = Layout.Alignment.ALIGN_CENTER,
+)
+
+@Composable
+private fun rememberMarkerLine() = rememberLineComponent(
+    fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
+    shape = DashedShape(CorneredShape.Pill),
+)
+
+@Composable
+private fun rememberAxisText() = rememberTextComponent(
+    color = MaterialTheme.colorScheme.onBackground,
+)
