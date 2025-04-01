@@ -1,6 +1,7 @@
 package com.rjspies.daedalus.ui.diagram
 
-import androidx.compose.foundation.gestures.animateScrollBy
+import android.graphics.Typeface
+import android.text.Layout
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,22 +18,33 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import com.patrykandpatrick.vico.compose.axis.axisGuidelineComponent
-import com.patrykandpatrick.vico.compose.axis.axisLabelComponent
-import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
-import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
-import com.patrykandpatrick.vico.compose.chart.line.lineChart
-import com.patrykandpatrick.vico.compose.chart.scroll.rememberChartScrollSpec
-import com.patrykandpatrick.vico.compose.chart.scroll.rememberChartScrollState
-import com.patrykandpatrick.vico.compose.component.shapeComponent
-import com.patrykandpatrick.vico.core.chart.values.AxisValuesOverrider
-import com.patrykandpatrick.vico.core.component.marker.MarkerComponent
-import com.patrykandpatrick.vico.core.component.shape.Shapes
-import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
-import com.patrykandpatrick.vico.core.marker.Marker
-import com.patrykandpatrick.vico.core.scroll.InitialScroll
+import androidx.compose.ui.unit.dp
+import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
+import com.patrykandpatrick.vico.compose.cartesian.axis.rememberBottom
+import com.patrykandpatrick.vico.compose.cartesian.axis.rememberStart
+import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLayer
+import com.patrykandpatrick.vico.compose.cartesian.rememberCartesianChart
+import com.patrykandpatrick.vico.compose.cartesian.rememberVicoScrollState
+import com.patrykandpatrick.vico.compose.common.component.rememberLineComponent
+import com.patrykandpatrick.vico.compose.common.component.rememberShapeComponent
+import com.patrykandpatrick.vico.compose.common.component.rememberTextComponent
+import com.patrykandpatrick.vico.core.cartesian.FadingEdges
+import com.patrykandpatrick.vico.core.cartesian.Scroll
+import com.patrykandpatrick.vico.core.cartesian.axis.HorizontalAxis
+import com.patrykandpatrick.vico.core.cartesian.axis.VerticalAxis
+import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModelProducer
+import com.patrykandpatrick.vico.core.cartesian.data.CartesianLayerRangeProvider
+import com.patrykandpatrick.vico.core.cartesian.data.lineSeries
+import com.patrykandpatrick.vico.core.cartesian.marker.DefaultCartesianMarker
+import com.patrykandpatrick.vico.core.common.Fill
+import com.patrykandpatrick.vico.core.common.Insets
+import com.patrykandpatrick.vico.core.common.shape.CorneredShape
+import com.patrykandpatrick.vico.core.common.shape.DashedShape
+import com.patrykandpatrick.vico.core.common.shape.MarkerCorneredShape
 import com.ramcosta.composedestinations.annotation.Destination
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.data.WeightChartEntry
@@ -41,6 +53,8 @@ import com.rjspies.daedalus.ui.common.EmptyScreen
 import com.rjspies.daedalus.ui.common.horizontalSpacingM
 import com.rjspies.daedalus.ui.common.verticalSpacingM
 import org.koin.androidx.compose.koinViewModel
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 @Destination<MainNavigationGraph>(start = true)
 @Composable
@@ -91,62 +105,92 @@ fun WeightDiagramScreen(
 
 @Composable
 private fun Chart(entries: List<WeightChartEntry>) {
-    val lineProducer = remember(entries) { ChartEntryModelProducer(entries) }
-    val axisFormatter = remember { WeightDateAxisFormatter }
-    val valuesOverrider = remember(entries) { AxisValuesOverrider.fixed(minY = 0f, maxY = entries.maxOf { it.y } * 1.1f) }
-    val axisLabel = axisLabelComponent()
-    val chartScrollState = rememberChartScrollState()
-    val persistentMarker = rememberPersistentMarker(entries.indices)
+    val vicoScrollState = rememberVicoScrollState(initialScroll = Scroll.Absolute.End)
+    val modelProducer = remember { CartesianChartModelProducer() }
+    val axisText = rememberAxisText()
+    val markerText = rememberMarkerText()
+    val markerShape = rememberMarkerShape()
+    val markerLine = rememberMarkerLine()
+    val maxY = remember(entries) { entries.map { it.y }.average() * 2.0 }
 
     LaunchedEffect(entries) {
-        chartScrollState.animateScrollBy(chartScrollState.maxValue)
+        modelProducer.runTransaction {
+            lineSeries {
+                series(x = entries.map { it.x }, y = entries.map { it.y })
+            }
+        }
     }
 
-    com.patrykandpatrick.vico.compose.chart.Chart(
-        chart = lineChart(
-            axisValuesOverrider = valuesOverrider,
-            persistentMarkers = persistentMarker,
+    LaunchedEffect(entries) {
+        vicoScrollState.animateScroll(Scroll.Relative.x(vicoScrollState.maxValue.toDouble()))
+    }
+
+    CartesianChartHost(
+        chart = rememberCartesianChart(
+            startAxis = VerticalAxis.rememberStart(
+                label = axisText,
+            ),
+            bottomAxis = HorizontalAxis.rememberBottom(
+                label = axisText,
+                valueFormatter = { _, value, _ ->
+                    if (value.toInt() in entries.indices) {
+                        entries[value.toInt()].dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+                    } else {
+                        ""
+                    }
+                },
+                itemPlacer = HorizontalAxis.ItemPlacer.segmented(),
+            ),
+            layers = arrayOf(
+                rememberLineCartesianLayer(
+                    rangeProvider = CartesianLayerRangeProvider.fixed(maxY = maxY),
+                ),
+            ),
+            marker = remember {
+                DefaultCartesianMarker(
+                    label = markerText,
+                    indicator = { markerShape },
+                    guideline = markerLine,
+                )
+            },
+            fadingEdges = remember { FadingEdges() },
         ),
-        chartModelProducer = lineProducer,
-        startAxis = rememberStartAxis(label = axisLabel),
-        bottomAxis = rememberBottomAxis(
-            valueFormatter = axisFormatter,
-            label = axisLabel,
-        ),
-        marker = rememberMarker(),
-        isZoomEnabled = true,
-        runInitialAnimation = false,
-        chartScrollState = chartScrollState,
-        chartScrollSpec = rememberChartScrollSpec(initialScroll = InitialScroll.End),
+        modelProducer = modelProducer,
+        scrollState = vicoScrollState,
     )
 }
 
 @Composable
-private fun rememberPersistentMarker(indices: IntRange): Map<Float, Marker> {
-    val label = axisLabelComponent()
-    val indicator = shapeComponent(
-        shape = Shapes.pillShape,
-        color = MaterialTheme.colorScheme.secondary,
-    )
-    val guideline = axisGuidelineComponent()
+private fun rememberMarkerShape() = rememberShapeComponent(
+    fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
+    shape = CorneredShape.Pill,
+    strokeThickness = 6.dp,
+)
 
-    return remember(indices) {
-        if (indices.count() == 1) {
-            indices.associate {
-                it.toFloat() to object : MarkerComponent(
-                    label = label,
-                    indicator = indicator,
-                    guideline = guideline,
-                ) {
-                    init {
-                        indicatorSizeDp = INDICATOR_SIZE_DP
-                    }
-                }
-            }
-        } else {
-            emptyMap()
-        }
-    }
-}
+@Composable
+private fun rememberMarkerText() = rememberTextComponent(
+    color = MaterialTheme.colorScheme.onTertiary,
+    background = rememberShapeComponent(
+        fill = Fill(Color.Transparent.toArgb()),
+        strokeFill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
+        strokeThickness = 1.dp,
+        shape = MarkerCorneredShape(CorneredShape.Corner.Rounded),
+    ),
+    padding = Insets(
+        horizontalDp = 8f,
+        verticalDp = 2f,
+    ),
+    typeface = Typeface.MONOSPACE,
+    textAlignment = Layout.Alignment.ALIGN_CENTER,
+)
 
-private const val INDICATOR_SIZE_DP = 6f
+@Composable
+private fun rememberMarkerLine() = rememberLineComponent(
+    fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
+    shape = DashedShape(CorneredShape.Pill),
+)
+
+@Composable
+private fun rememberAxisText() = rememberTextComponent(
+    color = MaterialTheme.colorScheme.onBackground,
+)

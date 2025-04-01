@@ -5,6 +5,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import com.patrykandpatrick.vico.compose.common.ProvideVicoTheme
+import com.patrykandpatrick.vico.compose.m3.common.rememberM3VicoTheme
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -95,6 +97,15 @@ fun DaedalusTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = DaedalusTypography,
-        content = content,
+        content = {
+            ProvideVicoTheme(
+                theme = rememberM3VicoTheme(
+                    lineCartesianLayerColors = listOf(MaterialTheme.colorScheme.tertiary),
+                    lineColor = MaterialTheme.colorScheme.tertiary.copy(alpha = .3f),
+                    textColor = MaterialTheme.colorScheme.onBackground,
+                ),
+                content = content,
+            )
+        },
     )
 }
