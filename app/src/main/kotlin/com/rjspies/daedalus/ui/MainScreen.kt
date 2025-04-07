@@ -29,7 +29,7 @@ import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import com.ramcosta.composedestinations.utils.startDestination
 import com.rjspies.daedalus.IntentActions
 import com.rjspies.daedalus.R
-import com.rjspies.daedalus.ui.insertweight.AddWeightDialog
+import com.rjspies.daedalus.ui.insertweight.InsertWeightDialog
 import dev.chrisbanes.haze.HazeProgressive
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeEffect
@@ -52,7 +52,7 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
     }
 
     if (uiState.showDialog) {
-        AddWeightDialog {
+        InsertWeightDialog {
             viewModel.setShowDialog(false)
         }
     }

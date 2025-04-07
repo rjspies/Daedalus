@@ -3,7 +3,7 @@ package com.rjspies.daedalus.ui.insertweight
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rjspies.daedalus.AddWeightError
+import com.rjspies.daedalus.InsertWeightError
 import com.rjspies.daedalus.data.Weight
 import com.rjspies.daedalus.ui.common.SAVED_STATE_HANDLE_KEY_UI_STATE
 import java.time.ZonedDateTime
@@ -25,7 +25,7 @@ internal class InsertWeightViewModel(
             uiState.value.copy(dismissDialog = dismissDialog)
     }
 
-    fun setError(error: AddWeightError?) {
+    fun setError(error: InsertWeightError?) {
         savedStateHandle[SAVED_STATE_HANDLE_KEY_UI_STATE] = uiState.value.copy(error = error)
     }
 
@@ -45,7 +45,7 @@ internal class InsertWeightViewModel(
                 insertWeightUseCase(weight)
                 uiState.value.dismissDialog()
             } else {
-                setError(AddWeightError.ParseFloatError)
+                setError(InsertWeightError.ParseFloatError)
             }
         }
 

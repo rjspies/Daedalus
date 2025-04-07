@@ -32,7 +32,7 @@ import com.rjspies.daedalus.ui.common.VerticalSpacerXXS
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-internal fun AddWeightDialog(onDismiss: () -> Unit) {
+internal fun InsertWeightDialog(onDismiss: () -> Unit) {
     val viewModel = koinViewModel<InsertWeightViewModel>()
     val uiState by viewModel.uiState.collectAsState()
     var weightValue by rememberSaveable { mutableStateOf("") }
@@ -71,7 +71,7 @@ internal fun AddWeightDialog(onDismiss: () -> Unit) {
         confirmButton = {
             TextButton(
                 onClick = { viewModel.insertWeight(weightValue) },
-                content = { Text(stringResource(R.string.insert_weight_add_button_text)) },
+                content = { Text(stringResource(R.string.insert_weight_insert_button_text)) },
                 enabled = !uiState.isLoading,
             )
         },
