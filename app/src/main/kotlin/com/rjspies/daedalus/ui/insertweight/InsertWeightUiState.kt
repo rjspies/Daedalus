@@ -8,5 +8,5 @@ import kotlinx.parcelize.Parcelize
 internal data class InsertWeightUiState(
     val isLoading: Boolean = false,
     val error: AddWeightError? = null,
-    val dismissDialog: () -> Unit = {},
+    val dismissDialog: Boolean = false,
 ) : UiState

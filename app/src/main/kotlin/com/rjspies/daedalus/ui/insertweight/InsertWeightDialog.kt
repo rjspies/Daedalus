@@ -38,7 +38,12 @@ internal fun AddWeightDialog(onDismiss: () -> Unit) {
     var weightValue by rememberSaveable { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
 
-    viewModel.setDismissDialog(onDismiss)
+    LaunchedEffect(uiState.dismissDialog) {
+        if (uiState.dismissDialog) {
+            onDismiss()
+            viewModel.setDismissDialog(false)
+        }
+    }
 
     DisposableEffect(Unit) {
         onDispose {
