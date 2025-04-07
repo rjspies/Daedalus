@@ -6,6 +6,6 @@ import kotlinx.parcelize.Parcelize
 interface AppError : Parcelable
 
 @Parcelize
-sealed class AddWeightError : AppError {
-    data object ParseFloatError : AddWeightError()
+sealed class InsertWeightError : AppError {
+    data object ParseFloatError : InsertWeightError()
 }

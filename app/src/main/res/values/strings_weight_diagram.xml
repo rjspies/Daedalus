@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="weight_diagram_title">Deine Statistik</string>
-    <string name="weight_diagram_add_weight_button_text">Neue Messung hinzufügen</string>
     <string name="weight_diagram_empty_screen_title">Bereit zum Eintragen</string>
     <string name="weight_diagram_empty_screen_subtitle">Sobald du deine erste Messung hinzugefügt hast, wirst du hier ein Liniendiagramm vorfinden.</string>
     <string name="weight_diagram_empty_screen_content_description">Liniendiagramm-Icon</string>

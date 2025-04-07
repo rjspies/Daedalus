@@ -1,5 +1,7 @@
 package com.rjspies.daedalus.ui
 
+import android.content.Intent
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,6 +11,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -24,8 +27,9 @@ import com.ramcosta.composedestinations.rememberNavHostEngine
 import com.ramcosta.composedestinations.utils.currentDestinationAsState
 import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import com.ramcosta.composedestinations.utils.startDestination
+import com.rjspies.daedalus.IntentActions
 import com.rjspies.daedalus.R
-import com.rjspies.daedalus.ui.insertweight.AddWeightDialog
+import com.rjspies.daedalus.ui.insertweight.InsertWeightDialog
 import dev.chrisbanes.haze.HazeProgressive
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeEffect
@@ -39,9 +43,16 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
     val navigationController = rememberNavController()
     val navigator = navigationController.rememberDestinationsNavigator()
     val uiState by viewModel.uiState.collectAsState()
+    val intent = LocalActivity.current?.intent
+
+    IntentHandler(intent) {
+        when (it) {
+            IntentActions.InsertWeight -> viewModel.setShowDialog(true)
+        }
+    }
 
     if (uiState.showDialog) {
-        AddWeightDialog {
+        InsertWeightDialog {
             viewModel.setShowDialog(false)
         }
     }
@@ -111,4 +122,13 @@ private fun StatusBarBlur(scaffoldPadding: PaddingValues, hazeState: HazeState) 
                 )
             },
     )
+}
+
+@Composable
+private fun IntentHandler(intent: Intent?, onIntentReceived: (IntentActions) -> Unit) {
+    LaunchedEffect(intent) {
+        when (intent?.action) {
+            IntentActions.InsertWeight.action -> onIntentReceived(IntentActions.InsertWeight)
+        }
+    }
 }

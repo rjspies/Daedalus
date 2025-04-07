@@ -32,7 +32,7 @@ import com.rjspies.daedalus.ui.common.VerticalSpacerXXS
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-internal fun AddWeightDialog(onDismiss: () -> Unit) {
+internal fun InsertWeightDialog(onDismiss: () -> Unit) {
     val viewModel = koinViewModel<InsertWeightViewModel>()
     val uiState by viewModel.uiState.collectAsState()
     var weightValue by rememberSaveable { mutableStateOf("") }
@@ -56,7 +56,7 @@ internal fun AddWeightDialog(onDismiss: () -> Unit) {
         icon = {
             Icon(
                 painter = painterResource(R.drawable.stack_plus_fill),
-                contentDescription = stringResource(R.string.add_weight_icon_content_description),
+                contentDescription = stringResource(R.string.insert_weight_icon_content_description),
             )
         },
         title = {
@@ -76,7 +76,7 @@ internal fun AddWeightDialog(onDismiss: () -> Unit) {
         confirmButton = {
             TextButton(
                 onClick = { viewModel.insertWeight(weightValue) },
-                content = { Text(stringResource(R.string.add_weight_add_button_text)) },
+                content = { Text(stringResource(R.string.insert_weight_insert_button_text)) },
                 enabled = !uiState.isLoading,
             )
         },
@@ -102,12 +102,12 @@ private fun Input(
         value = weightValue,
         onValueChange = onValueChange,
         modifier = Modifier.focusRequester(focusRequester),
-        label = { Text(stringResource(R.string.add_weight_weight_text_field_label)) },
+        label = { Text(stringResource(R.string.insert_weight_weight_text_field_label)) },
         supportingText = {
             if (uiState.error != null) {
-                Text(stringResource(R.string.add_weight_weight_text_field_supporting_message_error))
+                Text(stringResource(R.string.insert_weight_weight_text_field_supporting_message_error))
             } else {
-                Text(stringResource(R.string.add_weight_weight_text_field_supporting_message))
+                Text(stringResource(R.string.insert_weight_weight_text_field_supporting_message))
             }
         },
         keyboardOptions = KeyboardOptions(
@@ -129,7 +129,7 @@ private fun Title(uiState: InsertWeightUiState) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         content = {
-            Text(stringResource(R.string.add_weight_dialog_title))
+            Text(stringResource(R.string.insert_weight_dialog_title))
 
             if (uiState.isLoading) {
                 VerticalSpacerXXS()
