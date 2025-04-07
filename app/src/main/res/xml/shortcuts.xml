@@ -7,7 +7,7 @@
         android:shortcutLongLabel="@string/add_weight_shortcut_long_title"
         android:shortcutShortLabel="@string/add_weight_shortcut_short_title">
         <intent
-            android:action="com.rjspies.daedalus.intent.ADD_WEIGHT"
+            android:action="com.rjspies.daedalus.intent.action.ADD_WEIGHT"
             android:targetClass="com.rjspies.daedalus.DaedalusActivity" />
     </shortcut>
 </shortcuts>

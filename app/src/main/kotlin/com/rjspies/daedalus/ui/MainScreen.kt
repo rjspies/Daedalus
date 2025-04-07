@@ -1,5 +1,6 @@
 package com.rjspies.daedalus.ui
 
+import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import com.ramcosta.composedestinations.rememberNavHostEngine
 import com.ramcosta.composedestinations.utils.currentDestinationAsState
 import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import com.ramcosta.composedestinations.utils.startDestination
+import com.rjspies.daedalus.IntentActions
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.ui.insertweight.AddWeightDialog
 import dev.chrisbanes.haze.HazeProgressive
@@ -43,9 +45,9 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
     val intent = LocalActivity.current?.intent
 
-    LaunchedEffect(intent) {
-        if (intent?.action == "com.rjspies.daedalus.intent.ADD_WEIGHT") {
-            viewModel.setShowDialog(true)
+    IntentHandler(intent) {
+        when (it) {
+            IntentActions.AddWeight -> viewModel.setShowDialog(true)
         }
     }
 
@@ -120,4 +122,13 @@ private fun StatusBarBlur(scaffoldPadding: PaddingValues, hazeState: HazeState) 
                 )
             },
     )
+}
+
+@Composable
+private fun IntentHandler(intent: Intent?, onIntentReceived: (IntentActions) -> Unit) {
+    LaunchedEffect(intent) {
+        when (intent?.action) {
+            IntentActions.AddWeight.action -> onIntentReceived(IntentActions.AddWeight)
+        }
+    }
 }

@@ -33,7 +33,7 @@
             </intent-filter>
 
             <intent-filter>
-                <action android:name="com.rjspies.daedalus.intent.ADD_WEIGHT" />
+                <action android:name="com.rjspies.daedalus.intent.action.ADD_WEIGHT" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
