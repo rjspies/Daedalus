@@ -1,5 +1,6 @@
 package com.rjspies.daedalus.ui
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,6 +10,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -39,6 +41,13 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
     val navigationController = rememberNavController()
     val navigator = navigationController.rememberDestinationsNavigator()
     val uiState by viewModel.uiState.collectAsState()
+    val intent = LocalActivity.current?.intent
+
+    LaunchedEffect(intent) {
+        if (intent?.action == "com.rjspies.daedalus.intent.ADD_WEIGHT") {
+            viewModel.setShowDialog(true)
+        }
+    }
 
     if (uiState.showDialog) {
         AddWeightDialog {

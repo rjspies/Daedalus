@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/plus_circle_fill"
+        android:shortcutId="shortcut_add_weight"
+        android:shortcutLongLabel="@string/add_weight_shortcut_long_title"
+        android:shortcutShortLabel="@string/add_weight_shortcut_short_title">
+        <intent
+            android:action="com.rjspies.daedalus.intent.ADD_WEIGHT"
+            android:targetClass="com.rjspies.daedalus.DaedalusActivity" />
+    </shortcut>
+</shortcuts>
