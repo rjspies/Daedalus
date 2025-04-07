@@ -47,7 +47,7 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
 
     IntentHandler(intent) {
         when (it) {
-            IntentActions.AddWeight -> viewModel.setShowDialog(true)
+            IntentActions.InsertWeight -> viewModel.setShowDialog(true)
         }
     }
 
@@ -128,7 +128,7 @@ private fun StatusBarBlur(scaffoldPadding: PaddingValues, hazeState: HazeState) 
 private fun IntentHandler(intent: Intent?, onIntentReceived: (IntentActions) -> Unit) {
     LaunchedEffect(intent) {
         when (intent?.action) {
-            IntentActions.AddWeight.action -> onIntentReceived(IntentActions.AddWeight)
+            IntentActions.InsertWeight.action -> onIntentReceived(IntentActions.InsertWeight)
         }
     }
 }

@@ -3,11 +3,11 @@
     <shortcut
         android:enabled="true"
         android:icon="@drawable/plus_circle_fill"
-        android:shortcutId="shortcut_add_weight"
-        android:shortcutLongLabel="@string/add_weight_shortcut_long_title"
-        android:shortcutShortLabel="@string/add_weight_shortcut_short_title">
+        android:shortcutId="shortcut_insert_weight"
+        android:shortcutLongLabel="@string/insert_weight_shortcut_long_title"
+        android:shortcutShortLabel="@string/insert_weight_shortcut_short_title">
         <intent
-            android:action="com.rjspies.daedalus.intent.action.ADD_WEIGHT"
+            android:action="com.rjspies.daedalus.intent.action.INSERT_WEIGHT"
             android:targetClass="com.rjspies.daedalus.DaedalusActivity" />
     </shortcut>
 </shortcuts>

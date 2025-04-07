@@ -5,5 +5,5 @@ private const val PREFIX = "com.rjspies.daedalus.intent.action"
 sealed class IntentActions(
     val action: String,
 ) {
-    data object AddWeight : IntentActions("$PREFIX.ADD_WEIGHT")
+    data object InsertWeight : IntentActions("$PREFIX.INSERT_WEIGHT")
 }
