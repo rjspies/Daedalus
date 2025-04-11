@@ -15,7 +15,7 @@ deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version =
 
 androidGradlePlugin = "8.9.1"
 compose = "1.7.8"
-room = "2.6.1"
+room = "2.7.0"
 koin = "4.0.4"
 composeDestinations = "2.1.0"
 junit5 = "5.12.2"
@@ -23,7 +23,7 @@ haze = "1.5.2"
 
 # Raise these two together
 kotlin = "2.1.20"
-ksp = "2.1.20-1.0.32"
+ksp = "2.1.20-2.0.0"
 
 # App config
 compileSdk = "35"

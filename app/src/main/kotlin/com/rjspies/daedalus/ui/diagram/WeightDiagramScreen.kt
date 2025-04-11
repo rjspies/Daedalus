@@ -134,10 +134,10 @@ private fun Chart(entries: List<WeightChartEntry>) {
                 label = axisText,
                 valueFormatter = { _, value, _ ->
                     if (value.toInt() in entries.indices) {
-                        entries[value.toInt()].dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+                        entries[value.toInt()]
                     } else {
-                        ""
-                    }
+                        entries.last()
+                    }.dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
                 },
                 itemPlacer = HorizontalAxis.ItemPlacer.segmented(),
             ),

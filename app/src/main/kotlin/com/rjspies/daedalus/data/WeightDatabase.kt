@@ -6,21 +6,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [Weight::class], version = 1)
-public abstract class WeightDatabase : RoomDatabase() {
-    public abstract fun weightDao(): WeightDao
+abstract class WeightDatabase : RoomDatabase() {
+    abstract fun weightDao(): WeightDao
 
-    public companion object {
+    companion object {
         @Volatile
         private var INSTANCE: WeightDatabase? = null
 
-        public fun getDatabase(context: Context): WeightDatabase = INSTANCE ?: synchronized(this) {
+        fun getDatabase(context: Context): WeightDatabase = INSTANCE ?: synchronized(this) {
             val instance = Room
                 .databaseBuilder(
-                    context,
-                    WeightDatabase::class.java,
-                    "weight_database",
+                    context = context,
+                    klass = WeightDatabase::class.java,
+                    name = "weight_database",
                 ).apply {
-                    fallbackToDestructiveMigration()
+                    fallbackToDestructiveMigration(false)
                 }.build()
             INSTANCE = instance
             instance
