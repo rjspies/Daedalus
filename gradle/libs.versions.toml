@@ -23,7 +23,7 @@ haze = "1.5.2"
 
 # Raise these two together
 kotlin = "2.1.20"
-ksp = "2.1.20-1.0.32"
+ksp = "2.1.20-2.0.0"
 
 # App config
 compileSdk = "35"
