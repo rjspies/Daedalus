@@ -17,6 +17,14 @@
   "prHourlyLimit": 0,
   "packageRules": [
     {
+      "groupName": "Kotlin & KSP",
+      "matchPackageNames": [
+        "com.google.devtools.ksp",
+        "org.jetbrains.kotlin.android"
+      ],
+      "automerge": true
+    },
+    {
       "description": "Automerge everything",
       "matchUpdateTypes": [
         "major",
