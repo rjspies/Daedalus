@@ -4,6 +4,7 @@ import androidx.room.Room
 import com.rjspies.daedalus.data.WeightDatabase
 import com.rjspies.daedalus.data.WeightService
 import com.rjspies.daedalus.domain.DeleteWeightUseCase
+import com.rjspies.daedalus.domain.GetAverageWeightUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.GetWeightsDescendingUseCase
 import com.rjspies.daedalus.ui.MainViewModel
@@ -12,6 +13,7 @@ import com.rjspies.daedalus.ui.history.WeightHistoryViewModel
 import com.rjspies.daedalus.ui.insertweight.InsertWeightUseCase
 import com.rjspies.daedalus.ui.insertweight.InsertWeightViewModel
 import com.rjspies.daedalus.ui.settings.SettingsViewModel
+import com.rjspies.daedalus.ui.widgets.AverageWeightWidgetViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -35,4 +37,6 @@ val appModule = module {
     viewModel { SettingsViewModel(get()) }
     factory { InsertWeightUseCase(get()) }
     viewModel { InsertWeightViewModel(get(), get()) }
+    factory { GetAverageWeightUseCase(get()) }
+    viewModel { AverageWeightWidgetViewModel(get()) }
 }

@@ -2,8 +2,9 @@ package com.rjspies.daedalus
 
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import com.rjspies.daedalus.ui.widgets.AverageWeightWidget
 
-class MyAppWidgetReceiver : GlanceAppWidgetReceiver() {
+class AverageWeightWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget
-        get() = MyAppWidget()
+        get() = AverageWeightWidget()
 }

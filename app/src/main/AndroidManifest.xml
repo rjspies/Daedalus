@@ -43,7 +43,7 @@
         </activity>
 
         <receiver
-            android:name=".MyAppWidgetReceiver"
+            android:name=".AverageWeightWidgetReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -51,7 +51,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/my_app_widget_info" />
+                android:resource="@xml/average_weight_widget_information" />
         </receiver>
     </application>
 

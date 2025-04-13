@@ -45,6 +45,7 @@ import com.rjspies.daedalus.ui.common.tableItems
 import com.rjspies.daedalus.ui.common.verticalSpacingM
 import org.koin.androidx.compose.koinViewModel
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -267,7 +268,7 @@ private fun ArrowState.contentDescription(): String = when (this) {
     ArrowState.Upwards -> stringResource(R.string.weight_history_avatar_upwards_icon_content_description)
 }
 
-private fun Float.asUserfacingString(locale: Locale): String = "${DecimalFormat.getInstance(locale).format(this)} kg"
+fun Float.asUserfacingString(locale: Locale): String = "${DecimalFormat("#0.#", DecimalFormatSymbols(locale)).format(this)} kg"
 
 private fun ZonedDateTime.asUserfacingString(
     locale: Locale,
