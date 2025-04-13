@@ -65,3 +65,4 @@ androidxComposeMaterial-materialIconsExtended = { group = "androidx.compose.mate
 comLemonappdev-konsist = { group = "com.lemonappdev", name = "konsist", version = "0.17.3" }
 androidxGlance-glanceAppWidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "glance" }
 androidxGlance-glanceMaterial3 = { group = "androidx.glance", name = "glance-material3", version.ref = "glance" }
+ioInsertKoin-koinAndroid = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }

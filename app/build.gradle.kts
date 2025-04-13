@@ -97,6 +97,7 @@ dependencies {
     implementation(libs.androidxComposeMaterial.materialIconsExtended)
     implementation(libs.androidxGlance.glanceAppWidget)
     implementation(libs.androidxGlance.glanceMaterial3)
+    implementation(libs.ioInsertKoin.koinAndroid)
     ksp(libs.androidxRoom.roomCompiler)
     ksp(libs.ioGithubRaamcostaComposeDestinations.ksp)
     testImplementation(libs.ioInsertKoin.koinTestJunit4)
