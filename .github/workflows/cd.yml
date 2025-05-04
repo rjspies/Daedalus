@@ -64,6 +64,6 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           file: "${{ github.workspace }}/app/build/outputs/apk/release/app-release.apk"
-          release_name: "Daedalus ${{ steps.version.outputs.version }} (${{ steps.versionCode.outputs.versionCode }})"
+          release_name: "v${{ steps.version.outputs.version }} (${{ steps.versionCode.outputs.versionCode }})"
           asset_name: "Daedalus-${{ steps.version.outputs.version }}-${{ steps.versionCode.outputs.versionCode }}.apk"
           tag: Release/V${{ steps.version.outputs.version }}_${{ steps.date.outputs.builddate }}
