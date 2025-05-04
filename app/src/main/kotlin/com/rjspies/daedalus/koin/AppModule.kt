@@ -2,15 +2,16 @@ package com.rjspies.daedalus.koin
 
 import androidx.room.Room
 import com.rjspies.daedalus.data.WeightDatabase
-import com.rjspies.daedalus.data.WeightService
+import com.rjspies.daedalus.data.WeightServiceImpl
 import com.rjspies.daedalus.domain.DeleteWeightUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.GetWeightsDescendingUseCase
-import com.rjspies.daedalus.ui.MainViewModel
-import com.rjspies.daedalus.ui.diagram.WeightDiagramViewModel
-import com.rjspies.daedalus.ui.history.WeightHistoryViewModel
-import com.rjspies.daedalus.ui.insertweight.InsertWeightUseCase
-import com.rjspies.daedalus.ui.insertweight.InsertWeightViewModel
+import com.rjspies.daedalus.domain.InsertWeightUseCase
+import com.rjspies.daedalus.domain.WeightService
+import com.rjspies.daedalus.presentation.MainViewModel
+import com.rjspies.daedalus.presentation.diagram.WeightDiagramViewModel
+import com.rjspies.daedalus.presentation.history.WeightHistoryViewModel
+import com.rjspies.daedalus.presentation.insertweight.InsertWeightViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -24,7 +25,7 @@ val appModule = module {
             ).build()
     }
     single { get<WeightDatabase>().weightDao() }
-    single { WeightService(get()) }
+    single<WeightService> { WeightServiceImpl(get()) }
     viewModel { MainViewModel(get()) }
     factory { GetWeightsAscendingUseCase(get()) }
     viewModel { WeightDiagramViewModel(get()) }

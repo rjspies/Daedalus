@@ -61,3 +61,4 @@ orgJunitJupiter-junitJupiterEngine = { group = "org.junit.jupiter", name = "juni
 devChrisbanesHaze-hazeAndroid = { group = "dev.chrisbanes.haze", name = "haze-android", version.ref = "haze" }
 devChrisbanesHaze-hazeMaterials = { group = "dev.chrisbanes.haze", name = "haze-materials", version.ref = "haze" }
 androidxComposeMaterial-materialIconsExtended = { group = "androidx.compose.material", name = "material-icons-extended", version = "1.7.8" }
+comLemonappdev-konsist = { group = "com.lemonappdev", name = "konsist", version = "0.17.3" }

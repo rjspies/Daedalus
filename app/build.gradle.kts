@@ -100,6 +100,7 @@ dependencies {
     testImplementation(libs.ioInsertKoin.koinTestJunit4)
     testImplementation(libs.ioKotest.kotestAssertionsCore)
     testImplementation(libs.orgJunitJupiter.junitJupiterApi)
+    testImplementation(libs.comLemonappdev.konsist)
     testRuntimeOnly(libs.orgJunitJupiter.junitJupiterEngine)
 }
 

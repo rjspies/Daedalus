@@ -11,8 +11,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.core.animation.doOnEnd
-import com.rjspies.daedalus.ui.DaedalusTheme
-import com.rjspies.daedalus.ui.MainScreen
+import com.rjspies.daedalus.presentation.DaedalusTheme
+import com.rjspies.daedalus.presentation.MainScreen
 import org.koin.compose.KoinContext
 
 private const val ANIMATION_DURATION = 250L
