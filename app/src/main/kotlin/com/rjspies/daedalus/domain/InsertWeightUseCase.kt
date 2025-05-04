@@ -8,7 +8,7 @@ class InsertWeightUseCase(
     suspend operator fun invoke(
         value: Float,
         note: String?,
-        dateTime: ZonedDateTime
+        dateTime: ZonedDateTime,
     ): Unit = service.insertWeight(
         value = value,
         note = note,
