@@ -94,6 +94,7 @@ dependencies {
     implementation(libs.ioGithubRaamcostaComposeDestinations.core)
     implementation(libs.devChrisbanesHaze.hazeAndroid)
     implementation(libs.devChrisbanesHaze.hazeMaterials)
+    implementation(libs.androidxComposeMaterial.materialIconsExtended)
     ksp(libs.androidxRoom.roomCompiler)
     ksp(libs.ioGithubRaamcostaComposeDestinations.ksp)
     testImplementation(libs.ioInsertKoin.koinTestJunit4)
