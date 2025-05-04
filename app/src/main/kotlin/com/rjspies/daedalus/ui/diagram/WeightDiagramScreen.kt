@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Timeline
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +22,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
@@ -89,7 +91,7 @@ fun WeightDiagramScreen(
         }
     } else {
         EmptyScreen(
-            painter = painterResource(R.drawable.chart_line_fill),
+            painter = rememberVectorPainter(Icons.Rounded.Timeline),
             contentDescription = stringResource(R.string.weight_diagram_empty_screen_content_description),
             title = stringResource(R.string.weight_diagram_empty_screen_title),
             subtitle = stringResource(R.string.weight_diagram_empty_screen_subtitle),

@@ -2,7 +2,7 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/plus_circle_fill"
+        android:icon="@drawable/icon_rounded_add"
         android:shortcutId="shortcut_insert_weight"
         android:shortcutLongLabel="@string/insert_weight_shortcut_long_title"
         android:shortcutShortLabel="@string/insert_weight_shortcut_short_title">
