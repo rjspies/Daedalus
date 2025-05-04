@@ -24,9 +24,7 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.rememberNavHostEngine
-import com.ramcosta.composedestinations.utils.currentDestinationAsState
 import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
-import com.ramcosta.composedestinations.utils.startDestination
 import com.rjspies.daedalus.IntentActions
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.ui.insertweight.InsertWeightDialog
