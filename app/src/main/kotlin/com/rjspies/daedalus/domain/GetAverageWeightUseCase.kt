@@ -1,6 +1,5 @@
 package com.rjspies.daedalus.domain
 
-import com.rjspies.daedalus.data.WeightService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

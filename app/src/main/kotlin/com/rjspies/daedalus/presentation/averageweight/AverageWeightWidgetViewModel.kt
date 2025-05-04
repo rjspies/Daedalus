@@ -1,4 +1,4 @@
-package com.rjspies.daedalus.ui.widgets
+package com.rjspies.daedalus.presentation.averageweight
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +11,7 @@ class AverageWeightWidgetViewModel(
 ) : ViewModel() {
     val averageWeight = getAverageWeightUseCase().stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
+        started = SharingStarted.Companion.WhileSubscribed(),
         initialValue = 0f,
     )
 }

@@ -1,4 +1,4 @@
-package com.rjspies.daedalus.ui.widgets
+package com.rjspies.daedalus.presentation.averageweight
 
 import android.content.Context
 import androidx.compose.material3.MaterialTheme
@@ -19,14 +19,16 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import com.rjspies.daedalus.R
-import com.rjspies.daedalus.ui.common.Spacings
-import com.rjspies.daedalus.ui.darkScheme
-import com.rjspies.daedalus.ui.history.asUserfacingString
-import com.rjspies.daedalus.ui.lightScheme
-import org.koin.java.KoinJavaComponent.inject
+import com.rjspies.daedalus.presentation.common.Spacings
+import com.rjspies.daedalus.presentation.darkScheme
+import com.rjspies.daedalus.presentation.history.asUserfacingString
+import com.rjspies.daedalus.presentation.lightScheme
+import org.koin.java.KoinJavaComponent
 
 class AverageWeightWidget : GlanceAppWidget() {
-    private val viewModel: AverageWeightWidgetViewModel by inject(AverageWeightWidgetViewModel::class.java)
+    private val viewModel: AverageWeightWidgetViewModel by KoinJavaComponent.inject(
+        AverageWeightWidgetViewModel::class.java,
+    )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
