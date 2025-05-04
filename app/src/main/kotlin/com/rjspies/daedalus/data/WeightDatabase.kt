@@ -1,11 +1,17 @@
 package com.rjspies.daedalus.data
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.rjspies.daedalus.data.WeightDao
 
-@Database(entities = [Weight::class], version = 1)
+@Database(
+    entities = [WeightImpl::class],
+    version = 2,
+    autoMigrations = [AutoMigration(from = 1, to = 2)],
+)
 abstract class WeightDatabase : RoomDatabase() {
     abstract fun weightDao(): WeightDao
 
