@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="common_cancel">Abbrechen</string>
-    <string name="common_top_app_bar_icon_back_navigation_content_description">Zurück</string>
 </resources>

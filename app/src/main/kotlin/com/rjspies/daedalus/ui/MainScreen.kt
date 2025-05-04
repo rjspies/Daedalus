@@ -24,9 +24,7 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.rememberNavHostEngine
-import com.ramcosta.composedestinations.utils.currentDestinationAsState
 import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
-import com.ramcosta.composedestinations.utils.startDestination
 import com.rjspies.daedalus.IntentActions
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.ui.insertweight.InsertWeightDialog
@@ -66,21 +64,6 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                         painter = painterResource(R.drawable.plus_circle_fill),
                         contentDescription = stringResource(R.string.main_screen_floating_action_button_content_description),
                     )
-                },
-            )
-        },
-        bottomBar = {
-            val currentDestination = navigationController.currentDestinationAsState().value ?: NavGraphs.root.startDestination
-            NavigationBar(
-                currentDestination = currentDestination,
-                navigate = {
-                    navigator.navigate(it) {
-                        restoreState = true
-                        launchSingleTop = true
-                        popUpTo(NavGraphs.root.startRoute) {
-                            saveState = true
-                        }
-                    }
                 },
             )
         },
