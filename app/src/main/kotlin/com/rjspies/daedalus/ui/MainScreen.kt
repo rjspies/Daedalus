@@ -69,21 +69,6 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                 },
             )
         },
-        bottomBar = {
-            val currentDestination = navigationController.currentDestinationAsState().value ?: NavGraphs.root.startDestination
-            NavigationBar(
-                currentDestination = currentDestination,
-                navigate = {
-                    navigator.navigate(it) {
-                        restoreState = true
-                        launchSingleTop = true
-                        popUpTo(NavGraphs.root.startRoute) {
-                            saveState = true
-                        }
-                    }
-                },
-            )
-        },
         content = {
             val hazeState = remember { HazeState() }
 
