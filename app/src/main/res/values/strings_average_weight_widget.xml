@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="average_weight_widget_average_weight_caption">Durchschnittsgewicht der letzten 30 Tage</string>
+    <string name="average_weight_widget_average_weight_caption">Durchschnittsgewicht der letzten 30 Tage:</string>
 </resources>

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 
 class AverageWeightWidgetViewModel(
-    getAverageWeightUseCase: GetAverageWeightUseCase
+    getAverageWeightUseCase: GetAverageWeightUseCase,
 ) : ViewModel() {
     val averageWeight = getAverageWeightUseCase().stateIn(
         scope = viewModelScope,

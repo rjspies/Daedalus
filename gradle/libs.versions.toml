@@ -52,8 +52,9 @@ androidxRoom-roomKtx = { group = "androidx.room", name = "room-ktx", version.ref
 comJakewhartonTimer-timber = { group = "com.jakewharton.timber", name = "timber", version = "5.0.1" }
 comPatrykandpatrickVico-composeM3 = { group = "com.patrykandpatrick.vico", name = "compose-m3", version = "2.1.2" }
 ioInsertKoin-koinAndroidxCompose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
-androidxCore-coreSplashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
+ioInsertKoin-koinAndroid = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 ioInsertKoin-koinTestJunit4 = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
+androidxCore-coreSplashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
 ioGithubRaamcostaComposeDestinations-core = { group = "io.github.raamcosta.compose-destinations", name = "core", version.ref = "composeDestinations" }
 ioGithubRaamcostaComposeDestinations-ksp = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "composeDestinations" }
 ioKotest-kotestAssertionsCore = { group = "io.kotest", name = "kotest-assertions-core", version = "5.9.1" }
@@ -65,4 +66,6 @@ androidxComposeMaterial-materialIconsExtended = { group = "androidx.compose.mate
 comLemonappdev-konsist = { group = "com.lemonappdev", name = "konsist", version = "0.17.3" }
 androidxGlance-glanceAppWidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "glance" }
 androidxGlance-glanceMaterial3 = { group = "androidx.glance", name = "glance-material3", version.ref = "glance" }
-ioInsertKoin-koinAndroid = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+comGoogleAndroidMaterial-material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
+androidxComposeUi-uiToolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose" }
+androidxComposeUi-uiTooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }

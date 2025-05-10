@@ -2,6 +2,7 @@ package com.rjspies.daedalus.presentation.averageweight
 
 import android.content.Context
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.glance.GlanceId
@@ -23,12 +24,10 @@ import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.darkScheme
 import com.rjspies.daedalus.presentation.history.asUserfacingString
 import com.rjspies.daedalus.presentation.lightScheme
-import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.inject
 
 class AverageWeightWidget : GlanceAppWidget() {
-    private val viewModel: AverageWeightWidgetViewModel by KoinJavaComponent.inject(
-        AverageWeightWidgetViewModel::class.java,
-    )
+    private val viewModel by inject<AverageWeightWidgetViewModel>(AverageWeightWidgetViewModel::class.java)
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
@@ -43,26 +42,35 @@ class AverageWeightWidget : GlanceAppWidget() {
                 )
                 val averageWeight by viewModel.averageWeight.collectAsState()
 
-                Column(
-                    modifier = GlanceModifier
-                        .fillMaxSize()
-                        .padding(Spacings.S)
-                        .background(GlanceTheme.colors.background),
-                    verticalAlignment = Alignment.Vertical.CenterVertically,
-                    horizontalAlignment = Alignment.Horizontal.CenterHorizontally,
-                ) {
-                    Text(
-                        text = context.getString(R.string.average_weight_widget_average_weight_caption),
-                        style = glanceWidgetTextStyle.copy(fontSize = MaterialTheme.typography.labelSmall.fontSize),
-                        maxLines = 2,
-                    )
-                    Text(
-                        text = averageWeight.asUserfacingString(context.resources.configuration.locales[0]),
-                        style = glanceWidgetTextStyle.copy(fontSize = MaterialTheme.typography.titleLarge.fontSize),
-                        maxLines = 1,
-                    )
-                }
+                Content(context, glanceWidgetTextStyle, averageWeight)
             }
+        }
+    }
+
+    @Composable
+    private fun Content(
+        context: Context,
+        textStyle: TextStyle,
+        averageWeight: Float,
+    ) {
+        Column(
+            modifier = GlanceModifier
+                .fillMaxSize()
+                .padding(Spacings.S)
+                .background(GlanceTheme.colors.background),
+            verticalAlignment = Alignment.Vertical.CenterVertically,
+            horizontalAlignment = Alignment.Horizontal.CenterHorizontally,
+        ) {
+            Text(
+                text = context.getString(R.string.average_weight_widget_average_weight_caption),
+                style = textStyle.copy(fontSize = MaterialTheme.typography.labelLarge.fontSize),
+                maxLines = 2,
+            )
+            Text(
+                text = averageWeight.asUserfacingString(context.resources.configuration.locales[0]),
+                style = textStyle.copy(fontSize = MaterialTheme.typography.titleLarge.fontSize),
+                maxLines = 1,
+            )
         }
     }
 }
