@@ -19,7 +19,7 @@ room = "2.7.1"
 koin = "4.0.4"
 composeDestinations = "2.2.0"
 junit5 = "5.12.2"
-haze = "1.5.4"
+haze = "1.6.0"
 glance = "1.1.1"
 
 # Raise these two together
