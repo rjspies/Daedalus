@@ -44,6 +44,12 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import org.koin.androidx.compose.koinViewModel
 
+private val RADIAL_GRADIENT_COLOR_1 = Color(0xFF302B63)
+private val RADIAL_GRADIENT_COLOR_2 = Color(0xFF24243E)
+private val RADIAL_GRADIENT_COLOR_3 = Color(0xFF0F0C29)
+private const val RADIAL_GRADIENT_POSITION_OFFSET = .3f
+private const val RADIAL_GRADIENT_RADIUS_OFFSET = 1.7f
+
 @Composable
 fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
     val navigationController = rememberNavController()
@@ -106,12 +112,15 @@ private fun GradientBackground() {
             .background(
                 Brush.radialGradient(
                     colors = listOf(
-                        Color(0xff302b63),
-                        Color(0xff24243e),
-                        Color(0xff0f0c29),
+                        RADIAL_GRADIENT_COLOR_1,
+                        RADIAL_GRADIENT_COLOR_2,
+                        RADIAL_GRADIENT_COLOR_3,
                     ),
-                    center = Offset(window.containerSize.height * .3f, window.containerSize.width * .3f),
-                    radius = window.containerSize.width * 1.7f,
+                    center = Offset(
+                        x = window.containerSize.height * RADIAL_GRADIENT_POSITION_OFFSET,
+                        y = window.containerSize.width * RADIAL_GRADIENT_POSITION_OFFSET,
+                    ),
+                    radius = window.containerSize.width * RADIAL_GRADIENT_RADIUS_OFFSET,
                 ),
             ),
     )
