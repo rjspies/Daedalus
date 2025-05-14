@@ -1,6 +1,5 @@
 package com.rjspies.daedalus.presentation
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -86,7 +85,7 @@ val darkScheme = darkColorScheme(
 
 @Composable
 fun DaedalusTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     val colorScheme = when {

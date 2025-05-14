@@ -3,8 +3,10 @@ package com.rjspies.daedalus.presentation
 import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.LinearEasing
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
@@ -18,8 +20,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -58,6 +64,7 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
     }
 
     Scaffold(
+        containerColor = Color.Transparent,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { viewModel.setShowDialog(true) },
@@ -71,6 +78,7 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
         },
         content = {
             val hazeState = remember { HazeState() }
+            GradientBackground()
 
             DestinationsNavHost(
                 navGraph = NavGraphs.root,
@@ -89,6 +97,26 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
     )
 }
 
+@Composable
+private fun GradientBackground() {
+    val window = LocalWindowInfo.current
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.radialGradient(
+                    colors = listOf(
+                        Color(0xff302b63),
+                        Color(0xff24243e),
+                        Color(0xff0f0c29),
+                    ),
+                    center = Offset(window.containerSize.height * .3f, window.containerSize.width * .3f),
+                    radius = window.containerSize.width * 1.7f,
+                ),
+            ),
+    )
+}
+
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 private fun StatusBarBlur(scaffoldPadding: PaddingValues, hazeState: HazeState) {
@@ -98,7 +126,7 @@ private fun StatusBarBlur(scaffoldPadding: PaddingValues, hazeState: HazeState) 
         modifier = Modifier
             .fillMaxWidth()
             .height(scaffoldPadding.calculateTopPadding())
-            .hazeEffect(hazeState, HazeMaterials.regular()) {
+            .hazeEffect(hazeState, HazeMaterials.regular(Color.Transparent)) {
                 progressive = HazeProgressive.verticalGradient(
                     easing = LinearEasing,
                     startIntensity = 1f,

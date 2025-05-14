@@ -86,6 +86,7 @@ fun WeightDiagramScreen(
                 text = stringResource(R.string.weight_diagram_title),
                 modifier = Modifier.horizontalSpacingM(),
                 style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onBackground
             )
             Box(Modifier.horizontalSpacingM()) { Chart(entries) }
         }
