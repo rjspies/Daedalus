@@ -14,7 +14,7 @@ deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version =
 [versions]
 
 androidGradlePlugin = "8.10.0"
-compose = "1.8.1"
+compose = "1.8.2"
 room = "2.7.1"
 koin = "4.0.4"
 composeDestinations = "2.2.0"
