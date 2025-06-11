@@ -9,7 +9,7 @@ orgJmailenKotlinter = { id = "org.jmailen.kotlinter", version = "5.1.1" }
 comGoogleDevtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 orgJetbrainsKotlinPluginCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 orgJetbrainsKotlinPluginParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version = "1.12.2.0" }
+deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version = "1.13.0.0" }
 
 [versions]
 
