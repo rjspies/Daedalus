@@ -13,7 +13,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.animation.doOnEnd
 import com.rjspies.daedalus.presentation.DaedalusTheme
 import com.rjspies.daedalus.presentation.MainScreen
-import org.koin.compose.KoinContext
 
 private const val ANIMATION_DURATION = 250L
 
@@ -29,10 +28,8 @@ class DaedalusActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            KoinContext {
-                DaedalusTheme {
-                    MainScreen()
-                }
+            DaedalusTheme {
+                MainScreen()
             }
         }
     }
