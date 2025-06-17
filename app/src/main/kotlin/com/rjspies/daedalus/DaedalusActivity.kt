@@ -20,6 +20,7 @@ class DaedalusActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Daedalus)
         enableEdgeToEdge()
+        window?.isNavigationBarContrastEnforced = false
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             splashScreen.animateExit()

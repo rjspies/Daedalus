@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
@@ -17,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalDensity
@@ -84,25 +87,50 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                 engine = rememberNavHostEngine(),
             )
 
-            StatusBarBlur(it, hazeState)
+            Box(Modifier.fillMaxSize()) {
+                StatusBarBlur(it, hazeState)
+                NavigationBarBlur(it, hazeState)
+            }
         },
     )
 }
 
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
-private fun StatusBarBlur(scaffoldPadding: PaddingValues, hazeState: HazeState) {
+private fun BoxScope.StatusBarBlur(scaffoldPadding: PaddingValues, hazeState: HazeState) {
     val height = with(LocalDensity.current) { scaffoldPadding.calculateTopPadding().toPx() }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .align(Alignment.TopCenter)
             .height(scaffoldPadding.calculateTopPadding())
             .hazeEffect(hazeState, HazeMaterials.regular()) {
                 progressive = HazeProgressive.verticalGradient(
                     easing = LinearEasing,
-                    startIntensity = 1f,
-                    endIntensity = 0f,
+                    startIntensity = .25f,
+                    endIntensity = .25f,
+                    endY = height,
+                )
+            },
+    )
+}
+
+@OptIn(ExperimentalHazeMaterialsApi::class)
+@Composable
+private fun BoxScope.NavigationBarBlur(scaffoldPadding: PaddingValues, hazeState: HazeState) {
+    val height = with(LocalDensity.current) { scaffoldPadding.calculateBottomPadding().toPx() }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.BottomCenter)
+            .height(scaffoldPadding.calculateBottomPadding())
+            .hazeEffect(hazeState, HazeMaterials.regular()) {
+                progressive = HazeProgressive.verticalGradient(
+                    easing = LinearEasing,
+                    startIntensity = .25f,
+                    endIntensity = .25f,
                     endY = height,
                 )
             },

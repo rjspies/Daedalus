@@ -58,7 +58,7 @@ import java.time.format.FormatStyle
 import java.util.Locale
 import kotlinx.coroutines.launch
 
-@Destination<MainNavigationGraph>
+@Destination<MainNavigationGraph>(start = true)
 @Composable
 fun WeightHistoryScreen(
     viewModel: WeightHistoryViewModel = koinViewModel(),

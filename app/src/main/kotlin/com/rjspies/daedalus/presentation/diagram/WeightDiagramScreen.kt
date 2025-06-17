@@ -58,7 +58,7 @@ import org.koin.androidx.compose.koinViewModel
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
-@Destination<MainNavigationGraph>(start = true)
+@Destination<MainNavigationGraph>(start = false)
 @Composable
 fun WeightDiagramScreen(
     viewModel: WeightDiagramViewModel = koinViewModel(),
