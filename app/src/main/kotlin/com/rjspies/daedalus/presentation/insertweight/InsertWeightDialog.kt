@@ -2,6 +2,7 @@ package com.rjspies.daedalus.presentation.insertweight
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -10,6 +11,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -80,6 +82,7 @@ internal fun InsertWeightDialog(onDismiss: () -> Unit) {
                 onClick = { viewModel.insertWeight(weightValue) },
                 content = { Text(stringResource(R.string.insert_weight_insert_button_text)) },
                 enabled = !uiState.isLoading,
+                shape = ShapeDefaults.Large,
             )
         },
         dismissButton = {
@@ -87,8 +90,11 @@ internal fun InsertWeightDialog(onDismiss: () -> Unit) {
                 onClick = onDismiss,
                 content = { Text(stringResource(R.string.common_cancel)) },
                 enabled = !uiState.isLoading,
+                shape = ShapeDefaults.Large,
             )
         },
+        shape = ShapeDefaults.Large,
+        modifier = Modifier.imePadding(),
     )
 }
 
@@ -103,7 +109,9 @@ private fun Input(
     OutlinedTextField(
         value = weightValue,
         onValueChange = onValueChange,
-        modifier = Modifier.focusRequester(focusRequester),
+        modifier = Modifier
+            .fillMaxWidth()
+            .focusRequester(focusRequester),
         label = { Text(stringResource(R.string.insert_weight_weight_text_field_label)) },
         supportingText = {
             if (uiState.error != null) {
@@ -122,6 +130,7 @@ private fun Input(
         isError = uiState.error != null,
         singleLine = true,
         enabled = !uiState.isLoading,
+        shape = ShapeDefaults.Large,
     )
 }
 
