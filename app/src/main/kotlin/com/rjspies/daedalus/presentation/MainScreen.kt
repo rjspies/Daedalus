@@ -24,27 +24,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.generated.NavGraphs
-import com.ramcosta.composedestinations.navigation.dependency
-import com.ramcosta.composedestinations.rememberNavHostEngine
-import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import com.rjspies.daedalus.IntentActions
 import com.rjspies.daedalus.R
+import com.rjspies.daedalus.presentation.diagram.WeightDiagramScreen
 import com.rjspies.daedalus.presentation.insertweight.InsertWeightDialog
 import dev.chrisbanes.haze.HazeProgressive
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import org.koin.androidx.compose.koinViewModel
+import kotlinx.serialization.Serializable
 
 @Composable
 fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
-    val navigationController = rememberNavController()
-    val navigator = navigationController.rememberDestinationsNavigator()
     val uiState by viewModel.uiState.collectAsState()
     val intent = LocalActivity.current?.intent
 
@@ -72,28 +68,30 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                 },
             )
         },
-        content = {
+        content = { padding ->
             val hazeState = remember { HazeState() }
+            val navigationController = rememberNavController()
 
-            DestinationsNavHost(
-                navGraph = NavGraphs.root,
-                modifier = Modifier.hazeSource(hazeState),
+            NavHost(
                 navController = navigationController,
-                dependenciesContainerBuilder = {
-                    dependency(it)
-                    dependency(navigator)
-                    dependency(hazeState)
+                startDestination = Start,
+                builder = {
+                    composable<Start> {
+                        WeightDiagramScreen(scaffoldPadding = padding)
+                    }
                 },
-                engine = rememberNavHostEngine(),
             )
 
             Box(Modifier.fillMaxSize()) {
-                StatusBarBlur(it, hazeState)
-                NavigationBarBlur(it, hazeState)
+                StatusBarBlur(padding, hazeState)
+                NavigationBarBlur(padding, hazeState)
             }
         },
     )
 }
+
+@Serializable
+object Start
 
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable

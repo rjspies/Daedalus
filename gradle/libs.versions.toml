@@ -10,6 +10,7 @@ comGoogleDevtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 orgJetbrainsKotlinPluginCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 orgJetbrainsKotlinPluginParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version = "1.13.0.0" }
+orgJetbrainsKotlinPluginSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [versions]
 
@@ -17,7 +18,6 @@ androidGradlePlugin = "8.10.1"
 compose = "1.8.3"
 room = "2.7.2"
 koin = "4.1.0"
-composeDestinations = "2.2.0"
 junit5 = "5.13.1"
 haze = "1.6.4"
 glance = "1.1.1"
@@ -55,8 +55,6 @@ ioInsertKoin-koinAndroidxCompose = { group = "io.insert-koin", name = "koin-andr
 ioInsertKoin-koinAndroid = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 ioInsertKoin-koinTestJunit4 = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
 androidxCore-coreSplashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
-ioGithubRaamcostaComposeDestinations-core = { group = "io.github.raamcosta.compose-destinations", name = "core", version.ref = "composeDestinations" }
-ioGithubRaamcostaComposeDestinations-ksp = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "composeDestinations" }
 ioKotest-kotestAssertionsCore = { group = "io.kotest", name = "kotest-assertions-core", version = "5.9.1" }
 orgJunitJupiter-junitJupiterApi = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
 orgJunitJupiter-junitJupiterEngine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit5" }
@@ -69,3 +67,4 @@ androidxGlance-glanceMaterial3 = { group = "androidx.glance", name = "glance-mat
 comGoogleAndroidMaterial-material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
 androidxComposeUi-uiToolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose" }
 androidxComposeUi-uiTooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
+androidxNavigation-navigationCompose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.0" }
