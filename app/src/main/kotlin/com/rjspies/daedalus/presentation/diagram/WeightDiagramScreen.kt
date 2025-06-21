@@ -17,7 +17,6 @@ import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -28,6 +27,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberBottom
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberStart
@@ -67,7 +67,7 @@ fun WeightDiagramScreen(
     navigate: (Route) -> Unit,
     viewModel: WeightDiagramViewModel = koinViewModel(),
 ) {
-    val weights by viewModel.weights.collectAsState()
+    val weights by viewModel.weights.collectAsStateWithLifecycle()
     val entries = rememberSaveable(weights) {
         weights.mapIndexed { index, weight ->
             WeightChartEntry(
