@@ -2,7 +2,6 @@ package com.rjspies.daedalus.presentation.history
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.TrendingDown
@@ -19,11 +17,12 @@ import androidx.compose.material.icons.automirrored.rounded.TrendingUp
 import androidx.compose.material.icons.rounded.DeleteForever
 import androidx.compose.material.icons.rounded.FormatListNumbered
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
@@ -45,6 +44,7 @@ import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.Weight
 import com.rjspies.daedalus.presentation.common.EmptyScreen
 import com.rjspies.daedalus.presentation.common.Spacings
+import com.rjspies.daedalus.presentation.common.VerticalSpacerS
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.tableItems
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
@@ -96,7 +96,6 @@ private fun Weights(
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = scaffoldPadding,
-        verticalArrangement = Arrangement.spacedBy(Spacings.S),
         content = {
             item {
                 Text(
@@ -104,6 +103,7 @@ private fun Weights(
                     modifier = Modifier.horizontalSpacingM(),
                     style = MaterialTheme.typography.headlineMedium,
                 )
+                VerticalSpacerS()
             }
 
             tableItems(
@@ -154,6 +154,7 @@ private fun WeightRow(
             if (showDeletePrompt.value) {
                 AlertDialog(
                     onDismissRequest = { showDeletePrompt.value = false },
+                    shape = ShapeDefaults.Large,
                     title = {
                         Text(stringResource(R.string.weight_history_dialog_delete_item_title))
                     },
@@ -164,12 +165,13 @@ private fun WeightRow(
                         )
                     },
                     confirmButton = {
-                        Button(
+                        TextButton(
                             onClick = {
                                 coroutineScope.launch {
                                     viewModel.deleteWeight(weight)
                                 }
                             },
+                            shape = ShapeDefaults.Large,
                             content = {
                                 Text(text = stringResource(R.string.weight_history_dialog_delete_item_button))
                             },
@@ -205,13 +207,13 @@ private fun WeightRow(
                     start.linkTo(avatar.end, margin = Spacings.M)
                     end.linkTo(deleteButton.start, margin = Spacings.M)
 
-                    if (note == null) {
+                    if (note.isNullOrBlank()) {
                         bottom.linkTo(parent.bottom, margin = Spacings.M)
                     }
                 },
             )
 
-            if (note != null) {
+            if (!note.isNullOrBlank()) {
                 Text(
                     text = stringResource(R.string.weight_history_item_note, note),
                     style = MaterialTheme.typography.bodySmall,
@@ -252,7 +254,7 @@ private fun Avatar(
 ) {
     Box(
         modifier = Modifier
-            .clip(CircleShape)
+            .clip(ShapeDefaults.Large)
             .background(Color.Gray.copy(alpha = .3f))
             .then(modifier),
         content = {

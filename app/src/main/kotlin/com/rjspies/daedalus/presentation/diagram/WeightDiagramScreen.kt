@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.Timeline
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -52,6 +53,7 @@ import com.patrykandpatrick.vico.core.common.shape.DashedShape
 import com.patrykandpatrick.vico.core.common.shape.MarkerCorneredShape
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.common.EmptyScreen
+import com.rjspies.daedalus.presentation.common.IconTextButtonContent
 import com.rjspies.daedalus.presentation.common.VerticalSpacerL
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
@@ -98,9 +100,13 @@ fun WeightDiagramScreen(
                     .horizontalSpacingM()
                     .align(Alignment.End),
                 shape = ShapeDefaults.Large,
-            ) {
-                Text(stringResource(R.string.weight_diagram_button_history_title))
-            }
+                content = {
+                    IconTextButtonContent(
+                        text = stringResource(R.string.weight_diagram_button_history_title),
+                        icon = Icons.AutoMirrored.Rounded.List,
+                    )
+                },
+            )
         }
     } else {
         EmptyScreen(

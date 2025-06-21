@@ -14,6 +14,7 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -60,6 +61,7 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { viewModel.setShowDialog(true) },
+                shape = ShapeDefaults.Large,
                 content = {
                     Icon(
                         painter = rememberVectorPainter(Icons.Rounded.Add),
