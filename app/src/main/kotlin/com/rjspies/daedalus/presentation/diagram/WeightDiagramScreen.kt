@@ -11,6 +11,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.List
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Timeline
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -19,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -55,14 +57,17 @@ import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.common.EmptyScreen
 import com.rjspies.daedalus.presentation.common.IconTextButtonContent
 import com.rjspies.daedalus.presentation.common.VerticalSpacerL
+import com.rjspies.daedalus.presentation.common.VerticalSpacerS
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
+import com.rjspies.daedalus.presentation.insertweight.InsertWeightDialog
 import com.rjspies.daedalus.presentation.navigation.Route
 import org.koin.androidx.compose.koinViewModel
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
+@Suppress("LongMethod")
 @Composable
 fun WeightDiagramScreen(
     scaffoldPadding: PaddingValues,
@@ -70,6 +75,7 @@ fun WeightDiagramScreen(
     viewModel: WeightDiagramViewModel = koinViewModel(),
 ) {
     val weights by viewModel.weights.collectAsStateWithLifecycle()
+    val showDialog = remember { mutableStateOf(false) }
     val entries = rememberSaveable(weights) {
         weights.mapIndexed { index, weight ->
             WeightChartEntry(
@@ -81,6 +87,12 @@ fun WeightDiagramScreen(
     }
 
     if (entries.isNotEmpty()) {
+        if (showDialog.value) {
+            InsertWeightDialog {
+                showDialog.value = false
+            }
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -104,6 +116,20 @@ fun WeightDiagramScreen(
                     IconTextButtonContent(
                         text = stringResource(R.string.weight_diagram_button_history_title),
                         icon = Icons.AutoMirrored.Rounded.List,
+                    )
+                },
+            )
+            VerticalSpacerS()
+            Button(
+                onClick = { showDialog.value = true },
+                modifier = Modifier
+                    .horizontalSpacingM()
+                    .align(Alignment.End),
+                shape = ShapeDefaults.Large,
+                content = {
+                    IconTextButtonContent(
+                        text = stringResource(R.string.weight_diagram_button_insert_weight_title),
+                        icon = Icons.Rounded.Add,
                     )
                 },
             )
