@@ -530,8 +530,10 @@ style:
     comments: [ "FIXME:", "STOPSHIP:", "TODO:" ]
     allowedPatterns: ''
   ForbiddenImport:
-    active: false
-    imports: [ ]
+    active: true
+    imports:
+      - value: "androidx.compose.runtime.collectAsState"
+        reason: "Only lifecycle aware collection should be used on Android: `androidx.lifecycle.compose.collectAsStateWithLifecycle`"
     forbiddenPatterns: ''
   ForbiddenMethodCall:
     active: false

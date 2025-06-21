@@ -3,7 +3,6 @@ package com.rjspies.daedalus.presentation.averageweight
 import android.content.Context
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
@@ -19,6 +18,7 @@ import androidx.glance.material3.ColorProviders
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.darkScheme
@@ -40,7 +40,7 @@ class AverageWeightWidget : GlanceAppWidget() {
                     color = GlanceTheme.colors.onBackground,
                     textAlign = TextAlign.Center,
                 )
-                val averageWeight by viewModel.averageWeight.collectAsState()
+                val averageWeight by viewModel.averageWeight.collectAsStateWithLifecycle()
 
                 Content(context, glanceWidgetTextStyle, averageWeight)
             }
