@@ -40,10 +40,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.ramcosta.composedestinations.annotation.Destination
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.Weight
-import com.rjspies.daedalus.presentation.MainNavigationGraph
 import com.rjspies.daedalus.presentation.common.EmptyScreen
 import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
@@ -58,7 +56,6 @@ import java.time.format.FormatStyle
 import java.util.Locale
 import kotlinx.coroutines.launch
 
-@Destination<MainNavigationGraph>(start = true)
 @Composable
 fun WeightHistoryScreen(
     viewModel: WeightHistoryViewModel = koinViewModel(),

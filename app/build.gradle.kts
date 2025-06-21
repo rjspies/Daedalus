@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.orgJetbrainsKotlinPluginCompose)
     alias(libs.plugins.orgJetbrainsKotlinPluginParcelize)
     alias(libs.plugins.deMannodermausAndroidJunit5)
+    alias(libs.plugins.orgJetbrainsKotlinPluginSerialization)
 }
 
 android {
@@ -91,7 +92,6 @@ dependencies {
     implementation(libs.androidxRoom.roomKtx)
     implementation(libs.androidxRoom.roomRuntime)
     implementation(libs.androidxConstraintlayout.constraintlayoutCompose)
-    implementation(libs.ioGithubRaamcostaComposeDestinations.core)
     implementation(libs.devChrisbanesHaze.hazeAndroid)
     implementation(libs.devChrisbanesHaze.hazeMaterials)
     implementation(libs.androidxComposeMaterial.materialIconsExtended)
@@ -100,9 +100,9 @@ dependencies {
     implementation(libs.ioInsertKoin.koinAndroid)
     implementation(libs.comGoogleAndroidMaterial.material)
     implementation(libs.androidxComposeUi.uiToolingPreview)
+    implementation(libs.androidxNavigation.navigationCompose)
     debugImplementation(libs.androidxComposeUi.uiTooling)
     ksp(libs.androidxRoom.roomCompiler)
-    ksp(libs.ioGithubRaamcostaComposeDestinations.ksp)
     testImplementation(libs.ioInsertKoin.koinTestJunit4)
     testImplementation(libs.ioKotest.kotestAssertionsCore)
     testImplementation(libs.orgJunitJupiter.junitJupiterApi)

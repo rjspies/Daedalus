@@ -47,9 +47,7 @@ import com.patrykandpatrick.vico.core.common.Insets
 import com.patrykandpatrick.vico.core.common.shape.CorneredShape
 import com.patrykandpatrick.vico.core.common.shape.DashedShape
 import com.patrykandpatrick.vico.core.common.shape.MarkerCorneredShape
-import com.ramcosta.composedestinations.annotation.Destination
 import com.rjspies.daedalus.R
-import com.rjspies.daedalus.presentation.MainNavigationGraph
 import com.rjspies.daedalus.presentation.common.EmptyScreen
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
@@ -58,7 +56,6 @@ import org.koin.androidx.compose.koinViewModel
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
-@Destination<MainNavigationGraph>(start = false)
 @Composable
 fun WeightDiagramScreen(
     viewModel: WeightDiagramViewModel = koinViewModel(),
