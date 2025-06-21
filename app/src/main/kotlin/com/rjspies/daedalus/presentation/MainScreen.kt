@@ -25,13 +25,12 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rjspies.daedalus.IntentActions
 import com.rjspies.daedalus.R
-import com.rjspies.daedalus.presentation.diagram.WeightDiagramScreen
-import com.rjspies.daedalus.presentation.history.WeightHistoryScreen
 import com.rjspies.daedalus.presentation.insertweight.InsertWeightDialog
+import com.rjspies.daedalus.presentation.navigation.Route
+import com.rjspies.daedalus.presentation.navigation.navigationGraph
 import dev.chrisbanes.haze.HazeProgressive
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeEffect
@@ -39,7 +38,6 @@ import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import org.koin.androidx.compose.koinViewModel
-import kotlinx.serialization.Serializable
 
 @Composable
 fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
@@ -76,15 +74,8 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
 
             NavHost(
                 navController = navigationController,
-                startDestination = DiagramScreen,
-                builder = {
-                    composable<DiagramScreen> {
-                        WeightDiagramScreen(scaffoldPadding = padding, navigateToHistory = { navigationController.navigate(HistoryScreen) })
-                    }
-                    composable<HistoryScreen> {
-                        WeightHistoryScreen(scaffoldPadding = padding)
-                    }
-                },
+                startDestination = Route.Diagram,
+                builder = { navigationGraph(navigationController, padding) },
                 modifier = Modifier.hazeSource(hazeState),
             )
 
@@ -95,12 +86,6 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
         },
     )
 }
-
-@Serializable
-data object DiagramScreen
-
-@Serializable
-data object HistoryScreen
 
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable

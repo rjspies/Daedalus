@@ -4,4 +4,5 @@
     <string name="weight_diagram_empty_screen_title">Bereit zum Eintragen</string>
     <string name="weight_diagram_empty_screen_subtitle">Sobald du deine erste Messung hinzugefügt hast, wirst du hier ein Liniendiagramm vorfinden.</string>
     <string name="weight_diagram_empty_screen_content_description">Liniendiagramm-Icon</string>
+    <string name="weight_diagram_button_history_title">Verlauf</string>
 </resources>

@@ -56,6 +56,7 @@ import com.rjspies.daedalus.presentation.common.VerticalSpacerL
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
+import com.rjspies.daedalus.presentation.navigation.Route
 import org.koin.androidx.compose.koinViewModel
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -63,7 +64,7 @@ import java.time.format.FormatStyle
 @Composable
 fun WeightDiagramScreen(
     scaffoldPadding: PaddingValues,
-    navigateToHistory: () -> Unit,
+    navigate: (Route) -> Unit,
     viewModel: WeightDiagramViewModel = koinViewModel(),
 ) {
     val weights by viewModel.weights.collectAsState()
@@ -92,13 +93,13 @@ fun WeightDiagramScreen(
             Box(Modifier.horizontalSpacingM()) { Chart(entries) }
             VerticalSpacerL()
             Button(
-                onClick = navigateToHistory,
+                onClick = { navigate(Route.History) },
                 modifier = Modifier
                     .horizontalSpacingM()
                     .align(Alignment.End),
                 shape = ShapeDefaults.Large,
             ) {
-                Text("Verlauf")
+                Text(stringResource(R.string.weight_diagram_button_history_title))
             }
         }
     } else {
