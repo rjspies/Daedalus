@@ -30,10 +30,12 @@ import androidx.navigation.compose.rememberNavController
 import com.rjspies.daedalus.IntentActions
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.diagram.WeightDiagramScreen
+import com.rjspies.daedalus.presentation.history.WeightHistoryScreen
 import com.rjspies.daedalus.presentation.insertweight.InsertWeightDialog
 import dev.chrisbanes.haze.HazeProgressive
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import org.koin.androidx.compose.koinViewModel
@@ -74,12 +76,16 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
 
             NavHost(
                 navController = navigationController,
-                startDestination = Start,
+                startDestination = DiagramScreen,
                 builder = {
-                    composable<Start> {
-                        WeightDiagramScreen(scaffoldPadding = padding)
+                    composable<DiagramScreen> {
+                        WeightDiagramScreen(scaffoldPadding = padding, navigateToHistory = { navigationController.navigate(HistoryScreen) })
+                    }
+                    composable<HistoryScreen> {
+                        WeightHistoryScreen(scaffoldPadding = padding)
                     }
                 },
+                modifier = Modifier.hazeSource(hazeState),
             )
 
             Box(Modifier.fillMaxSize()) {
@@ -91,7 +97,10 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
 }
 
 @Serializable
-object Start
+data object DiagramScreen
+
+@Serializable
+data object HistoryScreen
 
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable

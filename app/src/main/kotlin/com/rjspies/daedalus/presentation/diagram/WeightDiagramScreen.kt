@@ -11,7 +11,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Timeline
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -49,6 +52,7 @@ import com.patrykandpatrick.vico.core.common.shape.DashedShape
 import com.patrykandpatrick.vico.core.common.shape.MarkerCorneredShape
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.common.EmptyScreen
+import com.rjspies.daedalus.presentation.common.VerticalSpacerL
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
@@ -58,8 +62,9 @@ import java.time.format.FormatStyle
 
 @Composable
 fun WeightDiagramScreen(
-    viewModel: WeightDiagramViewModel = koinViewModel(),
     scaffoldPadding: PaddingValues,
+    navigateToHistory: () -> Unit,
+    viewModel: WeightDiagramViewModel = koinViewModel(),
 ) {
     val weights by viewModel.weights.collectAsState()
     val entries = rememberSaveable(weights) {
@@ -85,6 +90,16 @@ fun WeightDiagramScreen(
                 style = MaterialTheme.typography.headlineMedium,
             )
             Box(Modifier.horizontalSpacingM()) { Chart(entries) }
+            VerticalSpacerL()
+            Button(
+                onClick = navigateToHistory,
+                modifier = Modifier
+                    .horizontalSpacingM()
+                    .align(Alignment.End),
+                shape = ShapeDefaults.Large,
+            ) {
+                Text("Verlauf")
+            }
         }
     } else {
         EmptyScreen(
