@@ -9,7 +9,7 @@ import com.rjspies.daedalus.presentation.history.WeightHistoryScreen
 
 fun NavGraphBuilder.navigationGraph(
     navigationController: NavController,
-    padding: PaddingValues
+    padding: PaddingValues,
 ) {
     composable<Route.Diagram> {
         WeightDiagramScreen(
