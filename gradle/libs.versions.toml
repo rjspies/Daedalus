@@ -24,7 +24,7 @@ glance = "1.1.1"
 
 # Raise these two together
 kotlin = "2.2.0"
-ksp = "2.1.21-2.0.2"
+ksp = "2.2.0-2.0.2"
 
 # App config
 compileSdk = "35"
