@@ -19,7 +19,7 @@ compose = "1.8.3"
 room = "2.7.2"
 koin = "4.1.0"
 junit5 = "5.13.2"
-haze = "1.6.4"
+haze = "1.6.5"
 glance = "1.1.1"
 
 # Raise these two together
