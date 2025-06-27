@@ -13,8 +13,10 @@ import com.rjspies.daedalus.presentation.MainViewModel
 import com.rjspies.daedalus.presentation.averageweight.AverageWeightWidgetViewModel
 import com.rjspies.daedalus.presentation.diagram.WeightDiagramViewModel
 import com.rjspies.daedalus.presentation.history.WeightHistoryViewModel
-import com.rjspies.daedalus.presentation.insertweight.InsertWeightViewModel
-import org.koin.core.module.dsl.viewModel
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val appModule = module {
@@ -27,15 +29,14 @@ val appModule = module {
             ).build()
     }
     single { get<WeightDatabase>().weightDao() }
-    single<WeightService> { WeightServiceImpl(get()) }
-    viewModel { MainViewModel(get()) }
-    factory { GetWeightsAscendingUseCase(get()) }
-    viewModel { WeightDiagramViewModel(get()) }
-    factory { GetWeightsDescendingUseCase(get()) }
-    factory { DeleteWeightUseCase(get()) }
-    viewModel { WeightHistoryViewModel(get(), get()) }
-    factory { InsertWeightUseCase(get()) }
-    viewModel { InsertWeightViewModel(get(), get()) }
-    factory { GetAverageWeightUseCase(get()) }
-    viewModel { AverageWeightWidgetViewModel(get()) }
+    singleOf(::WeightServiceImpl) { bind<WeightService>() }
+    viewModelOf(::MainViewModel)
+    factoryOf(::GetWeightsAscendingUseCase)
+    viewModelOf(::WeightDiagramViewModel)
+    factoryOf(::GetWeightsDescendingUseCase)
+    factoryOf(::DeleteWeightUseCase)
+    viewModelOf(::WeightHistoryViewModel)
+    factoryOf(::InsertWeightUseCase)
+    factoryOf(::GetAverageWeightUseCase)
+    viewModelOf(::AverageWeightWidgetViewModel)
 }
