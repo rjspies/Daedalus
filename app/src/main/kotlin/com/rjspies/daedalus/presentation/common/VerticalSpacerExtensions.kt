@@ -6,25 +6,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-internal fun VerticalSpacerXXS(): Unit = Spacer(modifier = Modifier.height(Spacings.XXS))
+fun VerticalSpacerXXS(): Unit = Spacer(modifier = Modifier.height(Spacings.XXS))
 
 @Composable
-internal fun VerticalSpacerXS(): Unit = Spacer(modifier = Modifier.height(Spacings.XS))
+fun VerticalSpacerXS(): Unit = Spacer(modifier = Modifier.height(Spacings.XS))
 
 @Composable
-internal fun VerticalSpacerS(): Unit = Spacer(modifier = Modifier.height(Spacings.S))
+fun VerticalSpacerS(): Unit = Spacer(modifier = Modifier.height(Spacings.S))
 
 @Composable
-internal fun VerticalSpacerM(): Unit = Spacer(modifier = Modifier.height(Spacings.M))
+fun VerticalSpacerM(): Unit = Spacer(modifier = Modifier.height(Spacings.M))
 
 @Composable
-internal fun VerticalSpacerL(): Unit = Spacer(modifier = Modifier.height(Spacings.L))
+fun VerticalSpacerL(): Unit = Spacer(modifier = Modifier.height(Spacings.L))
 
 @Composable
-internal fun VerticalSpacerXL(): Unit = Spacer(modifier = Modifier.height(Spacings.XL))
+fun VerticalSpacerXL(): Unit = Spacer(modifier = Modifier.height(Spacings.XL))
 
 @Composable
-internal fun VerticalSpacerXXL(): Unit = Spacer(modifier = Modifier.height(Spacings.XXL))
+fun VerticalSpacerXXL(): Unit = Spacer(modifier = Modifier.height(Spacings.XXL))
 
 @Composable
-internal fun VerticalSpacerXXXL(): Unit = Spacer(modifier = Modifier.height(Spacings.XXXL))
+fun VerticalSpacerXXXL(): Unit = Spacer(modifier = Modifier.height(Spacings.XXXL))

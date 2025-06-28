@@ -5,7 +5,6 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.rjspies.daedalus.data.WeightDao
 
 @Database(
     entities = [WeightImpl::class],
@@ -20,14 +19,13 @@ abstract class WeightDatabase : RoomDatabase() {
         private var INSTANCE: WeightDatabase? = null
 
         fun getDatabase(context: Context): WeightDatabase = INSTANCE ?: synchronized(this) {
-            val instance = Room
-                .databaseBuilder(
-                    context = context,
-                    klass = WeightDatabase::class.java,
-                    name = "weight_database",
-                ).apply {
-                    fallbackToDestructiveMigration(false)
-                }.build()
+            val instance = Room.databaseBuilder(
+                context = context,
+                klass = WeightDatabase::class.java,
+                name = "weight_database",
+            ).apply {
+                fallbackToDestructiveMigration(false)
+            }.build()
             INSTANCE = instance
             instance
         }

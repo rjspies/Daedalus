@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.ioGitlabArturboschDetekt)
     alias(libs.plugins.orgJmailenKotlinter)
     alias(libs.plugins.orgJetbrainsKotlinPluginCompose)
-    alias(libs.plugins.orgJetbrainsKotlinPluginParcelize)
     alias(libs.plugins.deMannodermausAndroidJunit5)
     alias(libs.plugins.orgJetbrainsKotlinPluginSerialization)
 }

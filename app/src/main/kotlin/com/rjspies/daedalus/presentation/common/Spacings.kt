@@ -3,7 +3,7 @@ package com.rjspies.daedalus.presentation.common
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-internal object Spacings {
+object Spacings {
     val XXS: Dp = 4.dp
     val XS: Dp = 8.dp
     val S: Dp = 12.dp
