@@ -36,23 +36,7 @@
                 <action android:name="com.rjspies.daedalus.intent.action.INSERT_WEIGHT" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts" />
         </activity>
-
-        <receiver
-            android:name=".AverageWeightWidgetReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/average_weight_widget_information" />
-        </receiver>
     </application>
 
 </manifest>

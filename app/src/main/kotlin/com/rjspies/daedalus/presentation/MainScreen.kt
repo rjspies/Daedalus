@@ -57,7 +57,7 @@ private fun BoxScope.NavigationBarBlur(scaffoldPadding: PaddingValues, hazeState
 
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
-private fun BoxScope.Blur(height: Dp, hazeState: HazeState, modifier: Modifier = Modifier) {
+private fun Blur(height: Dp, hazeState: HazeState, modifier: Modifier = Modifier) {
     val heightPx = with(LocalDensity.current) { height.toPx() }
 
     Box(

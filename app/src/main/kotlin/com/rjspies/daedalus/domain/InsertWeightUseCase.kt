@@ -2,9 +2,7 @@ package com.rjspies.daedalus.domain
 
 import java.time.ZonedDateTime
 
-class InsertWeightUseCase(
-    private val service: WeightService,
-) {
+class InsertWeightUseCase(private val service: WeightService) {
     suspend operator fun invoke(
         value: Float,
         note: String?,

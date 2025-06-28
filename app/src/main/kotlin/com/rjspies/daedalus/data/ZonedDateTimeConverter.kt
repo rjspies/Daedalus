@@ -3,10 +3,10 @@ package com.rjspies.daedalus.data
 import androidx.room.TypeConverter
 import java.time.ZonedDateTime
 
-public object ZonedDateTimeConverter {
+object ZonedDateTimeConverter {
     @TypeConverter
-    public fun stringToZonedDateTime(dateTime: String): ZonedDateTime = ZonedDateTime.parse(dateTime)
+    fun stringToZonedDateTime(dateTime: String): ZonedDateTime = ZonedDateTime.parse(dateTime)
 
     @TypeConverter
-    public fun zonedDateTimeToString(zonedDateTime: ZonedDateTime): String = zonedDateTime.toString()
+    fun zonedDateTimeToString(zonedDateTime: ZonedDateTime): String = zonedDateTime.toString()
 }
