@@ -47,6 +47,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
 
+@Suppress("LongMethod")
 @Composable
 fun WeightHistoryItem(
     weight: Weight,
