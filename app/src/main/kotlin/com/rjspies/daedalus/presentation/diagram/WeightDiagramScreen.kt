@@ -112,7 +112,7 @@ fun WeightDiagramScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .imePadding(),
-                icon = { Icon(Icons.Rounded.Addchart, contentDescription = null) },
+                icon = { Icon(rememberVectorPainter(Icons.Rounded.Addchart), contentDescription = null) },
                 title = { Text(stringResource(R.string.insert_weight_dialog_title)) },
                 text = {
                     LaunchedEffect(Unit) {

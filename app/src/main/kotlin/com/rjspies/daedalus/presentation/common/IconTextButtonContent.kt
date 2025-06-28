@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 
 @Composable
 fun IconTextButtonContent(text: String, icon: ImageVector, modifier: Modifier = Modifier) {
@@ -16,7 +17,7 @@ fun IconTextButtonContent(text: String, icon: ImageVector, modifier: Modifier = 
         horizontalArrangement = Arrangement.Absolute.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(icon, null)
+        Icon(rememberVectorPainter(icon), null)
         HorizontalSpacerXXS()
         Text(text)
     }

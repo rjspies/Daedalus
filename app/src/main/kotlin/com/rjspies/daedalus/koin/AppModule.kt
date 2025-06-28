@@ -4,14 +4,12 @@ import androidx.room.Room
 import com.rjspies.daedalus.data.WeightDatabase
 import com.rjspies.daedalus.data.WeightServiceImpl
 import com.rjspies.daedalus.domain.DeleteWeightUseCase
-import com.rjspies.daedalus.domain.GetAverageWeightUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.GetWeightsDescendingUseCase
 import com.rjspies.daedalus.domain.InsertWeightUseCase
 import com.rjspies.daedalus.domain.WeightService
-import com.rjspies.daedalus.presentation.MainViewModel
-import com.rjspies.daedalus.presentation.averageweight.AverageWeightWidgetViewModel
 import com.rjspies.daedalus.presentation.diagram.WeightDiagramViewModel
+import com.rjspies.daedalus.presentation.history.WeightHistoryItemViewModel
 import com.rjspies.daedalus.presentation.history.WeightHistoryViewModel
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
@@ -30,13 +28,11 @@ val appModule = module {
     }
     single { get<WeightDatabase>().weightDao() }
     singleOf(::WeightServiceImpl) { bind<WeightService>() }
-    viewModelOf(::MainViewModel)
     factoryOf(::GetWeightsAscendingUseCase)
     viewModelOf(::WeightDiagramViewModel)
     factoryOf(::GetWeightsDescendingUseCase)
     factoryOf(::DeleteWeightUseCase)
     viewModelOf(::WeightHistoryViewModel)
     factoryOf(::InsertWeightUseCase)
-    factoryOf(::GetAverageWeightUseCase)
-    viewModelOf(::AverageWeightWidgetViewModel)
+    viewModelOf(::WeightHistoryItemViewModel)
 }
