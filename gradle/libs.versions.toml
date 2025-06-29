@@ -8,7 +8,7 @@ orgJetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref =
 orgJmailenKotlinter = { id = "org.jmailen.kotlinter", version = "5.1.1" }
 comGoogleDevtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 orgJetbrainsKotlinPluginCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version = "1.13.0.0" }
+deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version = "1.13.1.0" }
 orgJetbrainsKotlinPluginSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [versions]
