@@ -18,7 +18,7 @@ fun IconTextButtonContent(text: String, icon: ImageVector, modifier: Modifier = 
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(rememberVectorPainter(icon), null)
-        HorizontalSpacerXXS()
+        HorizontalSpacerXS()
         Text(text)
     }
 }

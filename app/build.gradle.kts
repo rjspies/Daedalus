@@ -94,8 +94,6 @@ dependencies {
     implementation(libs.devChrisbanesHaze.hazeAndroid)
     implementation(libs.devChrisbanesHaze.hazeMaterials)
     implementation(libs.androidxComposeMaterial.materialIconsExtended)
-    implementation(libs.androidxGlance.glanceAppWidget)
-    implementation(libs.androidxGlance.glanceMaterial3)
     implementation(libs.ioInsertKoin.koinAndroid)
     implementation(libs.comGoogleAndroidMaterial.material)
     implementation(libs.androidxComposeUi.uiToolingPreview)
