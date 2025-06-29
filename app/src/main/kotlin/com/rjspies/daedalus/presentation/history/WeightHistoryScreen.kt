@@ -26,7 +26,7 @@ import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.VerticalSpacerS
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
-import com.rjspies.daedalus.presentation.common.verticalSpacingM
+import com.rjspies.daedalus.presentation.common.verticalSpacingXXL
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -51,7 +51,7 @@ fun WeightHistoryScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(scaffoldPadding)
-                .verticalSpacingM()
+                .verticalSpacingXXL()
                 .horizontalSpacingM(),
         )
     }
@@ -68,7 +68,7 @@ private fun Weights(
         contentPadding = PaddingValues(
             top = scaffoldPadding.calculateTopPadding(),
             end = Spacings.M,
-            bottom = scaffoldPadding.calculateBottomPadding(),
+            bottom = scaffoldPadding.calculateBottomPadding() + Spacings.XXL,
             start = Spacings.M,
         ),
         content = {

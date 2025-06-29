@@ -8,8 +8,10 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -26,6 +28,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
@@ -34,7 +37,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -55,6 +57,7 @@ import com.patrykandpatrick.vico.compose.cartesian.rememberVicoScrollState
 import com.patrykandpatrick.vico.compose.common.component.rememberLineComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberShapeComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberTextComponent
+import com.patrykandpatrick.vico.compose.common.shape.toComposeShape
 import com.patrykandpatrick.vico.core.cartesian.FadingEdges
 import com.patrykandpatrick.vico.core.cartesian.Scroll
 import com.patrykandpatrick.vico.core.cartesian.axis.HorizontalAxis
@@ -71,9 +74,10 @@ import com.patrykandpatrick.vico.core.common.shape.MarkerCorneredShape
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.common.EmptyScreen
 import com.rjspies.daedalus.presentation.common.IconTextButtonContent
+import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.VerticalSpacerL
-import com.rjspies.daedalus.presentation.common.VerticalSpacerS
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
+import com.rjspies.daedalus.presentation.common.VerticalSpacerXXS
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
@@ -91,7 +95,13 @@ fun WeightDiagramScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    if (uiState.weights.isNotEmpty()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(scaffoldPadding)
+            .padding(bottom = Spacings.XXL),
+    ) {
         if (uiState.insertWeightDialogShow) {
             val focusRequester = remember { FocusRequester() }
             AlertDialog(
@@ -168,59 +178,69 @@ fun WeightDiagramScreen(
             )
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(scaffoldPadding),
-        ) {
-            Text(
-                text = stringResource(R.string.weight_diagram_title),
-                modifier = Modifier.horizontalSpacingM(),
-                style = MaterialTheme.typography.headlineMedium,
-            )
-            Box(Modifier.horizontalSpacingM()) { Chart(uiState.weights) }
-            VerticalSpacerL()
-            Button(
-                onClick = { navigate(Route.History) },
+        if (uiState.weights.isNotEmpty()) {
+            Column {
+                Text(
+                    text = stringResource(R.string.weight_diagram_title),
+                    modifier = Modifier.horizontalSpacingM(),
+                    style = MaterialTheme.typography.headlineMedium,
+                )
+                Box(Modifier.horizontalSpacingM()) { Chart(uiState.weights) }
+            }
+            Spacer(Modifier.weight(1f))
+        } else {
+            Spacer(Modifier.weight(1f))
+            EmptyScreen(
+                painter = rememberVectorPainter(Icons.Rounded.Timeline),
+                contentDescription = stringResource(R.string.weight_diagram_empty_screen_content_description),
+                title = stringResource(R.string.weight_diagram_empty_screen_title),
+                subtitle = stringResource(R.string.weight_diagram_empty_screen_subtitle),
                 modifier = Modifier
-                    .horizontalSpacingM()
-                    .align(Alignment.End),
-                shape = ShapeDefaults.Large,
-                content = {
-                    IconTextButtonContent(
-                        text = stringResource(R.string.weight_diagram_button_history_title),
-                        icon = Icons.AutoMirrored.Rounded.List,
-                    )
-                },
+                    .verticalSpacingM()
+                    .horizontalSpacingM(),
             )
-            VerticalSpacerS()
-            Button(
-                onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
-                modifier = Modifier
-                    .horizontalSpacingM()
-                    .align(Alignment.End),
-                shape = ShapeDefaults.Large,
-                content = {
-                    IconTextButtonContent(
-                        text = stringResource(R.string.weight_diagram_button_insert_weight_title),
-                        icon = Icons.Rounded.Add,
-                    )
-                },
-            )
+            Spacer(Modifier.weight(1f))
         }
-    } else {
-        EmptyScreen(
-            painter = rememberVectorPainter(Icons.Rounded.Timeline),
-            contentDescription = stringResource(R.string.weight_diagram_empty_screen_content_description),
-            title = stringResource(R.string.weight_diagram_empty_screen_title),
-            subtitle = stringResource(R.string.weight_diagram_empty_screen_subtitle),
+
+        VerticalSpacerL()
+        Button(
+            onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
             modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(scaffoldPadding)
-                .verticalSpacingM()
-                .horizontalSpacingM(),
+                .fillMaxWidth()
+                .horizontalSpacingM()
+                .height(56.dp),
+            shape = CorneredShape.rounded(
+                topLeftDp = 16f,
+                topRightDp = 16f,
+                bottomLeftDp = 4f,
+                bottomRightDp = 4f,
+            ).toComposeShape(),
+            content = {
+                IconTextButtonContent(
+                    text = stringResource(R.string.weight_diagram_button_insert_weight_title),
+                    icon = Icons.Rounded.Add,
+                )
+            },
+        )
+        VerticalSpacerXXS()
+        OutlinedButton(
+            onClick = { navigate(Route.History) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalSpacingM()
+                .height(56.dp),
+            shape = CorneredShape.rounded(
+                topLeftDp = 4f,
+                topRightDp = 4f,
+                bottomLeftDp = 16f,
+                bottomRightDp = 16f,
+            ).toComposeShape(),
+            content = {
+                IconTextButtonContent(
+                    text = stringResource(R.string.weight_diagram_button_history_title),
+                    icon = Icons.AutoMirrored.Rounded.List,
+                )
+            },
         )
     }
 }
