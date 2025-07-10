@@ -8,6 +8,7 @@ import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.InsertWeightUseCase
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import java.time.ZonedDateTime
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest

@@ -24,15 +24,10 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Addchart
 import androidx.compose.material.icons.rounded.Timeline
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -48,6 +43,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.adevinta.spark.components.buttons.ButtonFilled
+import com.adevinta.spark.components.buttons.ButtonGhost
+import com.adevinta.spark.components.buttons.ButtonOutlined
+import com.adevinta.spark.components.progress.LinearProgressIndicatorIndeterminate
+import com.adevinta.spark.components.textfields.TextField
+import com.adevinta.spark.components.textfields.TextFieldState
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberBottom
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberStart
@@ -57,7 +58,6 @@ import com.patrykandpatrick.vico.compose.cartesian.rememberVicoScrollState
 import com.patrykandpatrick.vico.compose.common.component.rememberLineComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberShapeComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberTextComponent
-import com.patrykandpatrick.vico.compose.common.shape.toComposeShape
 import com.patrykandpatrick.vico.core.cartesian.FadingEdges
 import com.patrykandpatrick.vico.core.cartesian.Scroll
 import com.patrykandpatrick.vico.core.cartesian.axis.HorizontalAxis
@@ -111,9 +111,8 @@ fun WeightDiagramScreen(
                     }
                 },
                 confirmButton = {
-                    TextButton(
+                    ButtonGhost(
                         onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.InsertCurrentWeight) },
-                        shape = ShapeDefaults.Large,
                         content = {
                             Text(stringResource(R.string.insert_weight_insert_button_text))
                         },
@@ -130,19 +129,17 @@ fun WeightDiagramScreen(
                     }
 
                     Column {
-                        OutlinedTextField(
+                        TextField(
                             value = uiState.insertWeightDialogCurrentWeight.orEmpty(),
                             onValueChange = { viewModel.onEvent(WeightDiagramViewModel.Event.SetCurrentWeight(it)) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .focusRequester(focusRequester),
-                            label = { Text(stringResource(R.string.insert_weight_weight_text_field_label)) },
-                            supportingText = {
-                                if (uiState.insertWeightDialogError != null) {
-                                    Text(stringResource(R.string.insert_weight_weight_text_field_supporting_message_error))
-                                } else {
-                                    Text(stringResource(R.string.insert_weight_weight_text_field_supporting_message))
-                                }
+                            label = stringResource(R.string.insert_weight_weight_text_field_label),
+                            helper = if (uiState.insertWeightDialogError != null) {
+                                stringResource(R.string.insert_weight_weight_text_field_supporting_message_error)
+                            } else {
+                                stringResource(R.string.insert_weight_weight_text_field_supporting_message)
                             },
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Decimal,
@@ -151,9 +148,7 @@ fun WeightDiagramScreen(
                             keyboardActions = KeyboardActions(
                                 onDone = { viewModel.onEvent(WeightDiagramViewModel.Event.InsertCurrentWeight) },
                             ),
-                            isError = uiState.insertWeightDialogError != null,
-                            singleLine = true,
-                            shape = ShapeDefaults.Large,
+                            state = TextFieldState.Error.takeIf { uiState.insertWeightDialogError != null },
                         )
 
                         Column(
@@ -168,7 +163,7 @@ fun WeightDiagramScreen(
                             content = {
                                 if (uiState.insertWeightDialogIsLoading) {
                                     VerticalSpacerXS()
-                                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                                    LinearProgressIndicatorIndeterminate(modifier = Modifier.fillMaxWidth())
                                 }
                             },
                         )
@@ -203,18 +198,12 @@ fun WeightDiagramScreen(
         }
 
         VerticalSpacerL()
-        Button(
+        ButtonFilled(
             onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
             modifier = Modifier
                 .fillMaxWidth()
                 .horizontalSpacingM()
                 .height(56.dp),
-            shape = CorneredShape.rounded(
-                topLeftDp = 16f,
-                topRightDp = 16f,
-                bottomLeftDp = 4f,
-                bottomRightDp = 4f,
-            ).toComposeShape(),
             content = {
                 IconTextButtonContent(
                     text = stringResource(R.string.weight_diagram_button_insert_weight_title),
@@ -223,18 +212,12 @@ fun WeightDiagramScreen(
             },
         )
         VerticalSpacerXXS()
-        OutlinedButton(
+        ButtonOutlined(
             onClick = { navigate(Route.History) },
             modifier = Modifier
                 .fillMaxWidth()
                 .horizontalSpacingM()
                 .height(56.dp),
-            shape = CorneredShape.rounded(
-                topLeftDp = 4f,
-                topRightDp = 4f,
-                bottomLeftDp = 16f,
-                bottomRightDp = 16f,
-            ).toComposeShape(),
             content = {
                 IconTextButtonContent(
                     text = stringResource(R.string.weight_diagram_button_history_title),
