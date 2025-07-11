@@ -1,9 +1,9 @@
 package com.rjspies.daedalus.presentation.common
 
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.adevinta.spark.components.spacer.Spacer
 
 @Composable
 fun HorizontalSpacerXXS(): Unit = Spacer(modifier = Modifier.width(Spacings.XXS))

@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalSparkApi::class)
-
 package com.rjspies.daedalus.presentation.history
 
 import androidx.compose.animation.animateContentSize
@@ -49,6 +47,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
 
+@OptIn(ExperimentalSparkApi::class)
 @Suppress("LongMethod")
 @Composable
 fun WeightHistoryItem(
@@ -98,7 +97,9 @@ fun WeightHistoryItem(
         )
     }
     Card(
-        colors = CardDefaults.cardColors(),
+        colors = CardDefaults.cardColors(
+            containerColor = SparkTheme.colors.supportContainer,
+        ),
         content = {
             ConstraintLayout(
                 modifier = Modifier
@@ -132,6 +133,7 @@ fun WeightHistoryItem(
                             start.linkTo(avatar.end, margin = Spacings.M)
                             end.linkTo(deleteButton.start, margin = Spacings.M)
                         },
+                        color = SparkTheme.colors.onSupportContainer,
                     )
                     Text(
                         text = weight.dateTime.asUserfacingString(locale),
@@ -146,6 +148,7 @@ fun WeightHistoryItem(
                                 bottom.linkTo(parent.bottom, margin = Spacings.M)
                             }
                         },
+                        color = SparkTheme.colors.onSupportContainer,
                     )
 
                     if (!note.isNullOrBlank()) {
@@ -159,6 +162,7 @@ fun WeightHistoryItem(
                                 bottom.linkTo(parent.bottom, margin = Spacings.M)
                                 end.linkTo(deleteButton.start, margin = Spacings.M)
                             },
+                            color = SparkTheme.colors.onSupportContainer,
                         )
                     }
 
@@ -173,6 +177,7 @@ fun WeightHistoryItem(
                             Icon(
                                 painter = rememberVectorPainter(Icons.Rounded.DeleteForever),
                                 contentDescription = stringResource(R.string.weight_history_delete_icon_content_description),
+                                tint = SparkTheme.colors.onSupportContainer,
                             )
                         },
                     )
@@ -190,13 +195,14 @@ private fun Avatar(
     Box(
         modifier = Modifier
             .clip(SparkTheme.shapes.medium)
-            .background(SparkTheme.colors.surface)
+            .background(SparkTheme.colors.supportVariant)
             .then(modifier),
         content = {
             Icon(
                 painter = rememberVectorPainter(state.imageVector),
                 contentDescription = state.contentDescription(),
                 modifier = Modifier.padding(Spacings.S),
+                tint = SparkTheme.colors.onSupportVariant,
             )
         },
     )

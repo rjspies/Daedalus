@@ -1,9 +1,9 @@
 package com.rjspies.daedalus.presentation.common
 
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.adevinta.spark.components.spacer.Spacer
 
 @Composable
 fun VerticalSpacerXXS(): Unit = Spacer(modifier = Modifier.height(Spacings.XXS))
