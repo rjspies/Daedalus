@@ -18,7 +18,7 @@ compose = "1.8.3"
 room = "2.7.2"
 koin = "4.1.0"
 junit5 = "5.13.3"
-haze = "1.6.8"
+haze = "1.6.9"
 spark = "1.2.2"
 
 # Raise these two together
