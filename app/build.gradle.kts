@@ -99,6 +99,7 @@ dependencies {
     implementation(libs.androidxComposeUi.uiToolingPreview)
     implementation(libs.androidxNavigation.navigationCompose)
     implementation(libs.comAdevintaSpark.spark)
+    implementation(libs.androidxComposeMaterial3Adaptive.adaptive)
     debugImplementation(libs.androidxComposeUi.uiTooling)
     ksp(libs.androidxRoom.roomCompiler)
     testImplementation(libs.ioInsertKoin.koinTestJunit4)
