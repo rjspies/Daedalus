@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import org.gradle.internal.jvm.inspection.JvmVendor
 import org.gradle.jvm.toolchain.internal.DefaultJvmVendorSpec
 
@@ -6,7 +7,6 @@ plugins {
     alias(libs.plugins.orgJetbrainsKotlinAndroid)
     alias(libs.plugins.comGoogleDevtoolsKsp)
     alias(libs.plugins.ioGitlabArturboschDetekt)
-    alias(libs.plugins.orgJmailenKotlinter)
     alias(libs.plugins.orgJetbrainsKotlinPluginCompose)
     alias(libs.plugins.deMannodermausAndroidJunit5)
     alias(libs.plugins.orgJetbrainsKotlinPluginSerialization)
@@ -78,6 +78,16 @@ ksp {
     arg("room.schemaLocation", "$projectDir/schemas")
 }
 
+detekt {
+    version = libs.versions.detekt.get()
+    config.setFrom(file("$rootDir/config/detekt/detekt.yml"))
+    baseline = file("$rootDir/config/detekt/baseline.xml")
+    buildUponDefaultConfig = true
+    autoCorrect = true
+    basePath = projectDir.absolutePath
+    parallel = true
+}
+
 dependencies {
     implementation(libs.comJakewhartonTimer.timber)
     implementation(libs.androidxActivity.activityCompose)
@@ -100,6 +110,7 @@ dependencies {
     implementation(libs.androidxNavigation.navigationCompose)
     implementation(libs.comAdevintaSpark.spark)
     implementation(libs.androidxComposeMaterial3Adaptive.adaptive)
+    detektPlugins(libs.ioGitlabArturboschDetekt.detektFormatting)
     debugImplementation(libs.androidxComposeUi.uiTooling)
     ksp(libs.androidxRoom.roomCompiler)
     testImplementation(libs.ioInsertKoin.koinTestJunit4)
@@ -135,5 +146,12 @@ tasks {
 
     withType<Test>().configureEach {
         useJUnitPlatform()
+    }
+
+    withType<Detekt>().configureEach {
+        reports {
+            html.required.set(true)
+            md.required.set(true)
+        }
     }
 }

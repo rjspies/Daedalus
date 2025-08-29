@@ -25,8 +25,8 @@ class WeightDiagramViewModel(
     init {
         viewModelScope.launch {
             getWeightsAscending().collectLatest { domainWeights ->
-                _uiState.update {
-                    it.copy(
+                _uiState.update { uiState ->
+                    uiState.copy(
                         weights = domainWeights.mapIndexed { index, weight ->
                             WeightChartEntry(
                                 x = index.toFloat(),
@@ -43,14 +43,14 @@ class WeightDiagramViewModel(
     fun onEvent(event: Event) {
         when (event) {
             Event.ShowInsertWeightDialog -> viewModelScope.launch {
-                _uiState.update { it.copy(insertWeightDialogShow = true) }
+                _uiState.update { it.copy(shouldShowInsertWeightDialog = true) }
             }
 
             Event.CloseInsertWeightDialog -> viewModelScope.launch {
-                _uiState.update {
-                    it.copy(
-                        insertWeightDialogShow = false,
-                        insertWeightDialogIsLoading = false,
+                _uiState.update { uiState ->
+                    uiState.copy(
+                        shouldShowInsertWeightDialog = false,
+                        isInsertWeightDialogLoading = false,
                         insertWeightDialogCurrentWeight = null,
                         insertWeightDialogError = null,
                     )
@@ -58,8 +58,8 @@ class WeightDiagramViewModel(
             }
 
             is Event.SetCurrentWeight -> viewModelScope.launch {
-                _uiState.update {
-                    it.copy(
+                _uiState.update { uiState ->
+                    uiState.copy(
                         insertWeightDialogCurrentWeight = filterInput(event.weight),
                         insertWeightDialogError = null,
                     )
@@ -67,30 +67,34 @@ class WeightDiagramViewModel(
             }
 
             is Event.InsertCurrentWeight -> viewModelScope.launch {
-                _uiState.update {
-                    it.copy(
-                        insertWeightDialogIsLoading = true,
-                        insertWeightDialogIsInputEnabled = false,
-                        insertWeightDialogIsDismissable = false,
+                _uiState.update { uiState ->
+                    uiState.copy(
+                        isInsertWeightDialogLoading = true,
+                        isInsertWeightDialogInputEnabled = false,
+                        isInsertWeightDialogDismissable = false,
                     )
                 }
 
                 val parsedWeight = _uiState.value.insertWeightDialogCurrentWeight.parseToFloat()
                 var error: AppError? = null
                 if (parsedWeight != null) {
-                    insertWeight(value = parsedWeight, null, ZonedDateTime.now())
+                    insertWeight(
+                        value = parsedWeight,
+                        note = null,
+                        dateTime = ZonedDateTime.now(),
+                    )
                 } else {
                     error = InsertWeightError.ParseFloatError
                 }
 
-                _uiState.update {
-                    it.copy(
-                        insertWeightDialogShow = error != null,
-                        insertWeightDialogIsLoading = false,
+                _uiState.update { uiState ->
+                    uiState.copy(
+                        shouldShowInsertWeightDialog = error != null,
+                        isInsertWeightDialogLoading = false,
                         insertWeightDialogCurrentWeight = null,
                         insertWeightDialogError = error,
-                        insertWeightDialogIsInputEnabled = true,
-                        insertWeightDialogIsDismissable = true,
+                        isInsertWeightDialogInputEnabled = true,
+                        isInsertWeightDialogDismissable = true,
                     )
                 }
             }
@@ -98,16 +102,16 @@ class WeightDiagramViewModel(
     }
 
     private fun filterInput(weight: String): String = weight.filter { it.isDigit() || it == '.' || it == ',' }
-    private fun String?.parseToFloat(): Float? = this?.replace(",", ".")?.toFloatOrNull()
+    private fun String?.parseToFloat(): Float? = this?.run { replace(",", ".").toFloatOrNull() }
 
     data class UiState(
         val weights: List<WeightChartEntry> = emptyList(),
-        val insertWeightDialogShow: Boolean = false,
-        val insertWeightDialogIsLoading: Boolean = false,
+        val shouldShowInsertWeightDialog: Boolean = false,
+        val isInsertWeightDialogLoading: Boolean = false,
         val insertWeightDialogCurrentWeight: String? = null,
         val insertWeightDialogError: AppError? = null,
-        val insertWeightDialogIsInputEnabled: Boolean = true,
-        val insertWeightDialogIsDismissable: Boolean = true,
+        val isInsertWeightDialogInputEnabled: Boolean = true,
+        val isInsertWeightDialogDismissable: Boolean = true,
     )
 
     sealed interface Event {

@@ -39,13 +39,13 @@ import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.Weight
 import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
-import org.koin.androidx.compose.koinViewModel
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalSparkApi::class)
 @Suppress("LongMethod")
@@ -58,7 +58,7 @@ fun WeightHistoryItem(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    if (uiState.showDialog) {
+    if (uiState.shouldShowDialog) {
         AlertDialog(
             onDismissRequest = {
                 if (uiState.isDialogDismissable) {

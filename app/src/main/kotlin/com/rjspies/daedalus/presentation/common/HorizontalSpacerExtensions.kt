@@ -6,25 +6,25 @@ import androidx.compose.ui.Modifier
 import com.adevinta.spark.components.spacer.Spacer
 
 @Composable
-fun HorizontalSpacerXXS(): Unit = Spacer(modifier = Modifier.width(Spacings.XXS))
+fun HorizontalSpacerXXS() = Spacer(modifier = Modifier.width(Spacings.XXS))
 
 @Composable
-fun HorizontalSpacerXS(): Unit = Spacer(modifier = Modifier.width(Spacings.XS))
+fun HorizontalSpacerXS() = Spacer(modifier = Modifier.width(Spacings.XS))
 
 @Composable
-fun HorizontalSpacerS(): Unit = Spacer(modifier = Modifier.width(Spacings.S))
+fun HorizontalSpacerS() = Spacer(modifier = Modifier.width(Spacings.S))
 
 @Composable
-fun HorizontalSpacerM(): Unit = Spacer(modifier = Modifier.width(Spacings.M))
+fun HorizontalSpacerM() = Spacer(modifier = Modifier.width(Spacings.M))
 
 @Composable
-fun HorizontalSpacerL(): Unit = Spacer(modifier = Modifier.width(Spacings.L))
+fun HorizontalSpacerL() = Spacer(modifier = Modifier.width(Spacings.L))
 
 @Composable
-fun HorizontalSpacerXL(): Unit = Spacer(modifier = Modifier.width(Spacings.XL))
+fun HorizontalSpacerXL() = Spacer(modifier = Modifier.width(Spacings.XL))
 
 @Composable
-fun HorizontalSpacerXXL(): Unit = Spacer(modifier = Modifier.width(Spacings.XXL))
+fun HorizontalSpacerXXL() = Spacer(modifier = Modifier.width(Spacings.XXL))
 
 @Composable
-fun HorizontalSpacerXXXL(): Unit = Spacer(modifier = Modifier.width(Spacings.XXXL))
+fun HorizontalSpacerXXXL() = Spacer(modifier = Modifier.width(Spacings.XXXL))
