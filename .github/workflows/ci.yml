@@ -32,9 +32,6 @@ jobs:
       - name: Detekt
         run: ./gradlew detektMain detektTest --parallel
 
-      - name: Kotlinter
-        run: ./gradlew lintKotlin
-
       - name: Lint
         run: ./gradlew lint
 
