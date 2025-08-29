@@ -6,25 +6,25 @@ import androidx.compose.ui.Modifier
 import com.adevinta.spark.components.spacer.Spacer
 
 @Composable
-fun VerticalSpacerXXS(): Unit = Spacer(modifier = Modifier.height(Spacings.XXS))
+fun VerticalSpacerXXS() = Spacer(modifier = Modifier.height(Spacings.XXS))
 
 @Composable
-fun VerticalSpacerXS(): Unit = Spacer(modifier = Modifier.height(Spacings.XS))
+fun VerticalSpacerXS() = Spacer(modifier = Modifier.height(Spacings.XS))
 
 @Composable
-fun VerticalSpacerS(): Unit = Spacer(modifier = Modifier.height(Spacings.S))
+fun VerticalSpacerS() = Spacer(modifier = Modifier.height(Spacings.S))
 
 @Composable
-fun VerticalSpacerM(): Unit = Spacer(modifier = Modifier.height(Spacings.M))
+fun VerticalSpacerM() = Spacer(modifier = Modifier.height(Spacings.M))
 
 @Composable
-fun VerticalSpacerL(): Unit = Spacer(modifier = Modifier.height(Spacings.L))
+fun VerticalSpacerL() = Spacer(modifier = Modifier.height(Spacings.L))
 
 @Composable
-fun VerticalSpacerXL(): Unit = Spacer(modifier = Modifier.height(Spacings.XL))
+fun VerticalSpacerXL() = Spacer(modifier = Modifier.height(Spacings.XL))
 
 @Composable
-fun VerticalSpacerXXL(): Unit = Spacer(modifier = Modifier.height(Spacings.XXL))
+fun VerticalSpacerXXL() = Spacer(modifier = Modifier.height(Spacings.XXL))
 
 @Composable
-fun VerticalSpacerXXXL(): Unit = Spacer(modifier = Modifier.height(Spacings.XXXL))
+fun VerticalSpacerXXXL() = Spacer(modifier = Modifier.height(Spacings.XXXL))

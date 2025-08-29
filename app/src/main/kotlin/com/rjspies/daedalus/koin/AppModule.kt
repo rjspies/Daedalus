@@ -16,9 +16,9 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-val appModule = module {
+val APP_MODULE = module {
     singleOf(WeightDatabase::getDatabase)
-    single { get<WeightDatabase>().weightDao() }
+    singleOf(WeightDatabase::weightDao)
     singleOf(::WeightServiceImpl) { bind<WeightService>() }
     factoryOf(::GetWeightsAscendingUseCase)
     viewModelOf(::WeightDiagramViewModel)

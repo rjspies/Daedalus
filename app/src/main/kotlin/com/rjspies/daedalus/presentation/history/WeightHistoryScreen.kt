@@ -83,14 +83,14 @@ private fun Weights(
             items(
                 items = weights,
                 key = { it.id },
-                itemContent = {
-                    val index = weights.indexOf(it)
+                itemContent = { weight ->
+                    val index = weights.indexOf(weight)
                     val predecessor = remember(weights) {
                         weights.getOrNull(index + 1)
                     }
 
                     WeightHistoryItem(
-                        weight = it,
+                        weight = weight,
                         predecessorWeight = predecessor,
                     )
 

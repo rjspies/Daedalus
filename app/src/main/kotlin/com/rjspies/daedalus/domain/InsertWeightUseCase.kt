@@ -7,7 +7,7 @@ class InsertWeightUseCase(private val service: WeightService) {
         value: Float,
         note: String?,
         dateTime: ZonedDateTime,
-    ): Unit = service.insertWeight(
+    ) = service.insertWeight(
         value = value,
         note = note,
         dateTime = dateTime,

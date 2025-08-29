@@ -3,9 +3,8 @@
 [plugins]
 
 comAndroidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-ioGitlabArturboschDetekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.8" }
+ioGitlabArturboschDetekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 orgJetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-orgJmailenKotlinter = { id = "org.jmailen.kotlinter", version = "5.2.0" }
 comGoogleDevtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 orgJetbrainsKotlinPluginCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version = "1.13.1.0" }
@@ -20,6 +19,7 @@ koin = "4.1.0"
 junit5 = "5.13.4"
 haze = "1.6.10"
 spark = "1.3.0"
+detekt = "1.23.8"
 
 # Raise these two together
 kotlin = "2.2.10"
@@ -67,3 +67,4 @@ androidxComposeUi-uiToolingPreview = { group = "androidx.compose.ui", name = "ui
 androidxComposeUi-uiTooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
 androidxNavigation-navigationCompose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.3" }
 comAdevintaSpark-spark = { group = "com.adevinta.spark", name = "spark", version.ref = "spark" }
+ioGitlabArturboschDetekt-detektFormatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }

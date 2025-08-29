@@ -8,7 +8,11 @@ import kotlinx.coroutines.flow.Flow
 class WeightServiceImpl(
     private val weightDao: WeightDao,
 ) : WeightService {
-    override suspend fun insertWeight(value: Float, note: String?, dateTime: ZonedDateTime) = weightDao.insert(
+    override suspend fun insertWeight(
+        value: Float,
+        note: String?,
+        dateTime: ZonedDateTime,
+    ) = weightDao.insert(
         weight = WeightImpl(
             value = value,
             note = note,
@@ -18,5 +22,5 @@ class WeightServiceImpl(
 
     override fun weightsDescending(): Flow<List<Weight>> = weightDao.weightsDescending()
     override fun weightsAscending(): Flow<List<Weight>> = weightDao.weightsAscending()
-    override suspend fun deleteWeight(weight: Weight): Unit = weightDao.deleteWeight(weight.id)
+    override suspend fun deleteWeight(weight: Weight) = weightDao.deleteWeight(weight.id)
 }

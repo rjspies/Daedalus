@@ -14,4 +14,4 @@ data class WeightImpl(
     override val value: Float,
     override val note: String?,
     override val dateTime: ZonedDateTime,
-) : Weight()
+) : Weight

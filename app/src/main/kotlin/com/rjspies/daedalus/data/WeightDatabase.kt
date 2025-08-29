@@ -16,9 +16,9 @@ abstract class WeightDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: WeightDatabase? = null
+        private var instance: WeightDatabase? = null
 
-        fun getDatabase(context: Context): WeightDatabase = INSTANCE ?: synchronized(this) {
+        fun getDatabase(context: Context): WeightDatabase = instance ?: synchronized(this) {
             val instance = Room.databaseBuilder(
                 context = context,
                 klass = WeightDatabase::class.java,
@@ -26,7 +26,7 @@ abstract class WeightDatabase : RoomDatabase() {
             ).apply {
                 fallbackToDestructiveMigration(false)
             }.build()
-            INSTANCE = instance
+            Companion.instance = instance
             instance
         }
     }

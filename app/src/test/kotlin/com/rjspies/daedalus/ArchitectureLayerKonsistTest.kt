@@ -5,9 +5,9 @@ import com.lemonappdev.konsist.api.architecture.KoArchitectureCreator.assertArch
 import com.lemonappdev.konsist.api.architecture.Layer
 import org.junit.jupiter.api.Test
 
-private val presentationLayer = Layer("Presentation", "com.rjspies.daedalus.presentation..")
-private val domainLayer = Layer("Domain", "com.rjspies.daedalus.domain..")
-private val dataLayer = Layer("Data", "com.rjspies.daedalus.data..")
+private val PRESENTATION_LAYER = Layer("Presentation", "com.rjspies.daedalus.presentation..")
+private val DOMAIN_LAYER = Layer("Domain", "com.rjspies.daedalus.domain..")
+private val DATA_LAYER = Layer("Data", "com.rjspies.daedalus.data..")
 
 class ArchitectureLayerKonsistTest {
     @Test
@@ -15,11 +15,11 @@ class ArchitectureLayerKonsistTest {
         Konsist
             .scopeFromProject()
             .assertArchitecture {
-                presentationLayer.dependsOn(domainLayer)
-                presentationLayer.doesNotDependOn(dataLayer)
-                dataLayer.dependsOn(domainLayer)
-                dataLayer.doesNotDependOn(presentationLayer)
-                domainLayer.dependsOnNothing()
+                PRESENTATION_LAYER.dependsOn(DOMAIN_LAYER)
+                PRESENTATION_LAYER.doesNotDependOn(DATA_LAYER)
+                DATA_LAYER.dependsOn(DOMAIN_LAYER)
+                DATA_LAYER.doesNotDependOn(PRESENTATION_LAYER)
+                DOMAIN_LAYER.dependsOnNothing()
             }
     }
 }

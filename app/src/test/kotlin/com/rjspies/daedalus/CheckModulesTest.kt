@@ -1,7 +1,7 @@
 package com.rjspies.daedalus
 
 import androidx.lifecycle.SavedStateHandle
-import com.rjspies.daedalus.koin.appModule
+import com.rjspies.daedalus.koin.APP_MODULE
 import org.junit.Test
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.test.KoinTest
@@ -11,7 +11,7 @@ class CheckModulesTest : KoinTest {
     @OptIn(KoinExperimentalAPI::class)
     @Test
     fun checkAllModules() {
-        appModule.verify(
+        APP_MODULE.verify(
             extraTypes = listOf(SavedStateHandle::class),
         )
     }

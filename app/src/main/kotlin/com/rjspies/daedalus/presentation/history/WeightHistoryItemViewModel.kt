@@ -20,17 +20,17 @@ class WeightHistoryItemViewModel(
     fun onEvent(event: Event) {
         when (event) {
             Event.ShowDialog -> viewModelScope.launch {
-                _uiState.update { it.copy(showDialog = true) }
+                _uiState.update { it.copy(shouldShowDialog = true) }
             }
 
             Event.HideDialog -> viewModelScope.launch {
-                _uiState.update { it.copy(showDialog = false) }
+                _uiState.update { it.copy(shouldShowDialog = false) }
             }
 
             is Event.DeleteWeight -> {
                 viewModelScope.launch {
-                    _uiState.update {
-                        it.copy(
+                    _uiState.update { uiState ->
+                        uiState.copy(
                             isDialogLoading = true,
                             isDialogDismissable = false,
                         )
@@ -43,9 +43,9 @@ class WeightHistoryItemViewModel(
 
                 deleteJob.invokeOnCompletion {
                     viewModelScope.launch {
-                        _uiState.update {
-                            it.copy(
-                                showDialog = false,
+                        _uiState.update { uiState ->
+                            uiState.copy(
+                                shouldShowDialog = false,
                                 isDialogLoading = false,
                                 isDialogDismissable = true,
                             )
@@ -57,7 +57,7 @@ class WeightHistoryItemViewModel(
     }
 
     data class UiState(
-        val showDialog: Boolean = false,
+        val shouldShowDialog: Boolean = false,
         val isDialogLoading: Boolean = false,
         val isDialogDismissable: Boolean = true,
     )

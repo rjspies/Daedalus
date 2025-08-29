@@ -46,18 +46,36 @@ fun MainScreen() {
 }
 
 @Composable
-private fun BoxScope.StatusBarBlur(scaffoldPadding: PaddingValues, hazeState: HazeState) {
-    Blur(scaffoldPadding.calculateTopPadding(), hazeState, Modifier.align(Alignment.TopCenter))
+private fun BoxScope.StatusBarBlur(
+    scaffoldPadding: PaddingValues,
+    hazeState: HazeState,
+) {
+    Blur(
+        height = scaffoldPadding.calculateTopPadding(),
+        hazeState = hazeState,
+        modifier = Modifier.align(Alignment.TopCenter),
+    )
 }
 
 @Composable
-private fun BoxScope.NavigationBarBlur(scaffoldPadding: PaddingValues, hazeState: HazeState) {
-    Blur(scaffoldPadding.calculateBottomPadding(), hazeState, Modifier.align(Alignment.BottomCenter))
+private fun BoxScope.NavigationBarBlur(
+    scaffoldPadding: PaddingValues,
+    hazeState: HazeState,
+) {
+    Blur(
+        height = scaffoldPadding.calculateBottomPadding(),
+        hazeState = hazeState,
+        modifier = Modifier.align(Alignment.BottomCenter),
+    )
 }
 
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
-private fun Blur(height: Dp, hazeState: HazeState, modifier: Modifier = Modifier) {
+private fun Blur(
+    height: Dp,
+    hazeState: HazeState,
+    modifier: Modifier = Modifier,
+) {
     val heightPx = with(LocalDensity.current) { height.toPx() }
 
     Box(

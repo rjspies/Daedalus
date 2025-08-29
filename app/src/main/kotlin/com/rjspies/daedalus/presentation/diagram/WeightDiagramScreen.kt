@@ -83,9 +83,9 @@ import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
 import com.rjspies.daedalus.presentation.navigation.Route
-import org.koin.androidx.compose.koinViewModel
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalSparkApi::class)
 @Suppress("LongMethod")
@@ -104,11 +104,11 @@ fun WeightDiagramScreen(
             .padding(scaffoldPadding)
             .padding(bottom = Spacings.XXL),
     ) {
-        if (uiState.insertWeightDialogShow) {
+        if (uiState.shouldShowInsertWeightDialog) {
             val focusRequester = remember { FocusRequester() }
             AlertDialog(
                 onDismissRequest = {
-                    if (uiState.insertWeightDialogIsDismissable) {
+                    if (uiState.isInsertWeightDialogDismissable) {
                         viewModel.onEvent(WeightDiagramViewModel.Event.CloseInsertWeightDialog)
                     }
                 },
@@ -163,7 +163,7 @@ fun WeightDiagramScreen(
                                     ),
                                 ),
                             content = {
-                                if (uiState.insertWeightDialogIsLoading) {
+                                if (uiState.isInsertWeightDialogLoading) {
                                     VerticalSpacerXS()
                                     LinearProgressIndicatorIndeterminate(modifier = Modifier.fillMaxWidth())
                                 }

@@ -11,7 +11,11 @@ import com.adevinta.spark.components.icons.Icon
 import com.adevinta.spark.components.text.Text
 
 @Composable
-fun IconTextButtonContent(text: String, icon: ImageVector, modifier: Modifier = Modifier) {
+fun IconTextButtonContent(
+    text: String,
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+) {
     Row(
         modifier = Modifier.then(modifier),
         horizontalArrangement = Arrangement.Absolute.Center,

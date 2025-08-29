@@ -30,7 +30,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Detekt
-        run: ./gradlew detekt
+        run: ./gradlew detektMain detektTest --parallel
 
       - name: Kotlinter
         run: ./gradlew lintKotlin
