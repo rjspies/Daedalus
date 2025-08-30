@@ -21,10 +21,10 @@ val APP_MODULE = module {
     singleOf(WeightDatabase::weightDao)
     singleOf(::WeightServiceImpl) { bind<WeightService>() }
     factoryOf(::GetWeightsAscendingUseCase)
-    viewModelOf(::WeightDiagramViewModel)
     factoryOf(::GetWeightsDescendingUseCase)
     factoryOf(::DeleteWeightUseCase)
-    viewModelOf(::WeightHistoryViewModel)
     factoryOf(::InsertWeightUseCase)
+    viewModelOf(::WeightHistoryViewModel)
+    viewModelOf(::WeightDiagramViewModel)
     viewModelOf(::WeightHistoryItemViewModel)
 }
