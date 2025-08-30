@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rjspies.daedalus.domain.DeleteWeightUseCase
 import com.rjspies.daedalus.domain.Weight
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 
 class WeightHistoryItemViewModel(
     private val deleteWeight: DeleteWeightUseCase,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState>
@@ -37,7 +39,7 @@ class WeightHistoryItemViewModel(
                     }
                 }
 
-                val deleteJob = viewModelScope.launch(Dispatchers.IO) {
+                val deleteJob = viewModelScope.launch(ioDispatcher) {
                     deleteWeight(event.weight)
                 }
 
