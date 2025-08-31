@@ -19,7 +19,7 @@ jobs:
           distribution: oracle
 
       - name: Setup Android SDK
-        uses: amyu/setup-android@v4
+        uses: amyu/setup-android@v5
         with:
           cache-disabled: true
 
