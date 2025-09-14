@@ -24,7 +24,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Addchart
-import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.Publish
 import androidx.compose.material.icons.rounded.Timeline
 import androidx.compose.runtime.Composable
@@ -79,7 +78,6 @@ import com.patrykandpatrick.vico.core.common.shape.DashedShape
 import com.patrykandpatrick.vico.core.common.shape.MarkerCorneredShape
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.common.EmptyScreen
-import com.rjspies.daedalus.presentation.common.HorizontalSpacerXS
 import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.VerticalSpacerL
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
@@ -214,47 +212,41 @@ fun WeightDiagramScreen(
         }
 
         VerticalSpacerL()
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .horizontalSpacingM(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-        ) {
-            ButtonOutlined(
-                onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked) },
-                modifier = Modifier.weight(1f),
-                icon = SparkIcon.Vector(Icons.Rounded.Publish),
-                content = { Text("Export") },
-            )
-            HorizontalSpacerXS()
-            ButtonOutlined(
-                onClick = { },
-                modifier = Modifier.weight(1f),
-                icon = SparkIcon.Vector(Icons.Rounded.Download),
-                content = { Text("Import") },
-            )
-        }
-
-        VerticalSpacerXS()
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .horizontalSpacingM(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-        ) {
-            ButtonOutlined(
-                onClick = { navigate(Route.History) },
-                modifier = Modifier.weight(1f),
-                icon = SparkIcon.Vector(Icons.AutoMirrored.Rounded.List),
-                content = { Text(stringResource(R.string.weight_diagram_button_history_title)) },
-            )
-            HorizontalSpacerXS()
-            ButtonFilled(
-                onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
-                modifier = Modifier.weight(1f),
-                icon = SparkIcon.Vector(Icons.Rounded.Add),
-                content = { Text(stringResource(R.string.weight_diagram_button_insert_weight_title)) },
-            )
+        Column(verticalArrangement = Arrangement.spacedBy(Spacings.XS)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalSpacingM(),
+                horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
+            ) {
+                ButtonOutlined(
+                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked) },
+                    modifier = Modifier.weight(1f),
+                    icon = SparkIcon.Vector(Icons.Rounded.Publish),
+                    content = { Text(stringResource(R.string.weight_diagram_button_export_weights_title)) },
+                    isLoading = uiState.isExporting,
+                    enabled = !uiState.isExporting,
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalSpacingM(),
+                horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
+            ) {
+                ButtonOutlined(
+                    onClick = { navigate(Route.History) },
+                    modifier = Modifier.weight(1f),
+                    icon = SparkIcon.Vector(Icons.AutoMirrored.Rounded.List),
+                    content = { Text(stringResource(R.string.weight_diagram_button_history_title)) },
+                )
+                ButtonFilled(
+                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
+                    modifier = Modifier.weight(1f),
+                    icon = SparkIcon.Vector(Icons.Rounded.Add),
+                    content = { Text(stringResource(R.string.weight_diagram_button_insert_weight_title)) },
+                )
+            }
         }
     }
 }

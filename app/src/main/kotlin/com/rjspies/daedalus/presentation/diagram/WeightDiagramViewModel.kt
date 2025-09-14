@@ -93,14 +93,12 @@ class WeightDiagramViewModel(
                 }
             }
             Event.ExportClicked -> _uiState.update { uiState ->
-                uiState.copy(exportPrompt = ExportUiData("weights.csv", "text/csv"))
+                uiState.copy(exportPrompt = ExportUiData("weights.csv", "text/csv"), isExporting = true)
             }
             is Event.PathChosen -> viewModelScope.launch {
-                _uiState.update { uiState ->
-                    uiState.copy(exportPrompt = null)
-                }
-
+                _uiState.update { it.copy(exportPrompt = null) }
                 exportWeights(event.contentUri?.toString())
+                _uiState.update { it.copy(isExporting = false) }
             }
         }
     }
@@ -119,6 +117,7 @@ class WeightDiagramViewModel(
         val isInsertWeightDialogInputEnabled: Boolean = true,
         val isInsertWeightDialogDismissable: Boolean = true,
         val exportPrompt: ExportUiData? = null,
+        val isExporting: Boolean = false,
     )
 
     sealed interface Event {
