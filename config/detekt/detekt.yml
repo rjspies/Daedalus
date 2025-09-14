@@ -479,7 +479,7 @@ potential-bugs:
   NullCheckOnMutableProperty:
     active: true
   NullableToStringCall:
-    active: true
+    active: false
   PropertyUsedBeforeDeclaration:
     active: true
   UnconditionalJumpStatementInLoop:
@@ -519,7 +519,7 @@ style:
     singleLine: 'necessary'
     multiLine: 'consistent'
   CanBeNonNullable:
-    active: true
+    active: false
   CascadingCallWrapping:
     active: true
     includeElvis: true

@@ -113,7 +113,7 @@ dependencies {
     detektPlugins(libs.ioGitlabArturboschDetekt.detektFormatting)
     debugImplementation(libs.androidxComposeUi.uiTooling)
     ksp(libs.androidxRoom.roomCompiler)
-    testImplementation(libs.ioInsertKoin.koinTestJunit4)
+    testImplementation(libs.ioInsertKoin.koinTest)
     testImplementation(libs.ioKotest.kotestAssertionsCore)
     testImplementation(libs.orgJunitJupiter.junitJupiterApi)
     testImplementation(libs.comLemonappdev.konsist)
