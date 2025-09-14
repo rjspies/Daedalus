@@ -2,6 +2,8 @@ package com.rjspies.daedalus.presentation.diagram
 
 import android.graphics.Typeface
 import android.text.Layout
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -22,6 +24,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Addchart
+import androidx.compose.material.icons.rounded.Download
+import androidx.compose.material.icons.rounded.Publish
 import androidx.compose.material.icons.rounded.Timeline
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -174,6 +178,17 @@ fun WeightDiagramScreen(
             )
         }
 
+        val exportData = uiState.exportPrompt
+        if (exportData != null) {
+            val launcher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(exportData.mimeType)) {
+                viewModel.onEvent(WeightDiagramViewModel.Event.PathChosen(it))
+            }
+
+            LaunchedEffect(Unit) {
+                launcher.launch(exportData.fileName)
+            }
+        }
+
         if (uiState.weights.isNotEmpty()) {
             Column {
                 Text(
@@ -199,6 +214,28 @@ fun WeightDiagramScreen(
         }
 
         VerticalSpacerL()
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalSpacingM(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+        ) {
+            ButtonOutlined(
+                onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked) },
+                modifier = Modifier.weight(1f),
+                icon = SparkIcon.Vector(Icons.Rounded.Publish),
+                content = { Text("Export") },
+            )
+            HorizontalSpacerXS()
+            ButtonOutlined(
+                onClick = { },
+                modifier = Modifier.weight(1f),
+                icon = SparkIcon.Vector(Icons.Rounded.Download),
+                content = { Text("Import") },
+            )
+        }
+
+        VerticalSpacerXS()
         Row(
             modifier = Modifier
                 .fillMaxWidth()

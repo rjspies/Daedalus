@@ -3,6 +3,7 @@ package com.rjspies.daedalus.koin
 import com.rjspies.daedalus.data.WeightDatabase
 import com.rjspies.daedalus.data.WeightServiceImpl
 import com.rjspies.daedalus.domain.DeleteWeightUseCase
+import com.rjspies.daedalus.domain.ExportWeightsUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.GetWeightsDescendingUseCase
 import com.rjspies.daedalus.domain.InsertWeightUseCase
@@ -24,6 +25,7 @@ val APP_MODULE = module {
     factoryOf(::GetWeightsDescendingUseCase)
     factoryOf(::DeleteWeightUseCase)
     factoryOf(::InsertWeightUseCase)
+    factoryOf(::ExportWeightsUseCase)
     viewModelOf(::WeightHistoryViewModel)
     viewModelOf(::WeightDiagramViewModel)
     viewModelOf(::WeightHistoryItemViewModel)

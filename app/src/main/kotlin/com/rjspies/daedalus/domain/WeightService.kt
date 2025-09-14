@@ -1,5 +1,6 @@
 package com.rjspies.daedalus.domain
 
+import android.net.Uri
 import java.time.ZonedDateTime
 import kotlinx.coroutines.flow.Flow
 
@@ -9,8 +10,8 @@ interface WeightService {
         note: String?,
         dateTime: ZonedDateTime,
     )
-
+    suspend fun deleteWeight(weight: Weight)
+    suspend fun exportWeights(path: String)
     fun weightsDescending(): Flow<List<Weight>>
     fun weightsAscending(): Flow<List<Weight>>
-    suspend fun deleteWeight(weight: Weight)
 }

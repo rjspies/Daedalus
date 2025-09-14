@@ -18,4 +18,7 @@ interface WeightDao {
 
     @Query("DELETE FROM Weight WHERE id = :id")
     suspend fun deleteWeight(id: Int)
+
+    @Query("SELECT * FROM Weight ORDER BY dateTime")
+    suspend fun getAllWeights(): List<WeightImpl>
 }
