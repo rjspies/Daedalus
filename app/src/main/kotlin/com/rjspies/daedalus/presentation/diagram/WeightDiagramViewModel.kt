@@ -46,7 +46,6 @@ class WeightDiagramViewModel(
     fun onEvent(event: Event) {
         when (event) {
             Event.ShowInsertWeightDialog -> _uiState.update { it.copy(shouldShowInsertWeightDialog = true) }
-
             Event.CloseInsertWeightDialog -> _uiState.update { uiState ->
                 uiState.copy(
                     shouldShowInsertWeightDialog = false,
@@ -55,14 +54,12 @@ class WeightDiagramViewModel(
                     insertWeightDialogError = null,
                 )
             }
-
             is Event.SetCurrentWeight -> _uiState.update { uiState ->
                 uiState.copy(
                     insertWeightDialogCurrentWeight = filterInput(event.weight),
                     insertWeightDialogError = null,
                 )
             }
-
             is Event.InsertCurrentWeight -> viewModelScope.launch {
                 _uiState.update { uiState ->
                     uiState.copy(

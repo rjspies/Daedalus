@@ -24,11 +24,9 @@ class WeightHistoryItemViewModel(
             Event.ShowDialog -> viewModelScope.launch {
                 _uiState.update { it.copy(shouldShowDialog = true) }
             }
-
             Event.HideDialog -> viewModelScope.launch {
                 _uiState.update { it.copy(shouldShowDialog = false) }
             }
-
             is Event.DeleteWeight -> {
                 viewModelScope.launch {
                     _uiState.update { uiState ->
