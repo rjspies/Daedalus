@@ -45,28 +45,22 @@ class WeightDiagramViewModel(
 
     fun onEvent(event: Event) {
         when (event) {
-            Event.ShowInsertWeightDialog -> viewModelScope.launch {
-                _uiState.update { it.copy(shouldShowInsertWeightDialog = true) }
+            Event.ShowInsertWeightDialog -> _uiState.update { it.copy(shouldShowInsertWeightDialog = true) }
+
+            Event.CloseInsertWeightDialog -> _uiState.update { uiState ->
+                uiState.copy(
+                    shouldShowInsertWeightDialog = false,
+                    isInsertWeightDialogLoading = false,
+                    insertWeightDialogCurrentWeight = null,
+                    insertWeightDialogError = null,
+                )
             }
 
-            Event.CloseInsertWeightDialog -> viewModelScope.launch {
-                _uiState.update { uiState ->
-                    uiState.copy(
-                        shouldShowInsertWeightDialog = false,
-                        isInsertWeightDialogLoading = false,
-                        insertWeightDialogCurrentWeight = null,
-                        insertWeightDialogError = null,
-                    )
-                }
-            }
-
-            is Event.SetCurrentWeight -> viewModelScope.launch {
-                _uiState.update { uiState ->
-                    uiState.copy(
-                        insertWeightDialogCurrentWeight = filterInput(event.weight),
-                        insertWeightDialogError = null,
-                    )
-                }
+            is Event.SetCurrentWeight -> _uiState.update { uiState ->
+                uiState.copy(
+                    insertWeightDialogCurrentWeight = filterInput(event.weight),
+                    insertWeightDialogError = null,
+                )
             }
 
             is Event.InsertCurrentWeight -> viewModelScope.launch {
@@ -101,13 +95,9 @@ class WeightDiagramViewModel(
                     )
                 }
             }
-
-            Event.ExportClicked -> viewModelScope.launch {
-                _uiState.update { uiState ->
-                    uiState.copy(exportPrompt = ExportUiData("weights.csv", "text/csv"))
-                }
+            Event.ExportClicked -> _uiState.update { uiState ->
+                uiState.copy(exportPrompt = ExportUiData("weights.csv", "text/csv"))
             }
-
             is Event.PathChosen -> viewModelScope.launch {
                 _uiState.update { uiState ->
                     uiState.copy(exportPrompt = null)

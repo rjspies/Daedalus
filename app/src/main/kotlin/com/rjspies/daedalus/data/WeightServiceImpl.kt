@@ -34,13 +34,13 @@ class WeightServiceImpl(
     override fun weightsAscending(): Flow<List<Weight>> = weightDao.weightsAscending()
     override suspend fun exportWeights(path: String) {
         val outputStream = applicationContext.contentResolver.openOutputStream(path.toUri())
-        OutputStreamWriter(outputStream).use {
+        OutputStreamWriter(outputStream).use { outputStreamWriter ->
             val allWeights = weightDao.getAllWeights()
             val headline = "$WEIGHT_COLUMN_IDENTIFIER_ID,$WEIGHT_COLUMN_IDENTIFIER_VALUE,$WEIGHT_COLUMN_IDENTIFIER_NOTE,$WEIGHT_COLUMN_IDENTIFIER_DATE_TIME"
 
-            it.appendLine(headline)
+            outputStreamWriter.appendLine(headline)
             allWeights.fastForEach { weight ->
-                it.appendLine("${weight.id},${weight.value},${weight.note},${weight.dateTime}")
+                outputStreamWriter.appendLine("${weight.id},${weight.value},${weight.note},${weight.dateTime}")
             }
         }
     }
