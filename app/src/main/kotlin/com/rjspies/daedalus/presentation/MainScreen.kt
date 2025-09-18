@@ -8,14 +8,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.adevinta.spark.components.scaffold.Scaffold
+import com.adevinta.spark.components.snackbars.SnackbarHost
+import com.adevinta.spark.components.snackbars.SnackbarHostState
+import com.adevinta.spark.components.snackbars.SnackbarSparkVisuals
 import com.rjspies.daedalus.presentation.navigation.Route
 import com.rjspies.daedalus.presentation.navigation.navigationGraph
 import dev.chrisbanes.haze.HazeProgressive
@@ -24,10 +30,32 @@ import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun MainScreen() {
-    Scaffold { padding ->
+fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(uiState.snackbarData) {
+        val snackbar = uiState.snackbarData
+        if (snackbar != null) {
+            snackbarHostState.showSnackbar(
+                SnackbarSparkVisuals(
+                    message = snackbar.title,
+                    intent = snackbar.intent.toSparkSnackbarIntent(),
+                    withDismissAction = true,
+                )
+            )
+            viewModel.onEvent(MainViewModel.Event.OnSnackbarDismissed)
+        }
+    }
+
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(snackbarHostState)
+        }
+    ) { padding ->
         val hazeState = remember { HazeState() }
         val navigationController = rememberNavController()
 

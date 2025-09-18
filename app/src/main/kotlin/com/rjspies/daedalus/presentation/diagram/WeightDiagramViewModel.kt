@@ -8,6 +8,9 @@ import com.rjspies.daedalus.InsertWeightError
 import com.rjspies.daedalus.domain.ExportWeightsUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.InsertWeightUseCase
+import com.rjspies.daedalus.domain.RequestSnackbarUseCase
+import com.rjspies.daedalus.domain.SnackbarData
+import com.rjspies.daedalus.domain.SnackbarIntent
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import java.time.ZonedDateTime
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +23,7 @@ class WeightDiagramViewModel(
     getWeightsAscending: GetWeightsAscendingUseCase,
     private val insertWeight: InsertWeightUseCase,
     private val exportWeights: ExportWeightsUseCase,
+    private val requestSnackbar: RequestSnackbarUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState>
@@ -98,6 +102,7 @@ class WeightDiagramViewModel(
             is Event.PathChosen -> viewModelScope.launch {
                 _uiState.update { it.copy(exportPrompt = null) }
                 exportWeights(event.contentUri?.toString())
+                requestSnackbar(SnackbarData("Hooray", SnackbarIntent.Success))
                 _uiState.update { it.copy(isExporting = false) }
             }
         }
