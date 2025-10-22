@@ -14,7 +14,7 @@ orgJetbrainsKotlinPluginSerialization = { id = "org.jetbrains.kotlin.plugin.seri
 
 androidGradlePlugin = "8.13.0"
 compose = "1.9.4"
-room = "2.8.2"
+room = "2.8.3"
 koin = "4.1.1"
 junit5 = "6.0.0"
 haze = "1.6.10"
