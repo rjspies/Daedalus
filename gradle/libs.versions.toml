@@ -22,7 +22,7 @@ spark = "1.4.2"
 detekt = "1.23.8"
 
 # Raise these two together
-kotlin = "2.2.20"
+kotlin = "2.2.21"
 ksp = "2.3.0"
 
 # App config
