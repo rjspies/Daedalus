@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -15,7 +16,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.adevinta.spark.components.scaffold.Scaffold
 import com.rjspies.daedalus.presentation.navigation.Route
 import com.rjspies.daedalus.presentation.navigation.navigationGraph
 import dev.chrisbanes.haze.HazeProgressive

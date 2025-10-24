@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -21,11 +22,17 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.List
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Addchart
-import androidx.compose.material.icons.rounded.Publish
 import androidx.compose.material.icons.rounded.Timeline
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -41,19 +48,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.adevinta.spark.ExperimentalSparkApi
-import com.adevinta.spark.SparkTheme
-import com.adevinta.spark.components.buttons.ButtonFilled
-import com.adevinta.spark.components.buttons.ButtonGhost
-import com.adevinta.spark.components.buttons.ButtonOutlined
-import com.adevinta.spark.components.dialog.AlertDialog
-import com.adevinta.spark.components.icons.Icon
-import com.adevinta.spark.components.progress.LinearProgressIndicatorIndeterminate
-import com.adevinta.spark.components.spacer.Spacer
-import com.adevinta.spark.components.text.Text
-import com.adevinta.spark.components.textfields.TextField
-import com.adevinta.spark.components.textfields.TextFieldState
-import com.adevinta.spark.icons.SparkIcon
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberBottom
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberStart
@@ -89,7 +83,6 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalSparkApi::class)
 @Suppress("LongMethod")
 @Composable
 fun WeightDiagramScreen(
@@ -115,7 +108,7 @@ fun WeightDiagramScreen(
                     }
                 },
                 confirmButton = {
-                    ButtonGhost(
+                    TextButton(
                         onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.InsertCurrentWeight) },
                         content = {
                             Text(stringResource(R.string.insert_weight_insert_button_text))
@@ -139,11 +132,13 @@ fun WeightDiagramScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .focusRequester(focusRequester),
-                            label = stringResource(R.string.insert_weight_weight_text_field_label),
-                            helper = if (uiState.insertWeightDialogError != null) {
-                                stringResource(R.string.insert_weight_weight_text_field_supporting_message_error)
-                            } else {
-                                stringResource(R.string.insert_weight_weight_text_field_supporting_message)
+                            label = { Text(stringResource(R.string.insert_weight_weight_text_field_label)) },
+                            supportingText = {
+                                if (uiState.insertWeightDialogError != null) {
+                                    Text(stringResource(R.string.insert_weight_weight_text_field_supporting_message_error))
+                                } else {
+                                    Text(stringResource(R.string.insert_weight_weight_text_field_supporting_message))
+                                }
                             },
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Decimal,
@@ -152,7 +147,6 @@ fun WeightDiagramScreen(
                             keyboardActions = KeyboardActions(
                                 onDone = { viewModel.onEvent(WeightDiagramViewModel.Event.InsertCurrentWeight) },
                             ),
-                            state = TextFieldState.Error.takeIf { uiState.insertWeightDialogError != null },
                         )
 
                         Column(
@@ -167,7 +161,7 @@ fun WeightDiagramScreen(
                             content = {
                                 if (uiState.isInsertWeightDialogLoading) {
                                     VerticalSpacerXS()
-                                    LinearProgressIndicatorIndeterminate(modifier = Modifier.fillMaxWidth())
+                                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                                 }
                             },
                         )
@@ -192,7 +186,7 @@ fun WeightDiagramScreen(
                 Text(
                     text = stringResource(R.string.weight_diagram_title),
                     modifier = Modifier.horizontalSpacingM(),
-                    style = SparkTheme.typography.display2,
+                    style = MaterialTheme.typography.displayMedium,
                 )
                 Box(Modifier.horizontalSpacingM()) { Chart(uiState.weights) }
             }
@@ -219,12 +213,10 @@ fun WeightDiagramScreen(
                     .horizontalSpacingM(),
                 horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
             ) {
-                ButtonOutlined(
+                OutlinedButton(
                     onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked) },
                     modifier = Modifier.weight(1f),
-                    icon = SparkIcon.Vector(Icons.Rounded.Publish),
                     content = { Text(stringResource(R.string.weight_diagram_button_export_weights_title)) },
-                    isLoading = uiState.isExporting,
                     enabled = !uiState.isExporting,
                 )
             }
@@ -234,16 +226,14 @@ fun WeightDiagramScreen(
                     .horizontalSpacingM(),
                 horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
             ) {
-                ButtonOutlined(
+                OutlinedButton(
                     onClick = { navigate(Route.History) },
                     modifier = Modifier.weight(1f),
-                    icon = SparkIcon.Vector(Icons.AutoMirrored.Rounded.List),
                     content = { Text(stringResource(R.string.weight_diagram_button_history_title)) },
                 )
-                ButtonFilled(
+                Button(
                     onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
                     modifier = Modifier.weight(1f),
-                    icon = SparkIcon.Vector(Icons.Rounded.Add),
                     content = { Text(stringResource(R.string.weight_diagram_button_insert_weight_title)) },
                 )
             }
@@ -310,17 +300,17 @@ private fun Chart(entries: List<WeightChartEntry>) {
 
 @Composable
 private fun rememberMarkerShape() = rememberShapeComponent(
-    fill = Fill(SparkTheme.colors.support.toArgb()),
+    fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
     shape = CorneredShape.Pill,
     strokeThickness = 6.dp,
 )
 
 @Composable
 private fun rememberMarkerText() = rememberTextComponent(
-    color = SparkTheme.colors.onSupport,
+    color = MaterialTheme.colorScheme.onTertiary,
     background = rememberShapeComponent(
         fill = Fill(Color.Transparent.toArgb()),
-        strokeFill = Fill(SparkTheme.colors.support.toArgb()),
+        strokeFill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
         strokeThickness = 1.dp,
         shape = MarkerCorneredShape(CorneredShape.Corner.Rounded),
     ),
@@ -334,11 +324,11 @@ private fun rememberMarkerText() = rememberTextComponent(
 
 @Composable
 private fun rememberMarkerLine() = rememberLineComponent(
-    fill = Fill(SparkTheme.colors.support.toArgb()),
+    fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
     shape = DashedShape(CorneredShape.Pill),
 )
 
 @Composable
 private fun rememberAxisText() = rememberTextComponent(
-    color = SparkTheme.colors.onBackground,
+    color = MaterialTheme.colorScheme.onBackground,
 )

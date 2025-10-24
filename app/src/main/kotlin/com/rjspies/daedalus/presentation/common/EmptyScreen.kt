@@ -3,15 +3,15 @@ package com.rjspies.daedalus.presentation.common
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.adevinta.spark.SparkTheme
-import com.adevinta.spark.components.icons.Icon
-import com.adevinta.spark.components.text.Text
 
 @Composable
 fun EmptyScreen(
@@ -34,7 +34,7 @@ fun EmptyScreen(
             VerticalSpacerM()
             Text(
                 text = title,
-                style = SparkTheme.typography.display2,
+                style = MaterialTheme.typography.displayMedium,
                 textAlign = TextAlign.Center,
             )
             Text(
