@@ -10,6 +10,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FormatListNumbered
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -17,8 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.adevinta.spark.SparkTheme
-import com.adevinta.spark.components.text.Text
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.Weight
 import com.rjspies.daedalus.presentation.common.EmptyScreen
@@ -75,7 +75,7 @@ private fun Weights(
             item {
                 Text(
                     text = stringResource(R.string.weight_history_title),
-                    style = SparkTheme.typography.display2,
+                    style = MaterialTheme.typography.displayMedium,
                 )
                 VerticalSpacerS()
             }

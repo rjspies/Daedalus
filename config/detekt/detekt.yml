@@ -174,7 +174,7 @@ coroutines:
   GlobalCoroutineUsage:
     active: true
   InjectDispatcher:
-    active: true
+    active: false
     dispatcherNames:
       - 'IO'
       - 'Default'
@@ -973,7 +973,7 @@ formatting:
     indentSize: 4
     maxLineLength: 200
   PropertyName:
-    active: true
+    active: false
   PropertyWrapping:
     active: true
     autoCorrect: true

@@ -3,7 +3,6 @@ package com.rjspies.daedalus.presentation.history
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,11 +12,18 @@ import androidx.compose.material.icons.automirrored.rounded.TrendingDown
 import androidx.compose.material.icons.automirrored.rounded.TrendingFlat
 import androidx.compose.material.icons.automirrored.rounded.TrendingUp
 import androidx.compose.material.icons.rounded.DeleteForever
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalConfiguration
@@ -25,16 +31,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.adevinta.spark.ExperimentalSparkApi
-import com.adevinta.spark.SparkTheme
-import com.adevinta.spark.components.buttons.ButtonGhost
-import com.adevinta.spark.components.card.Card
-import com.adevinta.spark.components.card.CardDefaults
-import com.adevinta.spark.components.dialog.AlertDialog
-import com.adevinta.spark.components.icons.Icon
-import com.adevinta.spark.components.icons.IconButton
-import com.adevinta.spark.components.progress.LinearProgressIndicatorIndeterminate
-import com.adevinta.spark.components.text.Text
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.Weight
 import com.rjspies.daedalus.presentation.common.Spacings
@@ -47,7 +43,6 @@ import java.time.format.FormatStyle
 import java.util.Locale
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalSparkApi::class)
 @Suppress("LongMethod")
 @Composable
 fun WeightHistoryItem(
@@ -66,7 +61,7 @@ fun WeightHistoryItem(
                 }
             },
             confirmButton = {
-                ButtonGhost(
+                TextButton(
                     onClick = { viewModel.onEvent(WeightHistoryItemViewModel.Event.DeleteWeight(weight)) },
                     content = { Text(stringResource(R.string.weight_history_dialog_delete_item_button)) },
                 )
@@ -88,7 +83,7 @@ fun WeightHistoryItem(
                         content = {
                             if (uiState.isDialogLoading) {
                                 VerticalSpacerXS()
-                                LinearProgressIndicatorIndeterminate(modifier = Modifier.fillMaxWidth())
+                                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                             }
                         },
                     )
@@ -97,9 +92,6 @@ fun WeightHistoryItem(
         )
     }
     Card(
-        colors = CardDefaults.cardColors(
-            containerColor = SparkTheme.colors.supportContainer,
-        ),
         content = {
             ConstraintLayout(
                 modifier = Modifier
@@ -126,18 +118,17 @@ fun WeightHistoryItem(
                     )
                     Text(
                         text = weight.value.asUserfacingString(locale),
-                        style = SparkTheme.typography.headline1,
+                        style = MaterialTheme.typography.headlineSmall,
                         modifier = Modifier.constrainAs(title) {
                             width = Dimension.fillToConstraints
                             top.linkTo(parent.top, margin = Spacings.M)
                             start.linkTo(avatar.end, margin = Spacings.M)
                             end.linkTo(deleteButton.start, margin = Spacings.M)
                         },
-                        color = SparkTheme.colors.onSupportContainer,
                     )
                     Text(
                         text = weight.dateTime.asUserfacingString(locale),
-                        style = SparkTheme.typography.body1,
+                        style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.constrainAs(date) {
                             width = Dimension.fillToConstraints
                             top.linkTo(title.bottom)
@@ -148,13 +139,12 @@ fun WeightHistoryItem(
                                 bottom.linkTo(parent.bottom, margin = Spacings.M)
                             }
                         },
-                        color = SparkTheme.colors.onSupportContainer,
                     )
 
                     if (!note.isNullOrBlank()) {
                         Text(
                             text = stringResource(R.string.weight_history_item_note, note),
-                            style = SparkTheme.typography.body2,
+                            style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.constrainAs(noteReference) {
                                 width = Dimension.fillToConstraints
                                 top.linkTo(date.bottom)
@@ -162,7 +152,6 @@ fun WeightHistoryItem(
                                 bottom.linkTo(parent.bottom, margin = Spacings.M)
                                 end.linkTo(deleteButton.start, margin = Spacings.M)
                             },
-                            color = SparkTheme.colors.onSupportContainer,
                         )
                     }
 
@@ -177,7 +166,6 @@ fun WeightHistoryItem(
                             Icon(
                                 painter = rememberVectorPainter(Icons.Rounded.DeleteForever),
                                 contentDescription = stringResource(R.string.weight_history_delete_icon_content_description),
-                                tint = SparkTheme.colors.onSupportContainer,
                             )
                         },
                     )
@@ -193,16 +181,12 @@ private fun Avatar(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = Modifier
-            .clip(SparkTheme.shapes.medium)
-            .background(SparkTheme.colors.supportVariant)
-            .then(modifier),
+        modifier = Modifier.then(modifier),
         content = {
             Icon(
                 painter = rememberVectorPainter(state.imageVector),
                 contentDescription = state.contentDescription(),
                 modifier = Modifier.padding(Spacings.S),
-                tint = SparkTheme.colors.onSupportVariant,
             )
         },
     )

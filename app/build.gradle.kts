@@ -108,8 +108,8 @@ dependencies {
     implementation(libs.comGoogleAndroidMaterial.material)
     implementation(libs.androidxComposeUi.uiToolingPreview)
     implementation(libs.androidxNavigation.navigationCompose)
-    implementation(libs.comAdevintaSpark.spark)
     implementation(libs.androidxComposeMaterial3Adaptive.adaptive)
+    implementation(libs.androidxComposeUi.uiTextGoogleFonts)
     detektPlugins(libs.ioGitlabArturboschDetekt.detektFormatting)
     debugImplementation(libs.androidxComposeUi.uiTooling)
     ksp(libs.androidxRoom.roomCompiler)
@@ -117,6 +117,7 @@ dependencies {
     testImplementation(libs.ioKotest.kotestAssertionsCore)
     testImplementation(libs.orgJunitJupiter.junitJupiterApi)
     testImplementation(libs.comLemonappdev.konsist)
+    testImplementation(libs.orgJetbrainsKotlinx.kotlinxCoroutinesTest)
     testRuntimeOnly(libs.orgJunitJupiter.junitJupiterEngine)
 }
 
