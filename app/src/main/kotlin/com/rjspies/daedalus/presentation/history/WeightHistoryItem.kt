@@ -91,6 +91,7 @@ fun WeightHistoryItem(
             },
         )
     }
+
     Card(
         content = {
             ConstraintLayout(

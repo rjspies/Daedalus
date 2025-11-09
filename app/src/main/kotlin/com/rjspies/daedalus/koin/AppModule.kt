@@ -1,5 +1,6 @@
 package com.rjspies.daedalus.koin
 
+import com.rjspies.daedalus.data.SnackbarRepositoryImpl
 import com.rjspies.daedalus.data.WeightDao
 import com.rjspies.daedalus.data.WeightDatabase
 import com.rjspies.daedalus.data.WeightServiceImpl
@@ -7,10 +8,14 @@ import com.rjspies.daedalus.domain.CoroutineDispatcherProvider
 import com.rjspies.daedalus.domain.DefaultCoroutineDispatcherProvider
 import com.rjspies.daedalus.domain.DeleteWeightUseCase
 import com.rjspies.daedalus.domain.ExportWeightsUseCase
+import com.rjspies.daedalus.domain.GetSnackbarUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.GetWeightsDescendingUseCase
 import com.rjspies.daedalus.domain.InsertWeightUseCase
+import com.rjspies.daedalus.domain.ShowSnackbarUseCase
+import com.rjspies.daedalus.domain.SnackbarRepository
 import com.rjspies.daedalus.domain.WeightService
+import com.rjspies.daedalus.presentation.MainViewModel
 import com.rjspies.daedalus.presentation.diagram.WeightDiagramViewModel
 import com.rjspies.daedalus.presentation.history.WeightHistoryItemViewModel
 import com.rjspies.daedalus.presentation.history.WeightHistoryViewModel
@@ -24,13 +29,17 @@ val APP_MODULE = module {
     singleOf(WeightDatabase::getDatabase) { bind<WeightDatabase>() }
     singleOf(WeightDatabase::weightDao) { bind<WeightDao>() }
     singleOf(::WeightServiceImpl) { bind<WeightService>() }
+    singleOf(::SnackbarRepositoryImpl) { bind<SnackbarRepository>() }
     factoryOf(::GetWeightsAscendingUseCase)
     factoryOf(::GetWeightsDescendingUseCase)
     factoryOf(::DeleteWeightUseCase)
     factoryOf(::InsertWeightUseCase)
     factoryOf(::ExportWeightsUseCase)
     factoryOf(::DefaultCoroutineDispatcherProvider) { bind<CoroutineDispatcherProvider>() }
+    factoryOf(::ShowSnackbarUseCase)
+    factoryOf(::GetSnackbarUseCase)
     viewModelOf(::WeightHistoryViewModel)
     viewModelOf(::WeightDiagramViewModel)
     viewModelOf(::WeightHistoryItemViewModel)
+    viewModelOf(::MainViewModel)
 }

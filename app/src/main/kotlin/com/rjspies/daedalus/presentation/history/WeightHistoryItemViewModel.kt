@@ -1,5 +1,6 @@
 package com.rjspies.daedalus.presentation.history
 
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rjspies.daedalus.domain.CoroutineDispatcherProvider
@@ -55,6 +56,7 @@ class WeightHistoryItemViewModel(
         }
     }
 
+    @Immutable
     data class UiState(
         val shouldShowDialog: Boolean = false,
         val isDialogLoading: Boolean = false,
