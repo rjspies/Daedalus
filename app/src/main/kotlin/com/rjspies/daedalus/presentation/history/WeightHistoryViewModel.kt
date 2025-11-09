@@ -1,5 +1,6 @@
 package com.rjspies.daedalus.presentation.history
 
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rjspies.daedalus.domain.GetWeightsDescendingUseCase
@@ -25,6 +26,7 @@ class WeightHistoryViewModel(
         }
     }
 
+    @Immutable
     data class UiState(
         val weights: List<Weight> = emptyList(),
     )

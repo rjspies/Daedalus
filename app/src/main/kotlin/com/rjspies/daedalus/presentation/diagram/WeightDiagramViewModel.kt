@@ -1,6 +1,7 @@
 package com.rjspies.daedalus.presentation.diagram
 
 import android.net.Uri
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rjspies.daedalus.AppError
@@ -108,6 +109,7 @@ class WeightDiagramViewModel(
 
     data class ExportUiData(val fileName: String, val mimeType: String)
 
+    @Immutable
     data class UiState(
         val weights: List<WeightChartEntry> = emptyList(),
         val shouldShowInsertWeightDialog: Boolean = false,
