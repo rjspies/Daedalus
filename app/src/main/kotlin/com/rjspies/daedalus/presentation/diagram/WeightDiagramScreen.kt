@@ -79,9 +79,9 @@ import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
 import com.rjspies.daedalus.presentation.navigation.Route
+import org.koin.androidx.compose.koinViewModel
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import org.koin.androidx.compose.koinViewModel
 
 @Suppress("LongMethod")
 @Composable
@@ -214,9 +214,9 @@ fun WeightDiagramScreen(
                 horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
             ) {
                 OutlinedButton(
-                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked) },
+                    onClick = { navigate(Route.ImportExport) },
                     modifier = Modifier.weight(1f),
-                    content = { Text(stringResource(R.string.weight_diagram_button_export_weights_title)) },
+                    content = { Text("Import/Export") },
                     enabled = !uiState.isExporting,
                 )
             }

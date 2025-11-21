@@ -19,6 +19,7 @@ import com.rjspies.daedalus.presentation.MainViewModel
 import com.rjspies.daedalus.presentation.diagram.WeightDiagramViewModel
 import com.rjspies.daedalus.presentation.history.WeightHistoryItemViewModel
 import com.rjspies.daedalus.presentation.history.WeightHistoryViewModel
+import com.rjspies.daedalus.presentation.importexport.ImportExportViewModel
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -42,4 +43,5 @@ val APP_MODULE = module {
     viewModelOf(::WeightDiagramViewModel)
     viewModelOf(::WeightHistoryItemViewModel)
     viewModelOf(::MainViewModel)
+    viewModelOf(::ImportExportViewModel)
 }

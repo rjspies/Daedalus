@@ -10,12 +10,12 @@ import com.rjspies.daedalus.domain.ExportWeightsUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.InsertWeightUseCase
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
-import java.time.ZonedDateTime
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.ZonedDateTime
 
 class WeightDiagramViewModel(
     getWeightsAscending: GetWeightsAscendingUseCase,
@@ -93,9 +93,6 @@ class WeightDiagramViewModel(
                     )
                 }
             }
-            Event.ExportClicked -> _uiState.update { uiState ->
-                uiState.copy(exportPrompt = ExportUiData("weights.csv", "text/csv"), isExporting = true)
-            }
             is Event.PathChosen -> viewModelScope.launch {
                 _uiState.update { it.copy(exportPrompt = null) }
                 exportWeights(event.contentUri?.toString())
@@ -128,6 +125,5 @@ class WeightDiagramViewModel(
         data object ShowInsertWeightDialog : Event
         data object CloseInsertWeightDialog : Event
         data object InsertCurrentWeight : Event
-        data object ExportClicked : Event
     }
 }

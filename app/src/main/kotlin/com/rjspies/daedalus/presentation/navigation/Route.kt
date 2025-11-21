@@ -8,4 +8,7 @@ sealed class Route {
 
     @Serializable
     data object History : Route()
+
+    @Serializable
+    data object ImportExport : Route()
 }

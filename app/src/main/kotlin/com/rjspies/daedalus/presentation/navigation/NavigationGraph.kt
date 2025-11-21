@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rjspies.daedalus.presentation.diagram.WeightDiagramScreen
 import com.rjspies.daedalus.presentation.history.WeightHistoryScreen
+import com.rjspies.daedalus.presentation.importexport.ImportExportScreen
 
 fun NavGraphBuilder.navigationGraph(
     navigationController: NavController,
@@ -19,5 +20,8 @@ fun NavGraphBuilder.navigationGraph(
     }
     composable<Route.History> {
         WeightHistoryScreen(padding)
+    }
+    composable<Route.ImportExport> {
+        ImportExportScreen(padding)
     }
 }
