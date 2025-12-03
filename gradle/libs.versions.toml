@@ -66,5 +66,5 @@ androidxComposeUi-uiToolingPreview = { group = "androidx.compose.ui", name = "ui
 androidxComposeUi-uiTooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
 androidxNavigation-navigationCompose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.6" }
 ioGitlabArturboschDetekt-detektFormatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
-androidxComposeUi-uiTextGoogleFonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version = "1.9.5" }
+androidxComposeUi-uiTextGoogleFonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version = "1.10.0" }
 orgJetbrainsKotlinx-kotlinxCoroutinesTest = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version = "1.10.2" }
