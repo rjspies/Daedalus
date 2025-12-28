@@ -55,12 +55,14 @@ class WeightDiagramViewModel(
                     insertWeightDialogError = null,
                 )
             }
+
             is Event.SetCurrentWeight -> _uiState.update { uiState ->
                 uiState.copy(
                     insertWeightDialogCurrentWeight = filterInput(event.weight),
                     insertWeightDialogError = null,
                 )
             }
+
             is Event.InsertCurrentWeight -> viewModelScope.launch {
                 _uiState.update { uiState ->
                     uiState.copy(
@@ -93,13 +95,34 @@ class WeightDiagramViewModel(
                     )
                 }
             }
+
             Event.ExportClicked -> _uiState.update { uiState ->
-                uiState.copy(exportPrompt = ExportUiData("weights.csv", "text/csv"), isExporting = true)
+                uiState.copy(
+                    exportPrompt = ExportUiData("weights", "text/csv"),
+                    isExporting = true,
+                    importPrompt = null,
+                    isImporting = false,
+                )
             }
+
             is Event.PathChosen -> viewModelScope.launch {
                 _uiState.update { it.copy(exportPrompt = null) }
                 exportWeights(event.contentUri?.toString())
                 _uiState.update { it.copy(isExporting = false) }
+            }
+
+            Event.ImportClicked -> _uiState.update { uiState ->
+                uiState.copy(
+                    exportPrompt = null,
+                    isExporting = false,
+                    importPrompt = ImportUiData("text/comma-separated-values"),
+                    isImporting = true,
+                )
+            }
+
+            is Event.ContentChosen -> viewModelScope.launch {
+                _uiState.update { it.copy(importPrompt = null) }
+                _uiState.update { it.copy(isImporting = false) }
             }
         }
     }
@@ -107,7 +130,11 @@ class WeightDiagramViewModel(
     private fun filterInput(weight: String): String = weight.filter { it.isDigit() || it == '.' || it == ',' }
     private fun String?.parseToFloat(): Float? = this?.run { replace(",", ".").toFloatOrNull() }
 
+    @Immutable
     data class ExportUiData(val fileName: String, val mimeType: String)
+
+    @Immutable
+    data class ImportUiData(val mimeType: String)
 
     @Immutable
     data class UiState(
@@ -120,14 +147,18 @@ class WeightDiagramViewModel(
         val isInsertWeightDialogDismissable: Boolean = true,
         val exportPrompt: ExportUiData? = null,
         val isExporting: Boolean = false,
+        val importPrompt: ImportUiData? = null,
+        val isImporting: Boolean = false,
     )
 
     sealed interface Event {
         data class SetCurrentWeight(val weight: String) : Event
         data class PathChosen(val contentUri: Uri?) : Event
+        data class ContentChosen(val contentUri: Uri?) : Event
         data object ShowInsertWeightDialog : Event
         data object CloseInsertWeightDialog : Event
         data object InsertCurrentWeight : Event
         data object ExportClicked : Event
+        data object ImportClicked : Event
     }
 }

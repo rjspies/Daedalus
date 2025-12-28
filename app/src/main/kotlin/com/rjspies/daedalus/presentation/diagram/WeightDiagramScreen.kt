@@ -1,5 +1,6 @@
 package com.rjspies.daedalus.presentation.diagram
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.text.Layout
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -43,9 +44,11 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
@@ -181,6 +184,17 @@ fun WeightDiagramScreen(
             }
         }
 
+        val importData = uiState.importPrompt
+        if (importData != null) {
+            val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
+                viewModel.onEvent(WeightDiagramViewModel.Event.ContentChosen(it))
+            }
+
+            LaunchedEffect(Unit) {
+                launcher.launch(importData.mimeType)
+            }
+        }
+
         if (uiState.weights.isNotEmpty()) {
             Column {
                 Text(
@@ -216,8 +230,20 @@ fun WeightDiagramScreen(
                 OutlinedButton(
                     onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked) },
                     modifier = Modifier.weight(1f),
-                    content = { Text(stringResource(R.string.weight_diagram_button_export_weights_title)) },
+                    content = { Text(stringResource(R.string.weight_diagram_button_export_weights_title), maxLines = 1) },
                     enabled = !uiState.isExporting,
+                )
+                OutlinedButton(
+                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ImportClicked) },
+                    modifier = Modifier.weight(1f),
+                    content = {
+                        Text(
+                            text = stringResource(R.string.weight_diagram_button_import_weights_title),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    },
+                    enabled = !uiState.isImporting,
                 )
             }
             Row(
@@ -229,12 +255,12 @@ fun WeightDiagramScreen(
                 OutlinedButton(
                     onClick = { navigate(Route.History) },
                     modifier = Modifier.weight(1f),
-                    content = { Text(stringResource(R.string.weight_diagram_button_history_title)) },
+                    content = { Text(stringResource(R.string.weight_diagram_button_history_title), maxLines = 1) },
                 )
                 Button(
                     onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
                     modifier = Modifier.weight(1f),
-                    content = { Text(stringResource(R.string.weight_diagram_button_insert_weight_title)) },
+                    content = { Text(stringResource(R.string.weight_diagram_button_insert_weight_title), maxLines = 1) },
                 )
             }
         }
