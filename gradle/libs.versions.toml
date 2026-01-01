@@ -7,7 +7,7 @@ ioGitlabArturboschDetekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "
 orgJetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 comGoogleDevtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 orgJetbrainsKotlinPluginCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version = "1.14.0.0" }
+deMannodermausAndroidJunit5 = { id = "de.mannodermaus.android-junit5", version = "2.0.0" }
 orgJetbrainsKotlinPluginSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [versions]
