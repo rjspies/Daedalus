@@ -4,7 +4,6 @@ import org.gradle.jvm.toolchain.internal.DefaultJvmVendorSpec
 
 plugins {
     alias(libs.plugins.comAndroidApplication)
-    alias(libs.plugins.orgJetbrainsKotlinAndroid)
     alias(libs.plugins.comGoogleDevtoolsKsp)
     alias(libs.plugins.ioGitlabArturboschDetekt)
     alias(libs.plugins.orgJetbrainsKotlinPluginCompose)
