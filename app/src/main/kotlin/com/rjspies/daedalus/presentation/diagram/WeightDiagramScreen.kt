@@ -1,7 +1,5 @@
 package com.rjspies.daedalus.presentation.diagram
 
-import android.graphics.Typeface
-import android.text.Layout
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateContentSize
@@ -18,6 +16,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -40,36 +40,34 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
-import com.patrykandpatrick.vico.compose.cartesian.axis.rememberBottom
-import com.patrykandpatrick.vico.compose.cartesian.axis.rememberStart
+import com.patrykandpatrick.vico.compose.cartesian.FadingEdges
+import com.patrykandpatrick.vico.compose.cartesian.Scroll
+import com.patrykandpatrick.vico.compose.cartesian.axis.HorizontalAxis
+import com.patrykandpatrick.vico.compose.cartesian.axis.VerticalAxis
+import com.patrykandpatrick.vico.compose.cartesian.data.CartesianChartModelProducer
+import com.patrykandpatrick.vico.compose.cartesian.data.CartesianLayerRangeProvider
+import com.patrykandpatrick.vico.compose.cartesian.data.lineSeries
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLayer
+import com.patrykandpatrick.vico.compose.cartesian.marker.DefaultCartesianMarker
 import com.patrykandpatrick.vico.compose.cartesian.rememberCartesianChart
 import com.patrykandpatrick.vico.compose.cartesian.rememberVicoScrollState
+import com.patrykandpatrick.vico.compose.common.DashedShape
+import com.patrykandpatrick.vico.compose.common.Fill
+import com.patrykandpatrick.vico.compose.common.Insets
+import com.patrykandpatrick.vico.compose.common.MarkerCornerBasedShape
 import com.patrykandpatrick.vico.compose.common.component.rememberLineComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberShapeComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberTextComponent
-import com.patrykandpatrick.vico.core.cartesian.FadingEdges
-import com.patrykandpatrick.vico.core.cartesian.Scroll
-import com.patrykandpatrick.vico.core.cartesian.axis.HorizontalAxis
-import com.patrykandpatrick.vico.core.cartesian.axis.VerticalAxis
-import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModelProducer
-import com.patrykandpatrick.vico.core.cartesian.data.CartesianLayerRangeProvider
-import com.patrykandpatrick.vico.core.cartesian.data.lineSeries
-import com.patrykandpatrick.vico.core.cartesian.marker.DefaultCartesianMarker
-import com.patrykandpatrick.vico.core.common.Fill
-import com.patrykandpatrick.vico.core.common.Insets
-import com.patrykandpatrick.vico.core.common.shape.CorneredShape
-import com.patrykandpatrick.vico.core.common.shape.DashedShape
-import com.patrykandpatrick.vico.core.common.shape.MarkerCorneredShape
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.common.EmptyScreen
 import com.rjspies.daedalus.presentation.common.Spacings
@@ -82,6 +80,8 @@ import com.rjspies.daedalus.presentation.navigation.Route
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import org.koin.androidx.compose.koinViewModel
+
+private const val FULL_CORNER_RADIUS_PERCENT = 50
 
 @Suppress("LongMethod")
 @Composable
@@ -300,35 +300,37 @@ private fun Chart(entries: List<WeightChartEntry>) {
 
 @Composable
 private fun rememberMarkerShape() = rememberShapeComponent(
-    fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
-    shape = CorneredShape.Pill,
+    fill = Fill(MaterialTheme.colorScheme.tertiary),
+    shape = CircleShape,
     strokeThickness = 6.dp,
 )
 
 @Composable
 private fun rememberMarkerText() = rememberTextComponent(
-    color = MaterialTheme.colorScheme.onTertiary,
+    style = TextStyle(
+        color = MaterialTheme.colorScheme.onTertiary,
+        fontFamily = FontFamily.Monospace,
+        textAlign = TextAlign.Center,
+    ),
     background = rememberShapeComponent(
-        fill = Fill(Color.Transparent.toArgb()),
-        strokeFill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
+        fill = Fill.Transparent,
+        strokeFill = Fill(MaterialTheme.colorScheme.tertiary),
         strokeThickness = 1.dp,
-        shape = MarkerCorneredShape(CorneredShape.Corner.Rounded),
+        shape = MarkerCornerBasedShape(RoundedCornerShape(FULL_CORNER_RADIUS_PERCENT)),
     ),
     padding = Insets(
-        horizontalDp = 8f,
-        verticalDp = 2f,
+        horizontal = 8.dp,
+        vertical = 2.dp,
     ),
-    typeface = Typeface.MONOSPACE,
-    textAlignment = Layout.Alignment.ALIGN_CENTER,
 )
 
 @Composable
 private fun rememberMarkerLine() = rememberLineComponent(
-    fill = Fill(MaterialTheme.colorScheme.tertiary.toArgb()),
-    shape = DashedShape(CorneredShape.Pill),
+    fill = Fill(MaterialTheme.colorScheme.tertiary),
+    shape = DashedShape(CircleShape),
 )
 
 @Composable
 private fun rememberAxisText() = rememberTextComponent(
-    color = MaterialTheme.colorScheme.onBackground,
+    style = TextStyle(color = MaterialTheme.colorScheme.onBackground),
 )
