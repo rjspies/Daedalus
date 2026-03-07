@@ -42,8 +42,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -307,9 +305,8 @@ private fun rememberMarkerShape() = rememberShapeComponent(
 
 @Composable
 private fun rememberMarkerText() = rememberTextComponent(
-    style = TextStyle(
+    style = MaterialTheme.typography.labelSmall.copy(
         color = MaterialTheme.colorScheme.onTertiary,
-        fontFamily = FontFamily.Monospace,
         textAlign = TextAlign.Center,
     ),
     background = rememberShapeComponent(
@@ -332,5 +329,5 @@ private fun rememberMarkerLine() = rememberLineComponent(
 
 @Composable
 private fun rememberAxisText() = rememberTextComponent(
-    style = TextStyle(color = MaterialTheme.colorScheme.onBackground),
+    style = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onBackground),
 )
