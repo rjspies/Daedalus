@@ -186,7 +186,7 @@ fun WeightDiagramScreen(
             }
 
             LaunchedEffect(Unit) {
-                importLauncher.launch(arrayOf(importData.mimeType))
+                importLauncher.launch(importData.mimeTypes.toTypedArray())
             }
         }
 

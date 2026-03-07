@@ -46,7 +46,7 @@ class WeightDiagramViewModelTest {
     fun `ImportClicked sets importPrompt with CSV mime type and isImporting`() = runTest(testDispatcher) {
         viewModel.onEvent(WeightDiagramViewModel.Event.ImportClicked)
 
-        viewModel.uiState.value.importPrompt shouldBe WeightDiagramViewModel.ImportUiData("text/csv")
+        viewModel.uiState.value.importPrompt shouldBe WeightDiagramViewModel.ImportUiData(listOf("text/csv", "text/comma-separated-values", "text/plain"))
         viewModel.uiState.value.isImporting shouldBe true
     }
 

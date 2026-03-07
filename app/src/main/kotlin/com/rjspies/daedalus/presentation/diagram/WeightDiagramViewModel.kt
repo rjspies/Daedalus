@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val CSV_MIME_TYPE = "text/csv"
+private val IMPORT_MIME_TYPES = listOf(CSV_MIME_TYPE, "text/comma-separated-values", "text/plain")
 
 class WeightDiagramViewModel(
     getWeightsAscending: GetWeightsAscendingUseCase,
@@ -106,7 +107,7 @@ class WeightDiagramViewModel(
                 exportWeights(event.contentUri?.toString())
                 _uiState.update { it.copy(isExporting = false) }
             }
-            Event.ImportClicked -> _uiState.update { it.copy(importPrompt = ImportUiData(CSV_MIME_TYPE), isImporting = true) }
+            Event.ImportClicked -> _uiState.update { it.copy(importPrompt = ImportUiData(IMPORT_MIME_TYPES), isImporting = true) }
             is Event.ImportPathChosen -> viewModelScope.launch {
                 _uiState.update { it.copy(importPrompt = null) }
                 importWeights(event.contentUri?.toString())
@@ -119,7 +120,7 @@ class WeightDiagramViewModel(
     private fun String?.parseToFloat(): Float? = this?.run { replace(",", ".").toFloatOrNull() }
 
     data class ExportUiData(val fileName: String, val mimeType: String)
-    data class ImportUiData(val mimeType: String)
+    data class ImportUiData(val mimeTypes: List<String>)
 
     @Immutable
     data class UiState(
