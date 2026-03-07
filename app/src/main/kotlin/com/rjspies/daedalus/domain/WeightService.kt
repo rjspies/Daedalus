@@ -11,6 +11,7 @@ interface WeightService {
     )
     suspend fun deleteWeight(weight: Weight)
     suspend fun exportWeights(path: String)
+    suspend fun importWeights(path: String)
     fun weightsDescending(): Flow<List<Weight>>
     fun weightsAscending(): Flow<List<Weight>>
 }

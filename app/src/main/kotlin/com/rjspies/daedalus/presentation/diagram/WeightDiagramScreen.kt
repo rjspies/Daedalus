@@ -179,6 +179,17 @@ fun WeightDiagramScreen(
             }
         }
 
+        val importData = uiState.importPrompt
+        if (importData != null) {
+            val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
+                viewModel.onEvent(WeightDiagramViewModel.Event.ImportPathChosen(it))
+            }
+
+            LaunchedEffect(Unit) {
+                importLauncher.launch(arrayOf(importData.mimeType))
+            }
+        }
+
         if (uiState.weights.isNotEmpty()) {
             Column {
                 Text(
@@ -211,6 +222,12 @@ fun WeightDiagramScreen(
                     .horizontalSpacingM(),
                 horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
             ) {
+                OutlinedButton(
+                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ImportClicked) },
+                    modifier = Modifier.weight(1f),
+                    content = { Text(stringResource(R.string.weight_diagram_button_import_weights_title)) },
+                    enabled = !uiState.isImporting,
+                )
                 OutlinedButton(
                     onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked) },
                     modifier = Modifier.weight(1f),

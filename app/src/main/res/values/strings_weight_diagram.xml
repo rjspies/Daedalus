@@ -7,4 +7,5 @@
     <string name="weight_diagram_button_history_title">Verlauf</string>
     <string name="weight_diagram_button_insert_weight_title">Hinzufügen</string>
     <string name="weight_diagram_button_export_weights_title">Exportieren</string>
+    <string name="weight_diagram_button_import_weights_title">Importieren</string>
 </resources>
