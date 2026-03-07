@@ -11,6 +11,7 @@ import com.rjspies.daedalus.domain.ExportWeightsUseCase
 import com.rjspies.daedalus.domain.GetSnackbarUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.GetWeightsDescendingUseCase
+import com.rjspies.daedalus.domain.ImportWeightsUseCase
 import com.rjspies.daedalus.domain.InsertWeightUseCase
 import com.rjspies.daedalus.domain.ShowSnackbarUseCase
 import com.rjspies.daedalus.domain.SnackbarRepository
@@ -35,6 +36,7 @@ val APP_MODULE = module {
     factoryOf(::DeleteWeightUseCase)
     factoryOf(::InsertWeightUseCase)
     factoryOf(::ExportWeightsUseCase)
+    factoryOf(::ImportWeightsUseCase)
     factoryOf(::DefaultCoroutineDispatcherProvider) { bind<CoroutineDispatcherProvider>() }
     factoryOf(::ShowSnackbarUseCase)
     factoryOf(::GetSnackbarUseCase)

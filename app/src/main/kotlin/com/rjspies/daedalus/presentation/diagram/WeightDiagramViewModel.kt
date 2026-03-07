@@ -8,6 +8,7 @@ import com.rjspies.daedalus.AppError
 import com.rjspies.daedalus.InsertWeightError
 import com.rjspies.daedalus.domain.ExportWeightsUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
+import com.rjspies.daedalus.domain.ImportWeightsUseCase
 import com.rjspies.daedalus.domain.InsertWeightUseCase
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import java.time.ZonedDateTime
@@ -17,10 +18,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+private const val CSV_MIME_TYPE = "text/csv"
+
 class WeightDiagramViewModel(
     getWeightsAscending: GetWeightsAscendingUseCase,
     private val insertWeight: InsertWeightUseCase,
     private val exportWeights: ExportWeightsUseCase,
+    private val importWeights: ImportWeightsUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState>
@@ -44,6 +48,7 @@ class WeightDiagramViewModel(
         }
     }
 
+    @Suppress("LongMethod")
     fun onEvent(event: Event) {
         when (event) {
             Event.ShowInsertWeightDialog -> _uiState.update { it.copy(shouldShowInsertWeightDialog = true) }
@@ -94,12 +99,18 @@ class WeightDiagramViewModel(
                 }
             }
             Event.ExportClicked -> _uiState.update { uiState ->
-                uiState.copy(exportPrompt = ExportUiData("weights.csv", "text/csv"), isExporting = true)
+                uiState.copy(exportPrompt = ExportUiData("weights.csv", CSV_MIME_TYPE), isExporting = true)
             }
             is Event.PathChosen -> viewModelScope.launch {
                 _uiState.update { it.copy(exportPrompt = null) }
                 exportWeights(event.contentUri?.toString())
                 _uiState.update { it.copy(isExporting = false) }
+            }
+            Event.ImportClicked -> _uiState.update { it.copy(importPrompt = ImportUiData(CSV_MIME_TYPE), isImporting = true) }
+            is Event.ImportPathChosen -> viewModelScope.launch {
+                _uiState.update { it.copy(importPrompt = null) }
+                importWeights(event.contentUri?.toString())
+                _uiState.update { it.copy(isImporting = false) }
             }
         }
     }
@@ -108,6 +119,7 @@ class WeightDiagramViewModel(
     private fun String?.parseToFloat(): Float? = this?.run { replace(",", ".").toFloatOrNull() }
 
     data class ExportUiData(val fileName: String, val mimeType: String)
+    data class ImportUiData(val mimeType: String)
 
     @Immutable
     data class UiState(
@@ -120,14 +132,18 @@ class WeightDiagramViewModel(
         val isInsertWeightDialogDismissable: Boolean = true,
         val exportPrompt: ExportUiData? = null,
         val isExporting: Boolean = false,
+        val importPrompt: ImportUiData? = null,
+        val isImporting: Boolean = false,
     )
 
     sealed interface Event {
         data class SetCurrentWeight(val weight: String) : Event
         data class PathChosen(val contentUri: Uri?) : Event
+        data class ImportPathChosen(val contentUri: Uri?) : Event
         data object ShowInsertWeightDialog : Event
         data object CloseInsertWeightDialog : Event
         data object InsertCurrentWeight : Event
         data object ExportClicked : Event
+        data object ImportClicked : Event
     }
 }

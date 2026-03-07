@@ -9,6 +9,8 @@ import com.rjspies.daedalus.domain.WEIGHT_COLUMN_IDENTIFIER_NOTE
 import com.rjspies.daedalus.domain.WEIGHT_COLUMN_IDENTIFIER_VALUE
 import com.rjspies.daedalus.domain.Weight
 import com.rjspies.daedalus.domain.WeightService
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.time.ZonedDateTime
 import kotlinx.coroutines.flow.Flow
@@ -32,6 +34,20 @@ class WeightServiceImpl(
     override suspend fun deleteWeight(weight: Weight) = weightDao.deleteWeight(weight.id)
     override fun weightsDescending(): Flow<List<Weight>> = weightDao.weightsDescending()
     override fun weightsAscending(): Flow<List<Weight>> = weightDao.weightsAscending()
+    override suspend fun importWeights(path: String) {
+        val inputStream = applicationContext.contentResolver.openInputStream(path.toUri())
+        BufferedReader(InputStreamReader(inputStream)).use { reader ->
+            reader.readLines().drop(1).filter { it.isNotBlank() }.forEach { line ->
+                val parts = line.split(",")
+                val value = parts[1].toFloat()
+                val dateTime = ZonedDateTime.parse(parts.last())
+                val rawNote = parts.drop(2).dropLast(1).joinToString(",")
+                val note = if (rawNote == "null") null else rawNote
+                weightDao.insert(WeightImpl(id = 0, value = value, note = note, dateTime = dateTime))
+            }
+        }
+    }
+
     override suspend fun exportWeights(path: String) {
         val outputStream = applicationContext.contentResolver.openOutputStream(path.toUri())
         OutputStreamWriter(outputStream).use { outputStreamWriter ->
