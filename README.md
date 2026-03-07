@@ -1,3 +1,30 @@
+### Installation via Obtainium
+
+[Obtainium](https://github.com/ImranR98/Obtainium) lets you install and update
+Daedalus directly from GitHub releases.
+
+1. Open Obtainium and tap **Add App**
+2. Enter the repository URL: `https://github.com/rjspies/Daedalus`
+3. Under **APK Filter Regex**, enter: `Daedalus-.*\.apk`
+4. Tap **Add**
+
+#### Verify a release
+
+Each release includes a SHA-256 checksum (`.sha256`) and its GPG signature
+(`.sha256.sig`). To verify:
+
+```shell
+# Import the developer's public key (once)
+curl https://github.com/rjspies.gpg | gpg --import
+
+# Verify the checksum was signed by the developer
+gpg --verify Daedalus-<version>-<versionCode>.apk.sha256.sig \
+             Daedalus-<version>-<versionCode>.apk.sha256
+
+# Verify the APK matches the checksum
+sha256sum -c Daedalus-<version>-<versionCode>.apk.sha256
+```
+
 ### Architecture
 
 Daedalus follows a strict three-layer clean architecture:
