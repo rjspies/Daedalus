@@ -46,7 +46,7 @@ class WeightDiagramViewModelTest {
     fun `ImportClicked sets importPrompt with CSV mime type and isImporting`() = runTest(testDispatcher) {
         viewModel.onEvent(WeightDiagramViewModel.Event.ImportClicked)
 
-        viewModel.uiState.value.importPrompt shouldBe WeightDiagramViewModel.ImportUiData(listOf("text/csv", "text/comma-separated-values", "text/plain"))
+        viewModel.uiState.value.importPrompt shouldBe WeightDiagramViewModel.ImportUiData("text/comma-separated-values")
         viewModel.uiState.value.isImporting shouldBe true
     }
 
@@ -63,7 +63,7 @@ class WeightDiagramViewModelTest {
     fun `ExportClicked sets exportPrompt with CSV mime type and isExporting`() = runTest(testDispatcher) {
         viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked)
 
-        viewModel.uiState.value.exportPrompt shouldBe WeightDiagramViewModel.ExportUiData("weights.csv", "text/csv")
+        viewModel.uiState.value.exportPrompt shouldBe WeightDiagramViewModel.ExportUiData("weights.csv", "text/comma-separated-values")
         viewModel.uiState.value.isExporting shouldBe true
     }
 
