@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Daedalus is an Android weight-tracking app built with Jetpack Compose, targeting API 29+ (minSdk 29, targetSdk 35). It uses a clean architecture with strict layer dependency rules enforced by Konsist tests.
+Daedalus is an Android weight-tracking app built with Jetpack Compose, targeting API 29+ (minSdk 29, targetSdk 35). It uses a clean architecture with strict layer dependency rules enforced by ArchUnit tests.
 
 ## Build & Development Commands
 
