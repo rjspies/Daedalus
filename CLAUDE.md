@@ -59,3 +59,7 @@ Dependency injection is handled by Koin with a single `APP_MODULE` in `koin/AppM
 
 - `Route.Diagram` → `WeightDiagramScreen` — weight chart using Vico
 - `Route.History` → `WeightHistoryScreen` — list of weight entries with delete support
+
+## Git Workflow
+
+- **Branch naming**: Bugfix branches are prefixed with `Bugfix/`; all other branches (features, chores, version bumps, etc.) are prefixed with `Feature/`. After the slash: first word capitalized, remaining words lowercase, words separated by hyphens. Example: `Feature/My-test-feature`
