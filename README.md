@@ -15,7 +15,7 @@ Each release includes a SHA-256 checksum (`.sha256`) and its GPG signature
 
 ```shell
 # Import the developer's public key (once)
-curl https://github.com/rjspies.gpg | gpg --import
+curl https://raw.githubusercontent.com/rjspies/Daedalus/main/app/miscellaneous/rjspies.asc | gpg --import
 
 # Verify the checksum was signed by the developer
 gpg --verify Daedalus-<version>-<versionCode>.apk.sha256.sig \
