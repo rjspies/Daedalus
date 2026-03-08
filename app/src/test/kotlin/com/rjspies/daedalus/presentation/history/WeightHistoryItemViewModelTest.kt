@@ -26,17 +26,17 @@ import org.junit.jupiter.api.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class WeightHistoryItemViewModelTest {
     private val testDispatcher = UnconfinedTestDispatcher()
-    private lateinit var fakeSnackbarRepo: FakeSnackbarRepository
+    private lateinit var fakeSnackbarRepository: FakeSnackbarRepository
     private lateinit var viewModel: WeightHistoryItemViewModel
 
     @BeforeEach
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        fakeSnackbarRepo = FakeSnackbarRepository()
+        fakeSnackbarRepository = FakeSnackbarRepository()
         viewModel = WeightHistoryItemViewModel(
             deleteWeight = DeleteWeightUseCase(FakeWeightService()),
             dispatcherProvider = FakeDispatcherProvider(testDispatcher),
-            showSnackbar = ShowSnackbarUseCase(fakeSnackbarRepo),
+            showSnackbar = ShowSnackbarUseCase(fakeSnackbarRepository),
             stringProvider = StringProvider { "" },
         )
     }
@@ -75,7 +75,7 @@ class WeightHistoryItemViewModelTest {
     fun `DeleteWeight on success shows success snackbar`() = runTest(testDispatcher) {
         viewModel.onEvent(WeightHistoryItemViewModel.Event.DeleteWeight(FakeWeight))
 
-        fakeSnackbarRepo.lastVisuals?.isError shouldBe false
+        fakeSnackbarRepository.lastVisuals?.isError shouldBe false
     }
 
     @Test
@@ -83,13 +83,13 @@ class WeightHistoryItemViewModelTest {
         val failingViewModel = WeightHistoryItemViewModel(
             deleteWeight = DeleteWeightUseCase(FailingWeightService()),
             dispatcherProvider = FakeDispatcherProvider(testDispatcher),
-            showSnackbar = ShowSnackbarUseCase(fakeSnackbarRepo),
+            showSnackbar = ShowSnackbarUseCase(fakeSnackbarRepository),
             stringProvider = StringProvider { "" },
         )
 
         failingViewModel.onEvent(WeightHistoryItemViewModel.Event.DeleteWeight(FakeWeight))
 
-        fakeSnackbarRepo.lastVisuals?.isError shouldBe true
+        fakeSnackbarRepository.lastVisuals?.isError shouldBe true
     }
 }
 

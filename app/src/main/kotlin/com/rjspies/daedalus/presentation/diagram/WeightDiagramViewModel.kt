@@ -131,12 +131,12 @@ class WeightDiagramViewModel(
         result
             .onSuccess { showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_export_success))) }
             .onFailure { exception ->
-                val res = when (exception) {
+                val stringResourceId = when (exception) {
                     is IllegalArgumentException -> R.string.snackbar_export_error_uri_null
                     is IOException -> R.string.snackbar_export_error_io
                     else -> R.string.snackbar_export_error_unknown
                 }
-                showSnackbar(SnackbarVisuals(stringProvider.getString(res), isError = true))
+                showSnackbar(SnackbarVisuals(stringProvider.getString(stringResourceId), isError = true))
             }
     }
 
@@ -144,7 +144,7 @@ class WeightDiagramViewModel(
         result
             .onSuccess { showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_import_success))) }
             .onFailure { exception ->
-                val res = when (exception) {
+                val stringResourceId = when (exception) {
                     is IllegalArgumentException -> R.string.snackbar_import_error_uri_null
                     is IOException -> R.string.snackbar_import_error_io
                     is NumberFormatException,
@@ -154,7 +154,7 @@ class WeightDiagramViewModel(
                     -> R.string.snackbar_import_error_parse
                     else -> R.string.snackbar_import_error_unknown
                 }
-                showSnackbar(SnackbarVisuals(stringProvider.getString(res), isError = true))
+                showSnackbar(SnackbarVisuals(stringProvider.getString(stringResourceId), isError = true))
             }
     }
 
