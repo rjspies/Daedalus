@@ -131,6 +131,7 @@ fun WeightDiagramScreen(
                                 .fillMaxWidth()
                                 .focusRequester(focusRequester),
                             label = { Text(stringResource(R.string.insert_weight_weight_text_field_label)) },
+                            shape = MaterialTheme.shapes.medium,
                             supportingText = {
                                 if (uiState.insertWeightDialogError != null) {
                                     Text(stringResource(R.string.insert_weight_weight_text_field_supporting_message_error))
