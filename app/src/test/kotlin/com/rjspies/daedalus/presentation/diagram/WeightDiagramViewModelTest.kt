@@ -119,6 +119,22 @@ class WeightDiagramViewModelTest {
 
         fakeSnackbarRepo.lastVisuals?.isError shouldBe false
     }
+
+    @Test
+    fun `ImportPathChosen with empty file shows error snackbar`() = runTest(testDispatcher) {
+        val emptyService = EmptyImportWeightService()
+        val vm = WeightDiagramViewModel(
+            getWeightsAscending = GetWeightsAscendingUseCase(emptyService),
+            insertWeight = InsertWeightUseCase(emptyService),
+            exportWeights = ExportWeightsUseCase(emptyService),
+            importWeights = ImportWeightsUseCase(emptyService),
+            showSnackbar = ShowSnackbarUseCase(fakeSnackbarRepo),
+            stringProvider = StringProvider { "" },
+        )
+        vm.onEvent(WeightDiagramViewModel.Event.ImportPathChosen("content://test/empty.csv"))
+
+        fakeSnackbarRepo.lastVisuals?.isError shouldBe true
+    }
 }
 
 private class FakeSnackbarRepository : SnackbarRepository {
@@ -127,6 +143,10 @@ private class FakeSnackbarRepository : SnackbarRepository {
     override suspend fun showSnackbar(visuals: SnackbarVisuals) {
         lastVisuals = visuals
     }
+}
+
+private class EmptyImportWeightService : WeightService by FakeWeightService() {
+    override suspend fun importWeights(path: String) = throw NoSuchElementException("no data")
 }
 
 private class FakeWeightService : WeightService {

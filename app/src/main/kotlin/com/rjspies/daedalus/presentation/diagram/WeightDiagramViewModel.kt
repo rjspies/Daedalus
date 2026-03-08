@@ -150,6 +150,7 @@ class WeightDiagramViewModel(
                     is NumberFormatException,
                     is DateTimeParseException,
                     is IndexOutOfBoundsException,
+                    is NoSuchElementException,
                     -> R.string.snackbar_import_error_parse
                     else -> R.string.snackbar_import_error_unknown
                 }
