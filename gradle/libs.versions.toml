@@ -28,7 +28,7 @@ ksp = "2.3.6"
 compileSdk = "36"
 targetSdk = "35"
 minSdk = "29"
-versionName = "2.1"
+versionName = "2.2"
 versionCodeOffset = "200000"
 namespace = "com.rjspies.daedalus"
 
