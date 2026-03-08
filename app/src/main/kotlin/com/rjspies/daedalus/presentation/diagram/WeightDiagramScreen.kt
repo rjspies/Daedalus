@@ -171,7 +171,7 @@ fun WeightDiagramScreen(
         val exportData = uiState.exportPrompt
         if (exportData != null) {
             val launcher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(exportData.mimeType)) {
-                viewModel.onEvent(WeightDiagramViewModel.Event.PathChosen(it))
+                viewModel.onEvent(WeightDiagramViewModel.Event.PathChosen(it?.toString()))
             }
 
             LaunchedEffect(Unit) {
@@ -182,7 +182,7 @@ fun WeightDiagramScreen(
         val importData = uiState.importPrompt
         if (importData != null) {
             val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
-                viewModel.onEvent(WeightDiagramViewModel.Event.ImportPathChosen(it))
+                viewModel.onEvent(WeightDiagramViewModel.Event.ImportPathChosen(it?.toString()))
             }
 
             LaunchedEffect(Unit) {

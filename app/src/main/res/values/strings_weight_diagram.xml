@@ -8,4 +8,14 @@
     <string name="weight_diagram_button_insert_weight_title">Hinzufügen</string>
     <string name="weight_diagram_button_export_weights_title">Exportieren</string>
     <string name="weight_diagram_button_import_weights_title">Importieren</string>
+    <string name="snackbar_insert_weight_success">Gewicht erfolgreich hinzugefügt</string>
+    <string name="snackbar_export_success">Exportieren war erfolgreich</string>
+    <string name="snackbar_export_error_uri_null">Es wurde keine Datei ausgewählt</string>
+    <string name="snackbar_export_error_io">Die Datei konnte nicht geschrieben werden</string>
+    <string name="snackbar_export_error_unknown">Beim Exportieren ist ein unbekannter Fehler aufgetreten</string>
+    <string name="snackbar_import_success">Importieren war erfolgreich</string>
+    <string name="snackbar_import_error_uri_null">Es wurde keine Datei ausgewählt</string>
+    <string name="snackbar_import_error_io">Die Datei konnte nicht gelesen werden</string>
+    <string name="snackbar_import_error_parse">Die Datei enthält ungültige Daten</string>
+    <string name="snackbar_import_error_unknown">Beim Importieren ist ein unbekannter Fehler aufgetreten</string>
 </resources>

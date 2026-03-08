@@ -37,7 +37,9 @@ class WeightServiceImpl(
     override suspend fun importWeights(path: String) {
         val inputStream = applicationContext.contentResolver.openInputStream(path.toUri())
         BufferedReader(InputStreamReader(inputStream)).use { reader ->
-            reader.readLines().drop(1).filter { it.isNotBlank() }.forEach { line ->
+            val dataLines = reader.readLines().drop(1).filter { it.isNotBlank() }
+            if (dataLines.isEmpty()) throw NoSuchElementException("CSV file contains no data")
+            dataLines.forEach { line ->
                 val parts = line.split(",")
                 val value = parts[1].toFloat()
                 val dateTime = ZonedDateTime.parse(parts.last())
