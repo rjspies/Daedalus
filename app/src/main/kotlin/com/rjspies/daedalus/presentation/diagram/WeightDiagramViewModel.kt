@@ -1,6 +1,5 @@
 package com.rjspies.daedalus.presentation.diagram
 
-import android.net.Uri
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -56,7 +55,7 @@ class WeightDiagramViewModel(
         }
     }
 
-    @Suppress("LongMethod", "CyclomaticComplexMethod")
+    @Suppress("LongMethod")
     fun onEvent(event: Event) {
         when (event) {
             Event.ShowInsertWeightDialog -> _uiState.update { it.copy(shouldShowInsertWeightDialog = true) }
@@ -91,7 +90,7 @@ class WeightDiagramViewModel(
                         note = null,
                         dateTime = ZonedDateTime.now(),
                     )
-                    showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_insert_weight_success)))
+                    handleInsertSuccess()
                 } else {
                     error = InsertWeightError.ParseFloatError
                 }
@@ -112,42 +111,50 @@ class WeightDiagramViewModel(
             }
             is Event.PathChosen -> viewModelScope.launch {
                 _uiState.update { it.copy(exportPrompt = null) }
-                exportWeights(event.contentUri?.toString())
-                    .onSuccess {
-                        showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_export_success)))
-                    }
-                    .onFailure { exception ->
-                        val messageRes = when (exception) {
-                            is IllegalArgumentException -> R.string.snackbar_export_error_uri_null
-                            is IOException -> R.string.snackbar_export_error_io
-                            else -> R.string.snackbar_export_error_unknown
-                        }
-                        showSnackbar(SnackbarVisuals(stringProvider.getString(messageRes), isError = true))
-                    }
+                handleExportResult(exportWeights(event.contentUri))
                 _uiState.update { it.copy(isExporting = false) }
             }
             Event.ImportClicked -> _uiState.update { it.copy(importPrompt = ImportUiData(CSV_MIME_TYPE), isImporting = true) }
             is Event.ImportPathChosen -> viewModelScope.launch {
                 _uiState.update { it.copy(importPrompt = null) }
-                importWeights(event.contentUri?.toString())
-                    .onSuccess {
-                        showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_import_success)))
-                    }
-                    .onFailure { exception ->
-                        val messageRes = when (exception) {
-                            is IllegalArgumentException -> R.string.snackbar_import_error_uri_null
-                            is IOException -> R.string.snackbar_import_error_io
-                            is NumberFormatException,
-                            is DateTimeParseException,
-                            is IndexOutOfBoundsException,
-                            -> R.string.snackbar_import_error_parse
-                            else -> R.string.snackbar_import_error_unknown
-                        }
-                        showSnackbar(SnackbarVisuals(stringProvider.getString(messageRes), isError = true))
-                    }
+                handleImportResult(importWeights(event.contentUri))
                 _uiState.update { it.copy(isImporting = false) }
             }
         }
+    }
+
+    private suspend fun handleInsertSuccess() {
+        showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_insert_weight_success)))
+    }
+
+    private suspend fun handleExportResult(result: Result<Unit>) {
+        result
+            .onSuccess { showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_export_success))) }
+            .onFailure { exception ->
+                val res = when (exception) {
+                    is IllegalArgumentException -> R.string.snackbar_export_error_uri_null
+                    is IOException -> R.string.snackbar_export_error_io
+                    else -> R.string.snackbar_export_error_unknown
+                }
+                showSnackbar(SnackbarVisuals(stringProvider.getString(res), isError = true))
+            }
+    }
+
+    private suspend fun handleImportResult(result: Result<Unit>) {
+        result
+            .onSuccess { showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_import_success))) }
+            .onFailure { exception ->
+                val res = when (exception) {
+                    is IllegalArgumentException -> R.string.snackbar_import_error_uri_null
+                    is IOException -> R.string.snackbar_import_error_io
+                    is NumberFormatException,
+                    is DateTimeParseException,
+                    is IndexOutOfBoundsException,
+                    -> R.string.snackbar_import_error_parse
+                    else -> R.string.snackbar_import_error_unknown
+                }
+                showSnackbar(SnackbarVisuals(stringProvider.getString(res), isError = true))
+            }
     }
 
     private fun filterInput(weight: String): String = weight.filter { it.isDigit() || it == '.' || it == ',' }
@@ -173,8 +180,8 @@ class WeightDiagramViewModel(
 
     sealed interface Event {
         data class SetCurrentWeight(val weight: String) : Event
-        data class PathChosen(val contentUri: Uri?) : Event
-        data class ImportPathChosen(val contentUri: Uri?) : Event
+        data class PathChosen(val contentUri: String?) : Event
+        data class ImportPathChosen(val contentUri: String?) : Event
         data object ShowInsertWeightDialog : Event
         data object CloseInsertWeightDialog : Event
         data object InsertCurrentWeight : Event

@@ -43,13 +43,10 @@ class WeightHistoryItemViewModel(
                     }
                 }
 
-                val deleteJob = viewModelScope.launch(dispatcherProvider.io) {
-                    deleteWeight(event.weight)
-                }
-
-                deleteJob.invokeOnCompletion { throwable ->
+                viewModelScope.launch(dispatcherProvider.io) {
+                    val succeeded = runCatching { deleteWeight(event.weight) }.isSuccess
                     viewModelScope.launch {
-                        if (throwable == null) {
+                        if (succeeded) {
                             showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_delete_weight_success)))
                         } else {
                             showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_delete_weight_error), isError = true))

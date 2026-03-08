@@ -16,4 +16,6 @@
     <string name="weight_history_dialog_delete_item_title">Löschen bestätigen</string>
     <string name="weight_history_dialog_delete_item_message">Diese Aktion kann nicht rückgängig gemacht werden, dieser Eintrag wird dauerhaft gelöscht. Bist du sicher, dass du fortfahren möchtest?</string>
     <string name="weight_history_dialog_delete_item_button">Löschen</string>
+    <string name="snackbar_delete_weight_success">Gewicht erfolgreich gelöscht</string>
+    <string name="snackbar_delete_weight_error">Gewicht konnte nicht gelöscht werden</string>
 </resources>

@@ -27,18 +27,20 @@ import org.junit.jupiter.api.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class WeightDiagramViewModelTest {
     private val testDispatcher = UnconfinedTestDispatcher()
+    private lateinit var fakeSnackbarRepo: FakeSnackbarRepository
     private lateinit var viewModel: WeightDiagramViewModel
 
     @BeforeEach
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
         val fakeService = FakeWeightService()
+        fakeSnackbarRepo = FakeSnackbarRepository()
         viewModel = WeightDiagramViewModel(
             getWeightsAscending = GetWeightsAscendingUseCase(fakeService),
             insertWeight = InsertWeightUseCase(fakeService),
             exportWeights = ExportWeightsUseCase(fakeService),
             importWeights = ImportWeightsUseCase(fakeService),
-            showSnackbar = ShowSnackbarUseCase(FakeSnackbarRepository()),
+            showSnackbar = ShowSnackbarUseCase(fakeSnackbarRepo),
             stringProvider = StringProvider { "" },
         )
     }
@@ -81,11 +83,50 @@ class WeightDiagramViewModelTest {
         viewModel.uiState.value.exportPrompt shouldBe null
         viewModel.uiState.value.isExporting shouldBe false
     }
+
+    @Test
+    fun `InsertCurrentWeight with valid weight shows success snackbar`() = runTest(testDispatcher) {
+        viewModel.onEvent(WeightDiagramViewModel.Event.SetCurrentWeight("70"))
+        viewModel.onEvent(WeightDiagramViewModel.Event.InsertCurrentWeight)
+
+        fakeSnackbarRepo.lastVisuals?.isError shouldBe false
+    }
+
+    @Test
+    fun `PathChosen with null URI shows error snackbar`() = runTest(testDispatcher) {
+        viewModel.onEvent(WeightDiagramViewModel.Event.PathChosen(null))
+
+        fakeSnackbarRepo.lastVisuals?.isError shouldBe true
+    }
+
+    @Test
+    fun `PathChosen with valid URI shows success snackbar`() = runTest(testDispatcher) {
+        viewModel.onEvent(WeightDiagramViewModel.Event.PathChosen("content://test/file.csv"))
+
+        fakeSnackbarRepo.lastVisuals?.isError shouldBe false
+    }
+
+    @Test
+    fun `ImportPathChosen with null URI shows error snackbar`() = runTest(testDispatcher) {
+        viewModel.onEvent(WeightDiagramViewModel.Event.ImportPathChosen(null))
+
+        fakeSnackbarRepo.lastVisuals?.isError shouldBe true
+    }
+
+    @Test
+    fun `ImportPathChosen with valid URI shows success snackbar`() = runTest(testDispatcher) {
+        viewModel.onEvent(WeightDiagramViewModel.Event.ImportPathChosen("content://test/file.csv"))
+
+        fakeSnackbarRepo.lastVisuals?.isError shouldBe false
+    }
 }
 
 private class FakeSnackbarRepository : SnackbarRepository {
-    override val snackbarVisuals: kotlinx.coroutines.flow.Flow<SnackbarVisuals?> = kotlinx.coroutines.flow.MutableStateFlow(null)
-    override suspend fun showSnackbar(visuals: SnackbarVisuals) = Unit
+    var lastVisuals: SnackbarVisuals? = null
+    override val snackbarVisuals: Flow<SnackbarVisuals?> = MutableStateFlow(null)
+    override suspend fun showSnackbar(visuals: SnackbarVisuals) {
+        lastVisuals = visuals
+    }
 }
 
 private class FakeWeightService : WeightService {
