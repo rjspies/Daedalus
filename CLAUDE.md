@@ -67,4 +67,4 @@ Dependency injection is handled by Koin with a single `APP_MODULE` in `koin/AppM
 ## Git Workflow
 
 - **Branch naming**: Bugfix branches are prefixed with `Bugfix/`; all other branches (features, chores, version bumps, etc.) are prefixed with `Feature/`. After the slash: first word capitalized, remaining words lowercase, words separated by hyphens. Example: `Feature/My-test-feature`
-- **Pull requests**: Always assign `rjspies` as the assignee when creating PRs (`gh pr create ... --assignee rjspies`)
+- **Pull requests**: After completing a task on a branch, always create a PR against `main` — or push to the existing branch if a PR already exists. Always assign `rjspies` as the assignee (`gh pr create ... --assignee rjspies`)
