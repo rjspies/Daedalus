@@ -69,6 +69,7 @@ jobs:
           echo "$(sha256sum "$APK" | awk '{print $1}')  ${NAME}" > "$CHECKSUM"
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import --batch
           gpg --detach-sign --armor --output "${CHECKSUM}.sig" "$CHECKSUM"
+          gpg --batch --yes --delete-secret-and-public-key 903C3C5DE48798F1
 
       - name: Upload APK to release
         uses: svenstaro/upload-release-action@v2
