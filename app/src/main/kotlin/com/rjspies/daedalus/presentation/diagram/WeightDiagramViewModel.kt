@@ -6,12 +6,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rjspies.daedalus.AppError
 import com.rjspies.daedalus.InsertWeightError
+import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.ExportWeightsUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.ImportWeightsUseCase
 import com.rjspies.daedalus.domain.InsertWeightUseCase
+import com.rjspies.daedalus.domain.ShowSnackbarUseCase
+import com.rjspies.daedalus.domain.SnackbarVisuals
+import com.rjspies.daedalus.presentation.common.StringProvider
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
+import java.io.IOException
 import java.time.ZonedDateTime
+import java.time.format.DateTimeParseException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -25,6 +31,8 @@ class WeightDiagramViewModel(
     private val insertWeight: InsertWeightUseCase,
     private val exportWeights: ExportWeightsUseCase,
     private val importWeights: ImportWeightsUseCase,
+    private val showSnackbar: ShowSnackbarUseCase,
+    private val stringProvider: StringProvider,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState>
@@ -48,7 +56,7 @@ class WeightDiagramViewModel(
         }
     }
 
-    @Suppress("LongMethod")
+    @Suppress("LongMethod", "CyclomaticComplexMethod")
     fun onEvent(event: Event) {
         when (event) {
             Event.ShowInsertWeightDialog -> _uiState.update { it.copy(shouldShowInsertWeightDialog = true) }
@@ -83,6 +91,7 @@ class WeightDiagramViewModel(
                         note = null,
                         dateTime = ZonedDateTime.now(),
                     )
+                    showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_insert_weight_success)))
                 } else {
                     error = InsertWeightError.ParseFloatError
                 }
@@ -104,12 +113,38 @@ class WeightDiagramViewModel(
             is Event.PathChosen -> viewModelScope.launch {
                 _uiState.update { it.copy(exportPrompt = null) }
                 exportWeights(event.contentUri?.toString())
+                    .onSuccess {
+                        showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_export_success)))
+                    }
+                    .onFailure { exception ->
+                        val messageRes = when (exception) {
+                            is IllegalArgumentException -> R.string.snackbar_export_error_uri_null
+                            is IOException -> R.string.snackbar_export_error_io
+                            else -> R.string.snackbar_export_error_unknown
+                        }
+                        showSnackbar(SnackbarVisuals(stringProvider.getString(messageRes), isError = true))
+                    }
                 _uiState.update { it.copy(isExporting = false) }
             }
             Event.ImportClicked -> _uiState.update { it.copy(importPrompt = ImportUiData(CSV_MIME_TYPE), isImporting = true) }
             is Event.ImportPathChosen -> viewModelScope.launch {
                 _uiState.update { it.copy(importPrompt = null) }
                 importWeights(event.contentUri?.toString())
+                    .onSuccess {
+                        showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_import_success)))
+                    }
+                    .onFailure { exception ->
+                        val messageRes = when (exception) {
+                            is IllegalArgumentException -> R.string.snackbar_import_error_uri_null
+                            is IOException -> R.string.snackbar_import_error_io
+                            is NumberFormatException,
+                            is DateTimeParseException,
+                            is IndexOutOfBoundsException,
+                            -> R.string.snackbar_import_error_parse
+                            else -> R.string.snackbar_import_error_unknown
+                        }
+                        showSnackbar(SnackbarVisuals(stringProvider.getString(messageRes), isError = true))
+                    }
                 _uiState.update { it.copy(isImporting = false) }
             }
         }

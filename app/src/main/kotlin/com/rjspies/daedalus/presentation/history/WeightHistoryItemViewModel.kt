@@ -3,9 +3,13 @@ package com.rjspies.daedalus.presentation.history
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.CoroutineDispatcherProvider
 import com.rjspies.daedalus.domain.DeleteWeightUseCase
+import com.rjspies.daedalus.domain.ShowSnackbarUseCase
+import com.rjspies.daedalus.domain.SnackbarVisuals
 import com.rjspies.daedalus.domain.Weight
+import com.rjspies.daedalus.presentation.common.StringProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -14,6 +18,8 @@ import kotlinx.coroutines.launch
 class WeightHistoryItemViewModel(
     private val deleteWeight: DeleteWeightUseCase,
     private val dispatcherProvider: CoroutineDispatcherProvider,
+    private val showSnackbar: ShowSnackbarUseCase,
+    private val stringProvider: StringProvider,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState>
@@ -41,8 +47,13 @@ class WeightHistoryItemViewModel(
                     deleteWeight(event.weight)
                 }
 
-                deleteJob.invokeOnCompletion {
+                deleteJob.invokeOnCompletion { throwable ->
                     viewModelScope.launch {
+                        if (throwable == null) {
+                            showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_delete_weight_success)))
+                        } else {
+                            showSnackbar(SnackbarVisuals(stringProvider.getString(R.string.snackbar_delete_weight_error), isError = true))
+                        }
                         _uiState.update { uiState ->
                             uiState.copy(
                                 shouldShowDialog = false,

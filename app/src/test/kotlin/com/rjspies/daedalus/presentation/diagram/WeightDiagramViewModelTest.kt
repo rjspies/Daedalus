@@ -4,8 +4,12 @@ import com.rjspies.daedalus.domain.ExportWeightsUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.ImportWeightsUseCase
 import com.rjspies.daedalus.domain.InsertWeightUseCase
+import com.rjspies.daedalus.domain.ShowSnackbarUseCase
+import com.rjspies.daedalus.domain.SnackbarRepository
+import com.rjspies.daedalus.domain.SnackbarVisuals
 import com.rjspies.daedalus.domain.Weight
 import com.rjspies.daedalus.domain.WeightService
+import com.rjspies.daedalus.presentation.common.StringProvider
 import io.kotest.matchers.shouldBe
 import java.time.ZonedDateTime
 import kotlinx.coroutines.Dispatchers
@@ -34,6 +38,8 @@ class WeightDiagramViewModelTest {
             insertWeight = InsertWeightUseCase(fakeService),
             exportWeights = ExportWeightsUseCase(fakeService),
             importWeights = ImportWeightsUseCase(fakeService),
+            showSnackbar = ShowSnackbarUseCase(FakeSnackbarRepository()),
+            stringProvider = StringProvider { "" },
         )
     }
 
@@ -75,6 +81,11 @@ class WeightDiagramViewModelTest {
         viewModel.uiState.value.exportPrompt shouldBe null
         viewModel.uiState.value.isExporting shouldBe false
     }
+}
+
+private class FakeSnackbarRepository : SnackbarRepository {
+    override val snackbarVisuals: kotlinx.coroutines.flow.Flow<SnackbarVisuals?> = kotlinx.coroutines.flow.MutableStateFlow(null)
+    override suspend fun showSnackbar(visuals: SnackbarVisuals) = Unit
 }
 
 private class FakeWeightService : WeightService {

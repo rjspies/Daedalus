@@ -17,9 +17,11 @@ import com.rjspies.daedalus.domain.ShowSnackbarUseCase
 import com.rjspies.daedalus.domain.SnackbarRepository
 import com.rjspies.daedalus.domain.WeightService
 import com.rjspies.daedalus.presentation.MainViewModel
+import com.rjspies.daedalus.presentation.common.StringProvider
 import com.rjspies.daedalus.presentation.diagram.WeightDiagramViewModel
 import com.rjspies.daedalus.presentation.history.WeightHistoryItemViewModel
 import com.rjspies.daedalus.presentation.history.WeightHistoryViewModel
+import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -40,6 +42,7 @@ val APP_MODULE = module {
     factoryOf(::DefaultCoroutineDispatcherProvider) { bind<CoroutineDispatcherProvider>() }
     factoryOf(::ShowSnackbarUseCase)
     factoryOf(::GetSnackbarUseCase)
+    single<StringProvider> { StringProvider { resId -> androidApplication().getString(resId) } }
     viewModelOf(::WeightHistoryViewModel)
     viewModelOf(::WeightDiagramViewModel)
     viewModelOf(::WeightHistoryItemViewModel)

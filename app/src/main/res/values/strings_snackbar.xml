@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="snackbar_insert_weight_success">Gewicht erfolgreich hinzugefügt</string>
+    <string name="snackbar_delete_weight_success">Gewicht erfolgreich gelöscht</string>
+    <string name="snackbar_delete_weight_error">Gewicht konnte nicht gelöscht werden</string>
+    <string name="snackbar_export_success">Exportieren war erfolgreich</string>
+    <string name="snackbar_export_error_uri_null">Es wurde keine Datei ausgewählt</string>
+    <string name="snackbar_export_error_io">Die Datei konnte nicht geschrieben werden</string>
+    <string name="snackbar_export_error_unknown">Beim Exportieren ist ein unbekannter Fehler aufgetreten</string>
+    <string name="snackbar_import_success">Importieren war erfolgreich</string>
+    <string name="snackbar_import_error_uri_null">Es wurde keine Datei ausgewählt</string>
+    <string name="snackbar_import_error_io">Die Datei konnte nicht gelesen werden</string>
+    <string name="snackbar_import_error_parse">Die Datei enthält ungültige Daten</string>
+    <string name="snackbar_import_error_unknown">Beim Importieren ist ein unbekannter Fehler aufgetreten</string>
+</resources>
