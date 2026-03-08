@@ -60,10 +60,37 @@ jobs:
           github_token: ${{ github.token }}
           custom_tag: Release/V${{ steps.version.outputs.version }}_${{ steps.date.outputs.builddate }}
 
+      - name: Generate SHA-256 checksum and GPG signature
+        run: |
+          APK="${{ github.workspace }}/app/build/outputs/apk/release/app-release.apk"
+          NAME="Daedalus-${{ steps.version.outputs.version }}-${{ steps.versionCode.outputs.versionCode }}.apk"
+          CHECKSUM="${{ github.workspace }}/${NAME}.sha256"
+
+          echo "$(sha256sum "$APK" | awk '{print $1}')  ${NAME}" > "$CHECKSUM"
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import --batch
+          gpg --detach-sign --armor --output "${CHECKSUM}.sig" "$CHECKSUM"
+          gpg --batch --yes --delete-secret-and-public-key 903C3C5DE48798F1
+
       - name: Upload APK to release
         uses: svenstaro/upload-release-action@v2
         with:
           file: "${{ github.workspace }}/app/build/outputs/apk/release/app-release.apk"
           release_name: "v${{ steps.version.outputs.version }} (${{ steps.versionCode.outputs.versionCode }})"
           asset_name: "Daedalus-${{ steps.version.outputs.version }}-${{ steps.versionCode.outputs.versionCode }}.apk"
+          tag: Release/V${{ steps.version.outputs.version }}_${{ steps.date.outputs.builddate }}
+
+      - name: Upload checksum to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: "${{ github.workspace }}/Daedalus-${{ steps.version.outputs.version }}-${{ steps.versionCode.outputs.versionCode }}.apk.sha256"
+          release_name: "v${{ steps.version.outputs.version }} (${{ steps.versionCode.outputs.versionCode }})"
+          asset_name: "Daedalus-${{ steps.version.outputs.version }}-${{ steps.versionCode.outputs.versionCode }}.apk.sha256"
+          tag: Release/V${{ steps.version.outputs.version }}_${{ steps.date.outputs.builddate }}
+
+      - name: Upload GPG signature to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: "${{ github.workspace }}/Daedalus-${{ steps.version.outputs.version }}-${{ steps.versionCode.outputs.versionCode }}.apk.sha256.sig"
+          release_name: "v${{ steps.version.outputs.version }} (${{ steps.versionCode.outputs.versionCode }})"
+          asset_name: "Daedalus-${{ steps.version.outputs.version }}-${{ steps.versionCode.outputs.versionCode }}.apk.sha256.sig"
           tag: Release/V${{ steps.version.outputs.version }}_${{ steps.date.outputs.builddate }}
