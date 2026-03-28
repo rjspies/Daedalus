@@ -26,9 +26,6 @@ jobs:
         with:
           cache-disabled: true
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
-
       - name: Detekt
         run: ./gradlew detektMain detektTest --parallel
 
