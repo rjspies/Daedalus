@@ -12,10 +12,10 @@ class DaedalusApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        startKoin()
+        initializeKoin()
     }
 
-    private fun startKoin(): KoinApplication = startKoin {
+    private fun initializeKoin(): KoinApplication = startKoin {
         androidLogger()
         androidContext(applicationContext)
         modules(APP_MODULE)
