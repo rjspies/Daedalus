@@ -32,18 +32,18 @@ jobs:
           encodedString: ${{ secrets.KEYSTORE }}
 
       - name: Build release
-        run: ./gradlew app:assembleRelease
+        run: ./gradlew --no-configuration-cache app:assembleRelease
         env:
           DAEDALUS_SIGNING_KEY: ${{ secrets.DAEDALUS_SIGNING_KEY }}
           DAEDALUS_STORE_PASSWORD: ${{ secrets.DAEDALUS_STORE_PASSWORD }}
           DAEDALUS_SIGNING_KEY_PASSWORD: ${{ secrets.DAEDALUS_SIGNING_KEY_PASSWORD }}
 
       - name: Get current version
-        run: echo "version=$(./gradlew version -q)" >> $GITHUB_OUTPUT
+        run: echo "version=$(./gradlew --no-configuration-cache version -q)" >> $GITHUB_OUTPUT
         id: version
 
       - name: Get current version code
-        run: echo "versionCode=$(./gradlew versionCode -q)" >> $GITHUB_OUTPUT
+        run: echo "versionCode=$(./gradlew --no-configuration-cache versionCode -q)" >> $GITHUB_OUTPUT
         id: versionCode
 
       - name: Get current date
