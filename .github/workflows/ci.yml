@@ -26,17 +26,14 @@ jobs:
         with:
           cache-disabled: true
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
-
       - name: Detekt
-        run: ./gradlew detektMain detektTest --parallel
+        run: ./gradlew --no-configuration-cache detektMain detektTest --parallel
 
       - name: Lint
-        run: ./gradlew lint
+        run: ./gradlew --no-configuration-cache lint
 
       - name: Check
-        run: ./gradlew check
+        run: ./gradlew --no-configuration-cache check
 
       - name: Decode keystore
         id: decode_keystore
@@ -47,7 +44,7 @@ jobs:
           encodedString: ${{ secrets.KEYSTORE }}
 
       - name: Assemble
-        run: ./gradlew assemble
+        run: ./gradlew --no-configuration-cache assemble
         env:
           DAEDALUS_SIGNING_KEY: ${{ secrets.DAEDALUS_SIGNING_KEY }}
           DAEDALUS_STORE_PASSWORD: ${{ secrets.DAEDALUS_STORE_PASSWORD }}
