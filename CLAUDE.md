@@ -24,8 +24,8 @@ All commands use the Gradle wrapper from the project root:
 ./gradlew testDebugUnitTest
 ./gradlew testReleaseUnitTest
 
-# Run lint (detekt)
-./gradlew detekt
+# Run lint (detekt with type resolution)
+./gradlew detektMain detektTest
 
 # Print version name
 ./gradlew version
