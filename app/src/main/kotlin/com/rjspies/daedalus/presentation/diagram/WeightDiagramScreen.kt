@@ -200,6 +200,10 @@ fun WeightDiagramScreen(
                 )
                 Box(Modifier.horizontalSpacingM()) { Chart(uiState.weights) }
             }
+            WeightStatRow(
+                thirtyDayAverage = uiState.thirtyDayAverageWeight,
+                latestWeight = uiState.latestWeight,
+            )
             Spacer(Modifier.weight(1f))
         } else {
             Spacer(Modifier.weight(1f))

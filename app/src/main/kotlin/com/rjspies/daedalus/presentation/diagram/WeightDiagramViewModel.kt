@@ -7,6 +7,7 @@ import com.rjspies.daedalus.AppError
 import com.rjspies.daedalus.InsertWeightError
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.ExportWeightsUseCase
+import com.rjspies.daedalus.domain.GetThirtyDayAverageWeightUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.ImportWeightsUseCase
 import com.rjspies.daedalus.domain.InsertWeightUseCase
@@ -25,8 +26,10 @@ import kotlinx.coroutines.launch
 
 private const val CSV_MIME_TYPE = "text/comma-separated-values"
 
+@Suppress("LongParameterList")
 class WeightDiagramViewModel(
     getWeightsAscending: GetWeightsAscendingUseCase,
+    getThirtyDayAverageWeight: GetThirtyDayAverageWeightUseCase,
     private val insertWeight: InsertWeightUseCase,
     private val exportWeights: ExportWeightsUseCase,
     private val importWeights: ImportWeightsUseCase,
@@ -49,8 +52,14 @@ class WeightDiagramViewModel(
                                 dateTime = weight.dateTime,
                             )
                         },
+                        latestWeight = domainWeights.lastOrNull()?.value,
                     )
                 }
+            }
+        }
+        viewModelScope.launch {
+            getThirtyDayAverageWeight().collectLatest { average ->
+                _uiState.update { it.copy(thirtyDayAverageWeight = average) }
             }
         }
     }
@@ -167,6 +176,8 @@ class WeightDiagramViewModel(
     @Immutable
     data class UiState(
         val weights: List<WeightChartEntry> = emptyList(),
+        val latestWeight: Float? = null,
+        val thirtyDayAverageWeight: Float? = null,
         val shouldShowInsertWeightDialog: Boolean = false,
         val isInsertWeightDialogLoading: Boolean = false,
         val insertWeightDialogCurrentWeight: String? = null,

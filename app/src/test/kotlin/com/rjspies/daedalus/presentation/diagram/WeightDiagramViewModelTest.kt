@@ -1,6 +1,7 @@
 package com.rjspies.daedalus.presentation.diagram
 
 import com.rjspies.daedalus.domain.ExportWeightsUseCase
+import com.rjspies.daedalus.domain.GetThirtyDayAverageWeightUseCase
 import com.rjspies.daedalus.domain.GetWeightsAscendingUseCase
 import com.rjspies.daedalus.domain.ImportWeightsUseCase
 import com.rjspies.daedalus.domain.InsertWeightUseCase
@@ -37,6 +38,7 @@ class WeightDiagramViewModelTest {
         fakeSnackbarRepository = FakeSnackbarRepository()
         viewModel = WeightDiagramViewModel(
             getWeightsAscending = GetWeightsAscendingUseCase(fakeService),
+            getThirtyDayAverageWeight = GetThirtyDayAverageWeightUseCase(fakeService),
             insertWeight = InsertWeightUseCase(fakeService),
             exportWeights = ExportWeightsUseCase(fakeService),
             importWeights = ImportWeightsUseCase(fakeService),
@@ -125,6 +127,7 @@ class WeightDiagramViewModelTest {
         val emptyService = EmptyImportWeightService()
         val viewModel = WeightDiagramViewModel(
             getWeightsAscending = GetWeightsAscendingUseCase(emptyService),
+            getThirtyDayAverageWeight = GetThirtyDayAverageWeightUseCase(emptyService),
             insertWeight = InsertWeightUseCase(emptyService),
             exportWeights = ExportWeightsUseCase(emptyService),
             importWeights = ImportWeightsUseCase(emptyService),
@@ -134,6 +137,52 @@ class WeightDiagramViewModelTest {
         viewModel.onEvent(WeightDiagramViewModel.Event.ImportPathChosen("content://test/empty.csv"))
 
         fakeSnackbarRepository.lastVisuals?.isError shouldBe true
+    }
+
+    @Test
+    fun `latestWeight is null when no weights are present`() = runTest(testDispatcher) {
+        viewModel.uiState.value.latestWeight shouldBe null
+    }
+
+    @Test
+    fun `latestWeight reflects last weight in ascending list`() = runTest(testDispatcher) {
+        val fakeService = FakeWeightService()
+        val localViewModel = WeightDiagramViewModel(
+            getWeightsAscending = GetWeightsAscendingUseCase(fakeService),
+            getThirtyDayAverageWeight = GetThirtyDayAverageWeightUseCase(fakeService),
+            insertWeight = InsertWeightUseCase(fakeService),
+            exportWeights = ExportWeightsUseCase(fakeService),
+            importWeights = ImportWeightsUseCase(fakeService),
+            showSnackbar = ShowSnackbarUseCase(fakeSnackbarRepository),
+            stringProvider = StringProvider { "" },
+        )
+
+        fakeService.setWeights(
+            listOf(
+                FakeWeight(value = 80f),
+                FakeWeight(value = 85f),
+            ),
+        )
+
+        localViewModel.uiState.value.latestWeight shouldBe 85f
+    }
+
+    @Test
+    fun `thirtyDayAverageWeight reflects use case value`() = runTest(testDispatcher) {
+        val fakeService = FakeWeightService()
+        val localViewModel = WeightDiagramViewModel(
+            getWeightsAscending = GetWeightsAscendingUseCase(fakeService),
+            getThirtyDayAverageWeight = GetThirtyDayAverageWeightUseCase(fakeService),
+            insertWeight = InsertWeightUseCase(fakeService),
+            exportWeights = ExportWeightsUseCase(fakeService),
+            importWeights = ImportWeightsUseCase(fakeService),
+            showSnackbar = ShowSnackbarUseCase(fakeSnackbarRepository),
+            stringProvider = StringProvider { "" },
+        )
+
+        fakeService.setThirtyDayAverage(82.5f)
+
+        localViewModel.uiState.value.thirtyDayAverageWeight shouldBe 82.5f
     }
 }
 
@@ -151,6 +200,15 @@ private class EmptyImportWeightService : WeightService by FakeWeightService() {
 
 private class FakeWeightService : WeightService {
     private val weights = MutableStateFlow<List<Weight>>(emptyList())
+    private val thirtyDayAverage = MutableStateFlow<Float?>(null)
+
+    fun setWeights(newWeights: List<Weight>) {
+        weights.value = newWeights
+    }
+
+    fun setThirtyDayAverage(value: Float?) {
+        thirtyDayAverage.value = value
+    }
 
     override suspend fun insertWeight(
         value: Float,
@@ -162,4 +220,12 @@ private class FakeWeightService : WeightService {
     override suspend fun importWeights(path: String) = Unit
     override fun weightsDescending(): Flow<List<Weight>> = weights
     override fun weightsAscending(): Flow<List<Weight>> = weights
+    override fun thirtyDayAverageWeight(): Flow<Float?> = thirtyDayAverage
 }
+
+private data class FakeWeight(
+    override val id: Int = 0,
+    override val value: Float,
+    override val note: String? = null,
+    override val dateTime: ZonedDateTime = ZonedDateTime.now(),
+) : Weight
