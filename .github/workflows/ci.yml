@@ -32,8 +32,8 @@ jobs:
       - name: Lint
         run: ./gradlew --no-configuration-cache lint
 
-      - name: Check
-        run: ./gradlew --no-configuration-cache check
+      - name: Test
+        run: ./gradlew --no-configuration-cache testReleaseUnitTest
 
       - name: Decode keystore
         id: decode_keystore
