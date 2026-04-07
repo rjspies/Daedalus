@@ -4,8 +4,8 @@
     <string name="weight_diagram_empty_screen_title">Bereit zum Eintragen</string>
     <string name="weight_diagram_empty_screen_subtitle">Sobald du deine erste Messung hinzugefügt hast, wirst du hier ein Liniendiagramm vorfinden.</string>
     <string name="weight_diagram_empty_screen_content_description">Liniendiagramm-Icon</string>
-    <string name="weight_diagram_stat_thirty_day_average_label">Ø 30 Tage</string>
-    <string name="weight_diagram_stat_latest_weight_label">Zuletzt eingetragen</string>
+    <string name="weight_diagram_statistic_thirty_day_average_label">Ø 30 Tage</string>
+    <string name="weight_diagram_statistic_latest_weight_label">Zuletzt eingetragen</string>
     <string name="weight_diagram_button_history_title">Verlauf</string>
     <string name="weight_diagram_button_insert_weight_title">Hinzufügen</string>
     <string name="weight_diagram_button_export_weights_title">Exportieren</string>

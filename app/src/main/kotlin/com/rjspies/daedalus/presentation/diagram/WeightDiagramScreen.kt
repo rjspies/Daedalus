@@ -70,6 +70,7 @@ import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.common.EmptyScreen
 import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.VerticalSpacerL
+import com.rjspies.daedalus.presentation.common.VerticalSpacerM
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
@@ -200,7 +201,8 @@ fun WeightDiagramScreen(
                 )
                 Box(Modifier.horizontalSpacingM()) { Chart(uiState.weights) }
             }
-            WeightStatRow(
+            VerticalSpacerM()
+            WeightStatisticRow(
                 thirtyDayAverage = uiState.thirtyDayAverageWeight,
                 latestWeight = uiState.latestWeight,
             )

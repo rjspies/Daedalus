@@ -1,5 +1,8 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues/>
-  <CurrentIssues/>
+  <CurrentIssues>
+    <ID>LongParameterList:WeightDiagramViewModel.kt$WeightDiagramViewModel$( getWeightsAscending: GetWeightsAscendingUseCase, getThirtyDayAverageWeight: GetThirtyDayAverageWeightUseCase, private val insertWeight: InsertWeightUseCase, private val exportWeights: ExportWeightsUseCase, private val importWeights: ImportWeightsUseCase, private val showSnackbar: ShowSnackbarUseCase, private val stringProvider: StringProvider, )</ID>
+    <ID>UnusedPrivateMember:WeightStatisticCard.kt$@PreviewLightDark @Composable private fun WeightStatisticRowPreview( @PreviewParameter(WeightStatisticRowPreviewProvider::class) data: WeightStatisticRowPreviewData, )</ID>
+  </CurrentIssues>
 </SmellBaseline>

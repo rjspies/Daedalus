@@ -13,12 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 
 @Composable
-internal fun WeightStatRow(
+internal fun WeightStatisticRow(
     thirtyDayAverage: Float?,
     latestWeight: Float?,
     modifier: Modifier = Modifier,
@@ -29,13 +32,13 @@ internal fun WeightStatRow(
             .horizontalSpacingM(),
         horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
     ) {
-        WeightStatCard(
-            label = stringResource(R.string.weight_diagram_stat_thirty_day_average_label),
+        WeightStatisticCard(
+            label = stringResource(R.string.weight_diagram_statistic_thirty_day_average_label),
             value = thirtyDayAverage,
             modifier = Modifier.weight(1f),
         )
-        WeightStatCard(
-            label = stringResource(R.string.weight_diagram_stat_latest_weight_label),
+        WeightStatisticCard(
+            label = stringResource(R.string.weight_diagram_statistic_latest_weight_label),
             value = latestWeight,
             modifier = Modifier.weight(1f),
         )
@@ -43,7 +46,7 @@ internal fun WeightStatRow(
 }
 
 @Composable
-private fun WeightStatCard(
+private fun WeightStatisticCard(
     label: String,
     value: Float?,
     modifier: Modifier = Modifier,
@@ -71,4 +74,29 @@ private fun WeightStatCard(
             }
         }
     }
+}
+
+private data class WeightStatisticRowPreviewData(
+    val thirtyDayAverage: Float?,
+    val latestWeight: Float?,
+)
+
+private class WeightStatisticRowPreviewProvider :
+    PreviewParameterProvider<WeightStatisticRowPreviewData> {
+    override val values = sequenceOf(
+        WeightStatisticRowPreviewData(thirtyDayAverage = 82.5f, latestWeight = 85.0f),
+        WeightStatisticRowPreviewData(thirtyDayAverage = null, latestWeight = null),
+    )
+}
+
+@PreviewLightDark
+@Composable
+private fun WeightStatisticRowPreview(
+    @PreviewParameter(WeightStatisticRowPreviewProvider::class)
+    data: WeightStatisticRowPreviewData,
+) {
+    WeightStatisticRow(
+        thirtyDayAverage = data.thirtyDayAverage,
+        latestWeight = data.latestWeight,
+    )
 }

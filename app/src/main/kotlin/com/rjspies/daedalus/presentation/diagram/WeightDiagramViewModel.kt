@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 
 private const val CSV_MIME_TYPE = "text/comma-separated-values"
 
-@Suppress("LongParameterList")
 class WeightDiagramViewModel(
     getWeightsAscending: GetWeightsAscendingUseCase,
     getThirtyDayAverageWeight: GetThirtyDayAverageWeightUseCase,

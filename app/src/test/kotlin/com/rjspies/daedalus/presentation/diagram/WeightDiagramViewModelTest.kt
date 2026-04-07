@@ -220,7 +220,7 @@ private class FakeWeightService : WeightService {
     override suspend fun importWeights(path: String) = Unit
     override fun weightsDescending(): Flow<List<Weight>> = weights
     override fun weightsAscending(): Flow<List<Weight>> = weights
-    override fun thirtyDayAverageWeight(): Flow<Float?> = thirtyDayAverage
+    override fun averageWeightSince(from: ZonedDateTime): Flow<Float?> = thirtyDayAverage
 }
 
 private data class FakeWeight(

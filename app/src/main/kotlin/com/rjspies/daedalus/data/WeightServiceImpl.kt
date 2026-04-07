@@ -15,8 +15,6 @@ import java.io.OutputStreamWriter
 import java.time.ZonedDateTime
 import kotlinx.coroutines.flow.Flow
 
-private const val AVERAGE_WEIGHT_PERIOD_IN_DAYS = 30L
-
 class WeightServiceImpl(
     private val weightDao: WeightDao,
     private val applicationContext: Context,
@@ -36,9 +34,9 @@ class WeightServiceImpl(
     override suspend fun deleteWeight(weight: Weight) = weightDao.deleteWeight(weight.id)
     override fun weightsDescending(): Flow<List<Weight>> = weightDao.weightsDescending()
     override fun weightsAscending(): Flow<List<Weight>> = weightDao.weightsAscending()
-    override fun thirtyDayAverageWeight(): Flow<Float?> {
-        val cutoff = ZonedDateTimeConverter.zonedDateTimeToString(ZonedDateTime.now().minusDays(AVERAGE_WEIGHT_PERIOD_IN_DAYS))
-        return weightDao.getThirtyDayAverage(cutoff)
+    override fun averageWeightSince(from: ZonedDateTime): Flow<Float?> {
+        val cutoff = ZonedDateTimeConverter.zonedDateTimeToString(from)
+        return weightDao.averageWeightSince(cutoff)
     }
     override suspend fun importWeights(path: String) {
         val inputStream = applicationContext.contentResolver.openInputStream(path.toUri())

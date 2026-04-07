@@ -14,5 +14,5 @@ interface WeightService {
     suspend fun importWeights(path: String)
     fun weightsDescending(): Flow<List<Weight>>
     fun weightsAscending(): Flow<List<Weight>>
-    fun thirtyDayAverageWeight(): Flow<Float?>
+    fun averageWeightSince(from: ZonedDateTime): Flow<Float?>
 }

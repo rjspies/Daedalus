@@ -23,5 +23,5 @@ interface WeightDao {
     suspend fun getAllWeights(): List<WeightImpl>
 
     @Query("SELECT AVG(value) FROM Weight WHERE dateTime >= :cutoff")
-    fun getThirtyDayAverage(cutoff: String): Flow<Float?>
+    fun averageWeightSince(cutoff: String): Flow<Float?>
 }
