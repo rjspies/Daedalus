@@ -127,6 +127,7 @@ private class FakeWeightService : WeightService {
     override suspend fun importWeights(path: String) = Unit
     override fun weightsDescending(): Flow<List<Weight>> = weights
     override fun weightsAscending(): Flow<List<Weight>> = weights
+    override fun averageWeightSince(from: ZonedDateTime): Flow<Float?> = MutableStateFlow(null)
 }
 
 private class FailingWeightService : WeightService {
@@ -141,4 +142,5 @@ private class FailingWeightService : WeightService {
     override suspend fun importWeights(path: String) = Unit
     override fun weightsDescending(): Flow<List<Weight>> = weights
     override fun weightsAscending(): Flow<List<Weight>> = weights
+    override fun averageWeightSince(from: ZonedDateTime): Flow<Float?> = MutableStateFlow(null)
 }

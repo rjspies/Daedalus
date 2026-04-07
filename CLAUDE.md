@@ -24,8 +24,8 @@ All commands use the Gradle wrapper from the project root:
 ./gradlew testDebugUnitTest
 ./gradlew testReleaseUnitTest
 
-# Run lint (detekt)
-./gradlew detekt
+# Run lint (detekt with type resolution)
+./gradlew detektMain detektTest
 
 # Print version name
 ./gradlew version
@@ -50,10 +50,12 @@ Dependency injection is handled by Koin with a single `APP_MODULE` in `koin/AppM
 - **Database**: Room with KSP code generation; schemas exported to `app/schemas/`; auto-migration from version 1 to 2
 - **Navigation**: Jetpack Navigation Compose with typed, serializable routes (`Route` sealed class)
 - **Testing**: JUnit 5 + Kotest assertions + ArchUnit for architecture checks + Koin test utilities + Kotlin Coroutines Test
-- **Static analysis**: Detekt with config at `config/detekt/detekt.yml` and variant-specific baselines (`config/detekt/baseline-debug.xml`, `config/detekt/baseline-release.xml`); `autoCorrect = true` is enabled
+- **Static analysis**: Detekt with type resolution — use `./gradlew detektMain detektTest` (not the plain `detekt` task). Config at `config/detekt/detekt.yml`; variant-specific baselines at `config/detekt/baseline-debug.xml` and `config/detekt/baseline-release.xml`; regenerate with `detektBaselineDebug` / `detektBaselineRelease`. `autoCorrect = true` is enabled
 - **Kotlin compiler**: `allWarningsAsErrors = true` — all warnings must be resolved
 - **Version management**: `gradle/libs.versions.toml` (version catalog); dependency updates via `./gradlew refreshVersions` (stable-only)
 - **Icons**: Material Icons Extended (`androidx.compose.material:material-icons-extended`)
+- **Vertical spacing**: Use `VerticalSpacerXxx()` composable functions from `VerticalSpacerExtensions.kt` (e.g. `VerticalSpacerM()`) — not raw `Spacer(Modifier.height(...))`
+- **Horizontal spacing**: Use `HorizontalSpacerXxx()` composable functions from `HorizontalSpacerExtensions.kt` (e.g. `HorizontalSpacerM()`) — not raw `Spacer(Modifier.width(...))`
 
 ## Screens / Navigation Routes
 

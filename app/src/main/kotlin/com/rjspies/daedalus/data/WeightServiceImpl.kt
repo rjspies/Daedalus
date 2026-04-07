@@ -34,6 +34,10 @@ class WeightServiceImpl(
     override suspend fun deleteWeight(weight: Weight) = weightDao.deleteWeight(weight.id)
     override fun weightsDescending(): Flow<List<Weight>> = weightDao.weightsDescending()
     override fun weightsAscending(): Flow<List<Weight>> = weightDao.weightsAscending()
+    override fun averageWeightSince(from: ZonedDateTime): Flow<Float?> {
+        val cutoff = ZonedDateTimeConverter.zonedDateTimeToString(from)
+        return weightDao.averageWeightSince(cutoff)
+    }
     override suspend fun importWeights(path: String) {
         val inputStream = applicationContext.contentResolver.openInputStream(path.toUri())
         BufferedReader(InputStreamReader(inputStream)).use { reader ->
