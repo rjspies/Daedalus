@@ -75,7 +75,6 @@ import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
-import com.rjspies.daedalus.presentation.navigation.Route
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import org.koin.androidx.compose.koinViewModel
@@ -86,7 +85,6 @@ private const val FULL_CORNER_RADIUS_PERCENT = 50
 @Composable
 fun WeightDiagramScreen(
     scaffoldPadding: PaddingValues,
-    navigate: (Route) -> Unit,
     viewModel: WeightDiagramViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -242,23 +240,13 @@ fun WeightDiagramScreen(
                     enabled = !uiState.isExporting,
                 )
             }
-            Row(
+            Button(
+                onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .horizontalSpacingM(),
-                horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
-            ) {
-                OutlinedButton(
-                    onClick = { navigate(Route.History) },
-                    modifier = Modifier.weight(1f),
-                    content = { Text(stringResource(R.string.weight_diagram_button_history_title)) },
-                )
-                Button(
-                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
-                    modifier = Modifier.weight(1f),
-                    content = { Text(stringResource(R.string.weight_diagram_button_insert_weight_title)) },
-                )
-            }
+                content = { Text(stringResource(R.string.weight_diagram_button_insert_weight_title)) },
+            )
         }
     }
 }
