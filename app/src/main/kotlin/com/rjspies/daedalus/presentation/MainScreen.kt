@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ShowChart
 import androidx.compose.material.icons.rounded.History
@@ -45,6 +46,9 @@ import androidx.navigation.compose.rememberNavController
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.SnackbarVisuals
 import com.rjspies.daedalus.presentation.common.Snackbar
+import com.rjspies.daedalus.presentation.common.Spacings
+import com.rjspies.daedalus.presentation.common.VerticalSpacerL
+import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
 import com.rjspies.daedalus.presentation.navigation.Route
 import com.rjspies.daedalus.presentation.navigation.navigationGraph
 import dev.chrisbanes.haze.HazeProgressive
@@ -103,7 +107,12 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Text(stringResource(R.string.app_name))
+                VerticalSpacerXS()
+                Text(
+                    text = stringResource(R.string.app_name),
+                    modifier = Modifier.padding(horizontal = Spacings.M),
+                )
+                VerticalSpacerL()
                 NavigationDrawerItem(
                     label = { Text(stringResource(R.string.navigation_drawer_item_diagram)) },
                     icon = { Icon(Icons.AutoMirrored.Rounded.ShowChart, contentDescription = null) },
@@ -116,7 +125,9 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                             restoreState = true
                         }
                     },
+                    modifier = Modifier.padding(horizontal = Spacings.M),
                 )
+                VerticalSpacerXS()
                 NavigationDrawerItem(
                     label = { Text(stringResource(R.string.navigation_drawer_item_history)) },
                     icon = { Icon(Icons.Rounded.History, contentDescription = null) },
@@ -129,6 +140,7 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                             restoreState = true
                         }
                     },
+                    modifier = Modifier.padding(horizontal = Spacings.M),
                 )
             }
         },
