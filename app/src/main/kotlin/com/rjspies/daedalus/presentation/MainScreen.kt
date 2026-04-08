@@ -139,6 +139,8 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                     title = { Text(topBarTitle) },
                     modifier = Modifier.hazeEffect(hazeState, HazeMaterials.regular()) {
                         blurRadius = 40.dp
+                        tints = emptyList()
+                        noiseFactor = 0f
                         progressive = HazeProgressive.verticalGradient(
                             easing = LinearEasing,
                             startIntensity = .25f,
@@ -209,6 +211,8 @@ private fun Blur(
             .then(modifier)
             .hazeEffect(hazeState, HazeMaterials.regular()) {
                 blurRadius = 40.dp
+                tints = emptyList()
+                noiseFactor = 0f
                 progressive = HazeProgressive.verticalGradient(
                     easing = LinearEasing,
                     startIntensity = .25f,
