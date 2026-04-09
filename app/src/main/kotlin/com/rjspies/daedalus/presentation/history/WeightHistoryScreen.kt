@@ -1,5 +1,6 @@
 package com.rjspies.daedalus.presentation.history
 
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,14 +11,23 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FormatListNumbered
+import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.Weight
@@ -27,34 +37,72 @@ import com.rjspies.daedalus.presentation.common.VerticalSpacerS
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingXXL
+import dev.chrisbanes.haze.HazeProgressive
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
+import dev.chrisbanes.haze.materials.HazeMaterials
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 fun WeightHistoryScreen(
-    scaffoldPadding: PaddingValues,
+    onOpenDrawer: () -> Unit,
     viewModel: WeightHistoryViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val hazeState = remember { HazeState() }
 
-    if (uiState.weights.isNotEmpty()) {
-        Weights(
-            weights = uiState.weights,
-            scaffoldPadding = scaffoldPadding,
-        )
-    } else {
-        EmptyScreen(
-            painter = rememberVectorPainter(Icons.Rounded.FormatListNumbered),
-            contentDescription = stringResource(R.string.weight_history_empty_screen_content_description),
-            title = stringResource(R.string.weight_history_empty_screen_title),
-            subtitle = stringResource(R.string.weight_history_empty_screen_subtitle),
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(scaffoldPadding)
-                .verticalSpacingXXL()
-                .horizontalSpacingM(),
-        )
-    }
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text(stringResource(R.string.navigation_top_bar_title_history)) },
+                modifier = Modifier.hazeEffect(hazeState, HazeMaterials.regular()) {
+                    blurRadius = 40.dp
+                    tints = emptyList()
+                    noiseFactor = 0f
+                    progressive = HazeProgressive.verticalGradient(
+                        easing = LinearEasing,
+                        startIntensity = .25f,
+                        endIntensity = .25f,
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+                navigationIcon = {
+                    IconButton(onClick = onOpenDrawer) {
+                        Icon(
+                            imageVector = Icons.Rounded.Menu,
+                            contentDescription = stringResource(R.string.navigation_drawer_open_content_description),
+                        )
+                    }
+                },
+            )
+        },
+        content = { scaffoldPadding ->
+            if (uiState.weights.isNotEmpty()) {
+                Weights(
+                    weights = uiState.weights,
+                    scaffoldPadding = scaffoldPadding,
+                    hazeState = hazeState,
+                )
+            } else {
+                EmptyScreen(
+                    painter = rememberVectorPainter(Icons.Rounded.FormatListNumbered),
+                    contentDescription = stringResource(R.string.weight_history_empty_screen_content_description),
+                    title = stringResource(R.string.weight_history_empty_screen_title),
+                    subtitle = stringResource(R.string.weight_history_empty_screen_subtitle),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .hazeSource(hazeState)
+                        .verticalScroll(rememberScrollState())
+                        .padding(scaffoldPadding)
+                        .verticalSpacingXXL()
+                        .horizontalSpacingM(),
+                )
+            }
+        },
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -62,9 +110,12 @@ fun WeightHistoryScreen(
 private fun Weights(
     weights: List<Weight>,
     scaffoldPadding: PaddingValues,
+    hazeState: HazeState,
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .hazeSource(hazeState),
         contentPadding = PaddingValues(
             top = scaffoldPadding.calculateTopPadding(),
             end = Spacings.M,
