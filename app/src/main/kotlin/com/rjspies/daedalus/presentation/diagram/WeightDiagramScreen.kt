@@ -22,22 +22,16 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Addchart
-import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.Timeline
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -45,7 +39,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -74,16 +67,14 @@ import com.patrykandpatrick.vico.compose.common.component.rememberShapeComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberTextComponent
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.common.EmptyScreen
+import com.rjspies.daedalus.presentation.common.OverviewScreenContent
 import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.VerticalSpacerL
 import com.rjspies.daedalus.presentation.common.VerticalSpacerM
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
-import com.rjspies.daedalus.presentation.common.daedalusHazeEffect
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeSource
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import org.koin.androidx.compose.koinViewModel
@@ -91,200 +82,178 @@ import org.koin.androidx.compose.koinViewModel
 private const val FULL_CORNER_RADIUS_PERCENT = 50
 
 @Suppress("LongMethod")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeightDiagramScreen(
     onOpenDrawer: () -> Unit,
     viewModel: WeightDiagramViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val hazeState = remember { HazeState() }
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(R.string.navigation_top_bar_title_diagram)) },
-                modifier = Modifier.daedalusHazeEffect(hazeState),
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-                navigationIcon = {
-                    IconButton(onClick = onOpenDrawer) {
-                        Icon(
-                            imageVector = Icons.Rounded.Menu,
-                            contentDescription = stringResource(R.string.navigation_drawer_open_content_description),
+    OverviewScreenContent(
+        title = stringResource(R.string.navigation_top_bar_title_diagram),
+        onOpenDrawer = onOpenDrawer,
+    ) { scaffoldPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(scaffoldPadding)
+                .padding(bottom = Spacings.XXL),
+        ) {
+            if (uiState.shouldShowInsertWeightDialog) {
+                val focusRequester = remember { FocusRequester() }
+                AlertDialog(
+                    onDismissRequest = {
+                        if (uiState.isInsertWeightDialogDismissable) {
+                            viewModel.onEvent(WeightDiagramViewModel.Event.CloseInsertWeightDialog)
+                        }
+                    },
+                    confirmButton = {
+                        TextButton(
+                            onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.InsertCurrentWeight) },
+                            content = {
+                                Text(stringResource(R.string.insert_weight_insert_button_text))
+                            },
                         )
-                    }
-                },
-            )
-        },
-        content = { scaffoldPadding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .hazeSource(hazeState),
-            ) {
-                Column(
+                    },
                     modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
-                        .padding(scaffoldPadding)
-                        .padding(bottom = Spacings.XXL),
-                ) {
-                    if (uiState.shouldShowInsertWeightDialog) {
-                        val focusRequester = remember { FocusRequester() }
-                        AlertDialog(
-                            onDismissRequest = {
-                                if (uiState.isInsertWeightDialogDismissable) {
-                                    viewModel.onEvent(WeightDiagramViewModel.Event.CloseInsertWeightDialog)
-                                }
-                            },
-                            confirmButton = {
-                                TextButton(
-                                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.InsertCurrentWeight) },
-                                    content = {
-                                        Text(stringResource(R.string.insert_weight_insert_button_text))
-                                    },
-                                )
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .imePadding(),
-                            icon = { Icon(rememberVectorPainter(Icons.Rounded.Addchart), contentDescription = null) },
-                            title = { Text(stringResource(R.string.insert_weight_dialog_title)) },
-                            text = {
-                                LaunchedEffect(Unit) {
-                                    focusRequester.requestFocus()
-                                }
-
-                                Column {
-                                    OutlinedTextField(
-                                        value = uiState.insertWeightDialogCurrentWeight.orEmpty(),
-                                        onValueChange = { viewModel.onEvent(WeightDiagramViewModel.Event.SetCurrentWeight(it)) },
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .focusRequester(focusRequester),
-                                        label = { Text(stringResource(R.string.insert_weight_weight_text_field_label)) },
-                                        shape = MaterialTheme.shapes.medium,
-                                        supportingText = {
-                                            if (uiState.insertWeightDialogError != null) {
-                                                Text(stringResource(R.string.insert_weight_weight_text_field_supporting_message_error))
-                                            } else {
-                                                Text(stringResource(R.string.insert_weight_weight_text_field_supporting_message))
-                                            }
-                                        },
-                                        keyboardOptions = KeyboardOptions(
-                                            keyboardType = KeyboardType.Decimal,
-                                            imeAction = ImeAction.Done,
-                                        ),
-                                        keyboardActions = KeyboardActions(
-                                            onDone = { viewModel.onEvent(WeightDiagramViewModel.Event.InsertCurrentWeight) },
-                                        ),
-                                    )
-
-                                    Column(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .animateContentSize(
-                                                animationSpec = tween(
-                                                    durationMillis = 35,
-                                                    easing = LinearEasing,
-                                                ),
-                                            ),
-                                        content = {
-                                            if (uiState.isInsertWeightDialogLoading) {
-                                                VerticalSpacerXS()
-                                                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                                            }
-                                        },
-                                    )
-                                }
-                            },
-                        )
-                    }
-
-                    val exportData = uiState.exportPrompt
-                    if (exportData != null) {
-                        val launcher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(exportData.mimeType)) {
-                            viewModel.onEvent(WeightDiagramViewModel.Event.PathChosen(it?.toString()))
-                        }
-
+                        .fillMaxWidth()
+                        .imePadding(),
+                    icon = { Icon(rememberVectorPainter(Icons.Rounded.Addchart), contentDescription = null) },
+                    title = { Text(stringResource(R.string.insert_weight_dialog_title)) },
+                    text = {
                         LaunchedEffect(Unit) {
-                            launcher.launch(exportData.fileName)
-                        }
-                    }
-
-                    val importData = uiState.importPrompt
-                    if (importData != null) {
-                        val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
-                            viewModel.onEvent(WeightDiagramViewModel.Event.ImportPathChosen(it?.toString()))
+                            focusRequester.requestFocus()
                         }
 
-                        LaunchedEffect(Unit) {
-                            importLauncher.launch(arrayOf(importData.mimeType))
-                        }
-                    }
-
-                    if (uiState.weights.isNotEmpty()) {
                         Column {
-                            Text(
-                                text = stringResource(R.string.weight_diagram_title),
-                                modifier = Modifier.horizontalSpacingM(),
-                                style = MaterialTheme.typography.displayMedium,
+                            OutlinedTextField(
+                                value = uiState.insertWeightDialogCurrentWeight.orEmpty(),
+                                onValueChange = { viewModel.onEvent(WeightDiagramViewModel.Event.SetCurrentWeight(it)) },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .focusRequester(focusRequester),
+                                label = { Text(stringResource(R.string.insert_weight_weight_text_field_label)) },
+                                shape = MaterialTheme.shapes.medium,
+                                supportingText = {
+                                    if (uiState.insertWeightDialogError != null) {
+                                        Text(stringResource(R.string.insert_weight_weight_text_field_supporting_message_error))
+                                    } else {
+                                        Text(stringResource(R.string.insert_weight_weight_text_field_supporting_message))
+                                    }
+                                },
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Decimal,
+                                    imeAction = ImeAction.Done,
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onDone = { viewModel.onEvent(WeightDiagramViewModel.Event.InsertCurrentWeight) },
+                                ),
                             )
-                            Box(Modifier.horizontalSpacingM()) { Chart(uiState.weights) }
-                        }
-                        VerticalSpacerM()
-                        WeightStatisticRow(
-                            thirtyDayAverage = uiState.thirtyDayAverageWeight,
-                            latestWeight = uiState.latestWeight,
-                        )
-                        Spacer(Modifier.weight(1f))
-                    } else {
-                        Spacer(Modifier.weight(1f))
-                        EmptyScreen(
-                            painter = rememberVectorPainter(Icons.Rounded.Timeline),
-                            contentDescription = stringResource(R.string.weight_diagram_empty_screen_content_description),
-                            title = stringResource(R.string.weight_diagram_empty_screen_title),
-                            subtitle = stringResource(R.string.weight_diagram_empty_screen_subtitle),
-                            modifier = Modifier
-                                .verticalSpacingM()
-                                .horizontalSpacingM(),
-                        )
-                        Spacer(Modifier.weight(1f))
-                    }
 
-                    VerticalSpacerL()
-                    Column(verticalArrangement = Arrangement.spacedBy(Spacings.XS)) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .horizontalSpacingM(),
-                            horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
-                        ) {
-                            OutlinedButton(
-                                onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ImportClicked) },
-                                modifier = Modifier.weight(1f),
-                                content = { Text(stringResource(R.string.weight_diagram_button_import_weights_title)) },
-                                enabled = !uiState.isImporting,
-                            )
-                            OutlinedButton(
-                                onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked) },
-                                modifier = Modifier.weight(1f),
-                                content = { Text(stringResource(R.string.weight_diagram_button_export_weights_title)) },
-                                enabled = !uiState.isExporting,
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .animateContentSize(
+                                        animationSpec = tween(
+                                            durationMillis = 35,
+                                            easing = LinearEasing,
+                                        ),
+                                    ),
+                                content = {
+                                    if (uiState.isInsertWeightDialogLoading) {
+                                        VerticalSpacerXS()
+                                        LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                                    }
+                                },
                             )
                         }
-                        Button(
-                            onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .horizontalSpacingM(),
-                            content = { Text(stringResource(R.string.weight_diagram_button_insert_weight_title)) },
-                        )
-                    }
+                    },
+                )
+            }
+
+            val exportData = uiState.exportPrompt
+            if (exportData != null) {
+                val launcher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(exportData.mimeType)) {
+                    viewModel.onEvent(WeightDiagramViewModel.Event.PathChosen(it?.toString()))
+                }
+
+                LaunchedEffect(Unit) {
+                    launcher.launch(exportData.fileName)
                 }
             }
-        },
-    )
+
+            val importData = uiState.importPrompt
+            if (importData != null) {
+                val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
+                    viewModel.onEvent(WeightDiagramViewModel.Event.ImportPathChosen(it?.toString()))
+                }
+
+                LaunchedEffect(Unit) {
+                    importLauncher.launch(arrayOf(importData.mimeType))
+                }
+            }
+
+            if (uiState.weights.isNotEmpty()) {
+                Column {
+                    Text(
+                        text = stringResource(R.string.weight_diagram_title),
+                        modifier = Modifier.horizontalSpacingM(),
+                        style = MaterialTheme.typography.displayMedium,
+                    )
+                    Box(Modifier.horizontalSpacingM()) { Chart(uiState.weights) }
+                }
+                VerticalSpacerM()
+                WeightStatisticRow(
+                    thirtyDayAverage = uiState.thirtyDayAverageWeight,
+                    latestWeight = uiState.latestWeight,
+                )
+                Spacer(Modifier.weight(1f))
+            } else {
+                Spacer(Modifier.weight(1f))
+                EmptyScreen(
+                    painter = rememberVectorPainter(Icons.Rounded.Timeline),
+                    contentDescription = stringResource(R.string.weight_diagram_empty_screen_content_description),
+                    title = stringResource(R.string.weight_diagram_empty_screen_title),
+                    subtitle = stringResource(R.string.weight_diagram_empty_screen_subtitle),
+                    modifier = Modifier
+                        .verticalSpacingM()
+                        .horizontalSpacingM(),
+                )
+                Spacer(Modifier.weight(1f))
+            }
+
+            VerticalSpacerL()
+            Column(verticalArrangement = Arrangement.spacedBy(Spacings.XS)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalSpacingM(),
+                    horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
+                ) {
+                    OutlinedButton(
+                        onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ImportClicked) },
+                        modifier = Modifier.weight(1f),
+                        content = { Text(stringResource(R.string.weight_diagram_button_import_weights_title)) },
+                        enabled = !uiState.isImporting,
+                    )
+                    OutlinedButton(
+                        onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked) },
+                        modifier = Modifier.weight(1f),
+                        content = { Text(stringResource(R.string.weight_diagram_button_export_weights_title)) },
+                        enabled = !uiState.isExporting,
+                    )
+                }
+                Button(
+                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalSpacingM(),
+                    content = { Text(stringResource(R.string.weight_diagram_button_insert_weight_title)) },
+                )
+            }
+        }
+    }
 }
 
 @Composable
