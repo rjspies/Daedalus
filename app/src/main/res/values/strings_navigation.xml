@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="navigation_drawer_open_content_description">Navigation öffnen</string>
     <string name="navigation_top_bar_title_diagram">Statistik</string>
     <string name="navigation_top_bar_title_history">Verlauf</string>
     <string name="navigation_drawer_item_diagram">Statistik</string>
     <string name="navigation_drawer_item_history">Verlauf</string>
+    <string name="navigation_drawer_section_engineering">Engineering</string>
+    <string name="navigation_drawer_item_engineering_menu">Ingenieursmenü</string>
+    <string name="navigation_top_bar_title_engineering_menu">Ingenieursmenü</string>
 </resources>

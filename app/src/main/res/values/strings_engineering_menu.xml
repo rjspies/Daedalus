@@ -1,0 +1,10 @@
+<resources>
+    <string name="engineering_menu_item_typography_label">Typographie</string>
+    <string name="engineering_menu_item_colors_label">Farben</string>
+
+    <!-- Typography entry -->
+    <string name="engineering_menu_typography_screen_title">Typographie</string>
+
+    <!-- Colors entry -->
+    <string name="engineering_menu_colors_screen_title">Farben</string>
+</resources>

@@ -8,4 +8,13 @@ sealed class Route {
 
     @Serializable
     data object History : Route()
+
+    @Serializable
+    data object EngineeringMenu : Route()
+
+    @Serializable
+    data object EngineeringMenuTypography : Route()
+
+    @Serializable
+    data object EngineeringMenuColors : Route()
 }
