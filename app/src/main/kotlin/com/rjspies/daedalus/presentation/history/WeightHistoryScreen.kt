@@ -1,6 +1,5 @@
 package com.rjspies.daedalus.presentation.history
 
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,16 +35,13 @@ import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.VerticalSpacerS
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
+import com.rjspies.daedalus.presentation.common.daedalusHazeEffect
 import com.rjspies.daedalus.presentation.common.verticalSpacingXXL
-import dev.chrisbanes.haze.HazeProgressive
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
-import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
-import dev.chrisbanes.haze.materials.HazeMaterials
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeightHistoryScreen(
     onOpenDrawer: () -> Unit,
@@ -58,16 +54,7 @@ fun WeightHistoryScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(R.string.navigation_top_bar_title_history)) },
-                modifier = Modifier.hazeEffect(hazeState, HazeMaterials.regular()) {
-                    blurRadius = 40.dp
-                    tints = emptyList()
-                    noiseFactor = 0f
-                    progressive = HazeProgressive.verticalGradient(
-                        easing = LinearEasing,
-                        startIntensity = .25f,
-                        endIntensity = .25f,
-                    )
-                },
+                modifier = Modifier.daedalusHazeEffect(hazeState),
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
                 navigationIcon = {
                     IconButton(onClick = onOpenDrawer) {

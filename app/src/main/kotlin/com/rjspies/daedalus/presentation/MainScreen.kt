@@ -1,6 +1,5 @@
 package com.rjspies.daedalus.presentation
 
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -44,18 +43,15 @@ import com.rjspies.daedalus.presentation.common.Snackbar
 import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.VerticalSpacerL
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
+import com.rjspies.daedalus.presentation.common.daedalusHazeEffect
 import com.rjspies.daedalus.presentation.navigation.Route
 import com.rjspies.daedalus.presentation.navigation.navigationGraph
-import dev.chrisbanes.haze.HazeProgressive
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
-import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
-import dev.chrisbanes.haze.materials.HazeMaterials
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -173,7 +169,6 @@ private fun BoxScope.NavigationBarBlur(
     )
 }
 
-@OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 private fun Blur(
     height: Dp,
@@ -187,16 +182,6 @@ private fun Blur(
             .fillMaxWidth()
             .height(height)
             .then(modifier)
-            .hazeEffect(hazeState, HazeMaterials.regular()) {
-                blurRadius = 40.dp
-                tints = emptyList()
-                noiseFactor = 0f
-                progressive = HazeProgressive.verticalGradient(
-                    easing = LinearEasing,
-                    startIntensity = .25f,
-                    endIntensity = .25f,
-                    endY = heightPx,
-                )
-            },
+            .daedalusHazeEffect(hazeState, endY = heightPx),
     )
 }

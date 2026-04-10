@@ -80,13 +80,10 @@ import com.rjspies.daedalus.presentation.common.VerticalSpacerM
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
+import com.rjspies.daedalus.presentation.common.daedalusHazeEffect
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
-import dev.chrisbanes.haze.HazeProgressive
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
-import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
-import dev.chrisbanes.haze.materials.HazeMaterials
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import org.koin.androidx.compose.koinViewModel
@@ -94,7 +91,7 @@ import org.koin.androidx.compose.koinViewModel
 private const val FULL_CORNER_RADIUS_PERCENT = 50
 
 @Suppress("LongMethod")
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeightDiagramScreen(
     onOpenDrawer: () -> Unit,
@@ -107,16 +104,7 @@ fun WeightDiagramScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(R.string.navigation_top_bar_title_diagram)) },
-                modifier = Modifier.hazeEffect(hazeState, HazeMaterials.regular()) {
-                    blurRadius = 40.dp
-                    tints = emptyList()
-                    noiseFactor = 0f
-                    progressive = HazeProgressive.verticalGradient(
-                        easing = LinearEasing,
-                        startIntensity = .25f,
-                        endIntensity = .25f,
-                    )
-                },
+                modifier = Modifier.daedalusHazeEffect(hazeState),
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
                 navigationIcon = {
                     IconButton(onClick = onOpenDrawer) {
