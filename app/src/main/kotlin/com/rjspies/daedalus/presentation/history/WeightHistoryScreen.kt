@@ -10,8 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FormatListNumbered
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -24,7 +22,7 @@ import com.rjspies.daedalus.domain.Weight
 import com.rjspies.daedalus.presentation.common.EmptyScreen
 import com.rjspies.daedalus.presentation.common.OverviewScreenContent
 import com.rjspies.daedalus.presentation.common.Spacings
-import com.rjspies.daedalus.presentation.common.VerticalSpacerS
+import com.rjspies.daedalus.presentation.common.VerticalSpacerL
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingXXL
@@ -78,14 +76,7 @@ private fun Weights(
             start = Spacings.M,
         ),
         content = {
-            item {
-                Text(
-                    text = stringResource(R.string.weight_history_title),
-                    style = MaterialTheme.typography.displayMedium,
-                )
-                VerticalSpacerS()
-            }
-
+            item { VerticalSpacerL() }
             items(
                 items = weights,
                 key = { it.id },
