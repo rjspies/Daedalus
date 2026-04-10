@@ -22,6 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.Weight
 import com.rjspies.daedalus.presentation.common.EmptyScreen
+import com.rjspies.daedalus.presentation.common.OverviewScreenContent
 import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.VerticalSpacerS
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
@@ -31,29 +32,34 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun WeightHistoryScreen(
-    scaffoldPadding: PaddingValues,
+    onOpenDrawer: () -> Unit,
     viewModel: WeightHistoryViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    if (uiState.weights.isNotEmpty()) {
-        Weights(
-            weights = uiState.weights,
-            scaffoldPadding = scaffoldPadding,
-        )
-    } else {
-        EmptyScreen(
-            painter = rememberVectorPainter(Icons.Rounded.FormatListNumbered),
-            contentDescription = stringResource(R.string.weight_history_empty_screen_content_description),
-            title = stringResource(R.string.weight_history_empty_screen_title),
-            subtitle = stringResource(R.string.weight_history_empty_screen_subtitle),
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(scaffoldPadding)
-                .verticalSpacingXXL()
-                .horizontalSpacingM(),
-        )
+    OverviewScreenContent(
+        title = stringResource(R.string.navigation_top_bar_title_history),
+        onOpenDrawer = onOpenDrawer,
+    ) { scaffoldPadding ->
+        if (uiState.weights.isNotEmpty()) {
+            Weights(
+                weights = uiState.weights,
+                scaffoldPadding = scaffoldPadding,
+            )
+        } else {
+            EmptyScreen(
+                painter = rememberVectorPainter(Icons.Rounded.FormatListNumbered),
+                contentDescription = stringResource(R.string.weight_history_empty_screen_content_description),
+                title = stringResource(R.string.weight_history_empty_screen_title),
+                subtitle = stringResource(R.string.weight_history_empty_screen_subtitle),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(scaffoldPadding)
+                    .verticalSpacingXXL()
+                    .horizontalSpacingM(),
+            )
+        }
     }
 }
 
