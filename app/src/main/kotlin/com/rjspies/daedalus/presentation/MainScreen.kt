@@ -29,10 +29,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -175,13 +173,11 @@ private fun Blur(
     hazeState: HazeState,
     modifier: Modifier = Modifier,
 ) {
-    val heightPx = with(LocalDensity.current) { height.toPx() }
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(height)
             .then(modifier)
-            .daedalusHazeEffect(hazeState, endY = heightPx),
+            .daedalusHazeEffect(hazeState),
     )
 }
