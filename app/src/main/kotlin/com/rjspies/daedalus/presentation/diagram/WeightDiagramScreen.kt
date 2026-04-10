@@ -100,6 +100,7 @@ fun WeightDiagramScreen(
                 .padding(scaffoldPadding)
                 .padding(bottom = Spacings.XXL),
         ) {
+            VerticalSpacerL()
             if (uiState.shouldShowInsertWeightDialog) {
                 val focusRequester = remember { FocusRequester() }
                 AlertDialog(
@@ -195,14 +196,7 @@ fun WeightDiagramScreen(
             }
 
             if (uiState.weights.isNotEmpty()) {
-                Column {
-                    Text(
-                        text = stringResource(R.string.weight_diagram_title),
-                        modifier = Modifier.horizontalSpacingM(),
-                        style = MaterialTheme.typography.displayMedium,
-                    )
-                    Box(Modifier.horizontalSpacingM()) { Chart(uiState.weights) }
-                }
+                Box(Modifier.horizontalSpacingM()) { Chart(uiState.weights) }
                 VerticalSpacerM()
                 WeightStatisticRow(
                     thirtyDayAverage = uiState.thirtyDayAverageWeight,
