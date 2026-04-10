@@ -68,7 +68,7 @@ private fun WeightStatisticCard(
                 )
             } else {
                 Text(
-                    text = "\u2014",
+                    text = "\u2012",
                     style = MaterialTheme.typography.headlineMedium,
                 )
             }

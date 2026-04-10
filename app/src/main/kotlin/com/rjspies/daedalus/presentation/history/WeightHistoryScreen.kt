@@ -22,7 +22,6 @@ import com.rjspies.daedalus.domain.Weight
 import com.rjspies.daedalus.presentation.common.EmptyScreen
 import com.rjspies.daedalus.presentation.common.OverviewScreenContent
 import com.rjspies.daedalus.presentation.common.Spacings
-import com.rjspies.daedalus.presentation.common.VerticalSpacerL
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingXXL
@@ -70,13 +69,12 @@ private fun Weights(
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
-            top = scaffoldPadding.calculateTopPadding(),
+            top = scaffoldPadding.calculateTopPadding() + Spacings.L,
             end = Spacings.M,
-            bottom = scaffoldPadding.calculateBottomPadding() + Spacings.XXL,
+            bottom = scaffoldPadding.calculateBottomPadding() + Spacings.L,
             start = Spacings.M,
         ),
         content = {
-            item { VerticalSpacerL() }
             items(
                 items = weights,
                 key = { it.id },

@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ShowChart
+import androidx.compose.material.icons.rounded.Engineering
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -35,6 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.rjspies.daedalus.BuildConfig
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.SnackbarVisuals
 import com.rjspies.daedalus.presentation.common.Snackbar
@@ -63,9 +67,12 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
 
     val isDiagramSelected = currentRoute?.contains(Route.Diagram::class.qualifiedName.orEmpty()) == true
     val isHistorySelected = currentRoute?.contains(Route.History::class.qualifiedName.orEmpty()) == true
+    val isEngineeringTypographySelected = currentRoute?.contains(Route.EngineeringMenu::class.qualifiedName.orEmpty()) == true
 
     val hazeState = remember { HazeState() }
     val onOpenDrawer: () -> Unit = { coroutineScope.launch { drawerState.open() } }
+    val onNavigateUp: () -> Unit = { navigationController.navigateUp() }
+    val onNavigateTo: (Route) -> Unit = { navigationController.navigate(it) }
 
     LaunchedEffect(uiState.snackbarVisuals) {
         val visuals = uiState.snackbarVisuals
@@ -95,10 +102,11 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                 Text(
                     text = stringResource(R.string.app_name),
                     modifier = Modifier.padding(horizontal = Spacings.M),
+                    style = MaterialTheme.typography.displaySmall,
                 )
                 VerticalSpacerL()
                 NavigationDrawerItem(
-                    label = { Text(stringResource(R.string.navigation_drawer_item_diagram)) },
+                    label = { Text(stringResource(R.string.navigation_drawer_item_diagram), style = MaterialTheme.typography.labelLarge) },
                     icon = { Icon(Icons.AutoMirrored.Rounded.ShowChart, contentDescription = null) },
                     selected = isDiagramSelected,
                     onClick = {
@@ -113,7 +121,7 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                 )
                 VerticalSpacerXS()
                 NavigationDrawerItem(
-                    label = { Text(stringResource(R.string.navigation_drawer_item_history)) },
+                    label = { Text(stringResource(R.string.navigation_drawer_item_history), style = MaterialTheme.typography.labelLarge) },
                     icon = { Icon(Icons.Rounded.History, contentDescription = null) },
                     selected = isHistorySelected,
                     onClick = {
@@ -126,6 +134,23 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                     },
                     modifier = Modifier.padding(horizontal = Spacings.M),
                 )
+                if (BuildConfig.DEBUG) {
+                    HorizontalDivider(modifier = Modifier.padding(vertical = Spacings.S))
+                    NavigationDrawerItem(
+                        label = { Text(stringResource(R.string.navigation_drawer_item_engineering_menu), style = MaterialTheme.typography.labelLarge) },
+                        icon = { Icon(Icons.Rounded.Engineering, contentDescription = null) },
+                        selected = isEngineeringTypographySelected,
+                        onClick = {
+                            coroutineScope.launch { drawerState.close() }
+                            navigationController.navigate(Route.EngineeringMenu) {
+                                popUpTo(Route.Diagram) { saveState = true }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
+                        modifier = Modifier.padding(horizontal = Spacings.M),
+                    )
+                }
             }
         },
     ) {
@@ -143,7 +168,13 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                 NavHost(
                     navController = navigationController,
                     startDestination = Route.Diagram,
-                    builder = { navigationGraph(onOpenDrawer) },
+                    builder = {
+                        navigationGraph(
+                            onOpenDrawer = onOpenDrawer,
+                            onNavigateUp = onNavigateUp,
+                            onNavigateTo = onNavigateTo,
+                        )
+                    },
                     modifier = Modifier.hazeSource(hazeState),
                 )
 

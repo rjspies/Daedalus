@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="common_snackbar_dismiss_action_icon_content_description">Schließen-Knopf</string>
+    <string name="common_top_app_bar_hamburger_menu_content_description">Navigation öffnen</string>
+    <string name="common_top_app_bar_back_arrow_content_description">Zurücknavigieren</string>
 </resources>

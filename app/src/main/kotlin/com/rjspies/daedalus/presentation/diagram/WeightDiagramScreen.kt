@@ -74,6 +74,7 @@ import com.rjspies.daedalus.presentation.common.VerticalSpacerM
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
+import com.rjspies.daedalus.presentation.common.verticalSpacingL
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -98,9 +99,8 @@ fun WeightDiagramScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(scaffoldPadding)
-                .padding(bottom = Spacings.XXL),
+                .verticalSpacingL(),
         ) {
-            VerticalSpacerL()
             if (uiState.shouldShowInsertWeightDialog) {
                 val focusRequester = remember { FocusRequester() }
                 AlertDialog(
