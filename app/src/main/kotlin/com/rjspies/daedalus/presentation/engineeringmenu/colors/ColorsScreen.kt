@@ -21,17 +21,29 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
 import com.rjspies.daedalus.R.string
+import com.rjspies.daedalus.presentation.DaedalusTheme
 import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.SubScreenContent
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingL
 
+private const val HexFormat = "#%02X"
+
+@Composable
+@PreviewLightDark
+fun ColorsScreenPreview() {
+    DaedalusTheme {
+        ColorsScreen(onNavigateUp = {})
+    }
+}
+
 @Composable
 fun ColorsScreen(onNavigateUp: () -> Unit) {
-    SubScreenContent(stringResource(string.engineering_menu_typography_screen_title), onNavigateUp) { scaffoldPadding ->
+    SubScreenContent(stringResource(string.engineering_menu_colors_screen_title), onNavigateUp) { scaffoldPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -67,7 +79,7 @@ private fun ColorSection(color: EngineeringColor) {
                 maxLines = 1,
             )
             Text(
-                text = "#${color.color().toArgb().toHexString(HexFormat.UpperCase)}",
+                text = String.format(HexFormat, color.color().toArgb()),
                 style = MaterialTheme.typography.bodySmall,
                 maxLines = 1,
             )

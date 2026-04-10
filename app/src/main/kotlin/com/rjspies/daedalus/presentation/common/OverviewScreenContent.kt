@@ -40,7 +40,7 @@ fun OverviewScreenContent(
                     IconButton(onClick = onOpenDrawer) {
                         Icon(
                             imageVector = Icons.Rounded.Menu,
-                            contentDescription = stringResource(R.string.common_top_app_hamburger_menu_content_description),
+                            contentDescription = stringResource(R.string.common_top_app_bar_hamburger_menu_content_description),
                         )
                     }
                 },

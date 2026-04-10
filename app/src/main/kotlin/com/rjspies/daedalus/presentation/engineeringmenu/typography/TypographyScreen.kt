@@ -15,12 +15,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.Hyphens
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.util.fastForEach
 import com.rjspies.daedalus.R.string
+import com.rjspies.daedalus.presentation.DaedalusTheme
 import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.SubScreenContent
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingL
+
+@Composable
+@PreviewLightDark
+fun TypographyScreenPreview() {
+    DaedalusTheme {
+        TypographyScreen(onNavigateUp = {})
+    }
+}
 
 @Composable
 fun TypographyScreen(onNavigateUp: () -> Unit) {
