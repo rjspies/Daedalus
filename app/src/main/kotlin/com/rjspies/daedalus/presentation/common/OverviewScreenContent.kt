@@ -26,6 +26,7 @@ import dev.chrisbanes.haze.hazeSource
 fun OverviewScreenContent(
     title: String,
     onOpenDrawer: () -> Unit,
+    floatingActionButton: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val hazeState = remember { HazeState() }
@@ -46,6 +47,7 @@ fun OverviewScreenContent(
                 },
             )
         },
+        floatingActionButton = floatingActionButton,
         content = { scaffoldPadding ->
             Box(
                 modifier = Modifier
