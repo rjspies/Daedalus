@@ -21,10 +21,11 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Addchart
 import androidx.compose.material.icons.rounded.Timeline
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -93,6 +94,16 @@ fun WeightDiagramScreen(
     OverviewScreenContent(
         title = stringResource(R.string.navigation_top_bar_title_diagram),
         onOpenDrawer = onOpenDrawer,
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Add,
+                    contentDescription = stringResource(R.string.weight_diagram_floating_action_button_content_description),
+                )
+            }
+        },
     ) { scaffoldPadding ->
         Column(
             modifier = Modifier
@@ -218,32 +229,23 @@ fun WeightDiagramScreen(
             }
 
             VerticalSpacerL()
-            Column(verticalArrangement = Arrangement.spacedBy(Spacings.XS)) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .horizontalSpacingM(),
-                    horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
-                ) {
-                    OutlinedButton(
-                        onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ImportClicked) },
-                        modifier = Modifier.weight(1f),
-                        content = { Text(stringResource(R.string.weight_diagram_button_import_weights_title)) },
-                        enabled = !uiState.isImporting,
-                    )
-                    OutlinedButton(
-                        onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked) },
-                        modifier = Modifier.weight(1f),
-                        content = { Text(stringResource(R.string.weight_diagram_button_export_weights_title)) },
-                        enabled = !uiState.isExporting,
-                    )
-                }
-                Button(
-                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ShowInsertWeightDialog) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .horizontalSpacingM(),
-                    content = { Text(stringResource(R.string.weight_diagram_button_insert_weight_title)) },
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalSpacingM(),
+                horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
+            ) {
+                OutlinedButton(
+                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ImportClicked) },
+                    modifier = Modifier.weight(1f),
+                    content = { Text(stringResource(R.string.weight_diagram_button_import_weights_title)) },
+                    enabled = !uiState.isImporting,
+                )
+                OutlinedButton(
+                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked) },
+                    modifier = Modifier.weight(1f),
+                    content = { Text(stringResource(R.string.weight_diagram_button_export_weights_title)) },
+                    enabled = !uiState.isExporting,
                 )
             }
         }
