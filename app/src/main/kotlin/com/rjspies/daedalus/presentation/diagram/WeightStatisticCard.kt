@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,27 +50,25 @@ private fun WeightStatisticCard(
     value: Float?,
     modifier: Modifier = Modifier,
 ) {
-    ElevatedCard(modifier = modifier) {
-        Column(modifier = Modifier.padding(Spacings.M)) {
+    Column(modifier = modifier.padding(Spacings.M)) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodySmall,
+        )
+        if (value != null) {
+            val unitStyle = MaterialTheme.typography.bodySmall.toSpanStyle()
             Text(
-                text = label,
-                style = MaterialTheme.typography.bodySmall,
+                text = buildAnnotatedString {
+                    append("%.1f".format(value))
+                    withStyle(unitStyle) { append(" kg") }
+                },
+                style = MaterialTheme.typography.headlineMedium,
             )
-            if (value != null) {
-                val unitStyle = MaterialTheme.typography.bodySmall.toSpanStyle()
-                Text(
-                    text = buildAnnotatedString {
-                        append("%.1f".format(value))
-                        withStyle(unitStyle) { append(" kg") }
-                    },
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-            } else {
-                Text(
-                    text = "\u2012",
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-            }
+        } else {
+            Text(
+                text = "\u2012",
+                style = MaterialTheme.typography.headlineMedium,
+            )
         }
     }
 }
