@@ -69,4 +69,5 @@ DI via Koin, single `APP_MODULE` in `koin/AppModule.kt`.
 ## Git Workflow
 
 - **Branch naming**: Bugfix branches prefixed `Bugfix/`; all others (features, chores, version bumps, etc.) prefixed `Feature/`. After slash: first word capitalized, rest lowercase, hyphen-separated. Example: `Feature/My-test-feature`
-- **Pull requests**: After task complete, always create PR against `main` — or push to existing branch if PR exists. Always assign `rjspies` (`gh pr create ... --assignee rjspies`)
+- **Commit messages**: No conventional commit prefixes (no `feat:`, `fix:`, `chore:`, etc.). Plain imperative subject line.
+- **Pull requests**: After task complete, always create PR against `main` — or push to existing branch if PR exists. Always assign `rjspies` (`gh pr create ... --assignee rjspies`). No conventional commit prefixes in PR titles.
