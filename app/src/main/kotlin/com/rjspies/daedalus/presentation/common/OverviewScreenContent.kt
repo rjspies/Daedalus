@@ -2,6 +2,7 @@ package com.rjspies.daedalus.presentation.common
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Menu
@@ -27,6 +28,7 @@ fun OverviewScreenContent(
     title: String,
     onOpenDrawer: () -> Unit,
     floatingActionButton: @Composable () -> Unit = {},
+    actions: @Composable RowScope.() -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val hazeState = remember { HazeState() }
@@ -45,6 +47,7 @@ fun OverviewScreenContent(
                         )
                     }
                 },
+                actions = actions,
             )
         },
         floatingActionButton = floatingActionButton,

@@ -10,6 +10,7 @@
     <string name="weight_diagram_floating_action_button_content_description">Gewichtseintrag hinzufügen</string>
     <string name="weight_diagram_button_export_weights_title">Exportieren</string>
     <string name="weight_diagram_button_import_weights_title">Importieren</string>
+    <string name="weight_diagram_overflow_menu_content_description">Mehr Optionen</string>
     <string name="snackbar_insert_weight_success">Gewicht erfolgreich hinzugefügt</string>
     <string name="snackbar_export_success">Exportieren war erfolgreich</string>
     <string name="snackbar_export_error_uri_null">Es wurde keine Datei ausgewählt</string>
