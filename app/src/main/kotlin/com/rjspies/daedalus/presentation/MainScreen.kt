@@ -65,9 +65,10 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
 
     val currentRoute = currentBackStackEntry?.run { destination.route }
 
-    val isDiagramSelected = currentRoute?.contains(Route.Diagram::class.qualifiedName.orEmpty()) == true
-    val isHistorySelected = currentRoute?.contains(Route.History::class.qualifiedName.orEmpty()) == true
-    val isEngineeringTypographySelected = currentRoute?.contains(Route.EngineeringMenu::class.qualifiedName.orEmpty()) == true
+    val isDiagramSelected = currentRoute == Route.Diagram::class.qualifiedName
+    val isHistorySelected = currentRoute == Route.History::class.qualifiedName
+    val isEngineeringTypographySelected = currentRoute == Route.EngineeringMenu::class.qualifiedName
+    val isOverviewRoute = isDiagramSelected || isHistorySelected || isEngineeringTypographySelected
 
     val hazeState = remember { HazeState() }
     val onOpenDrawer: () -> Unit = { coroutineScope.launch { drawerState.open() } }
@@ -96,6 +97,7 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
 
     ModalNavigationDrawer(
         drawerState = drawerState,
+        gesturesEnabled = isOverviewRoute,
         drawerContent = {
             ModalDrawerSheet {
                 VerticalSpacerXS()
