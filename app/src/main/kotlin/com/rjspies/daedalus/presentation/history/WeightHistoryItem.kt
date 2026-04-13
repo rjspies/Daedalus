@@ -13,7 +13,7 @@ import androidx.compose.material.icons.automirrored.rounded.TrendingFlat
 import androidx.compose.material.icons.automirrored.rounded.TrendingUp
 import androidx.compose.material.icons.rounded.DeleteForever
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Card
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -28,6 +28,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -35,8 +37,6 @@ import com.rjspies.daedalus.R
 import com.rjspies.daedalus.domain.Weight
 import com.rjspies.daedalus.presentation.common.Spacings
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -92,7 +92,7 @@ fun WeightHistoryItem(
         )
     }
 
-    Card(
+    ElevatedCard(
         content = {
             ConstraintLayout(
                 modifier = Modifier
@@ -117,9 +117,13 @@ fun WeightHistoryItem(
                             bottom.linkTo(parent.bottom, margin = Spacings.M)
                         },
                     )
+                    val unitStyle = MaterialTheme.typography.bodySmall.toSpanStyle()
                     Text(
-                        text = weight.value.asUserfacingString(locale),
-                        style = MaterialTheme.typography.headlineSmall,
+                        text = buildAnnotatedString {
+                            append("%.1f".format(weight.value))
+                            withStyle(unitStyle) { append(" kg") }
+                        },
+                        style = MaterialTheme.typography.headlineMedium,
                         modifier = Modifier.constrainAs(title) {
                             width = Dimension.fillToConstraints
                             top.linkTo(parent.top, margin = Spacings.M)
@@ -206,8 +210,6 @@ private fun ArrowState.contentDescription(): String = when (this) {
     ArrowState.Neutral -> stringResource(R.string.weight_history_avatar_neutral_icon_content_description)
     ArrowState.Upwards -> stringResource(R.string.weight_history_avatar_upwards_icon_content_description)
 }
-
-private fun Float.asUserfacingString(locale: Locale): String = "${DecimalFormat("#0.#", DecimalFormatSymbols(locale)).format(this)} kg"
 
 private fun ZonedDateTime.asUserfacingString(
     locale: Locale,
