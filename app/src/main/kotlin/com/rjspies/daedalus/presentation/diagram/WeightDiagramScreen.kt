@@ -5,10 +5,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,20 +21,25 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Addchart
+import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Timeline
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -69,8 +72,6 @@ import com.patrykandpatrick.vico.compose.common.component.rememberTextComponent
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.common.EmptyScreen
 import com.rjspies.daedalus.presentation.common.OverviewScreenContent
-import com.rjspies.daedalus.presentation.common.Spacings
-import com.rjspies.daedalus.presentation.common.VerticalSpacerL
 import com.rjspies.daedalus.presentation.common.VerticalSpacerM
 import com.rjspies.daedalus.presentation.common.VerticalSpacerXS
 import com.rjspies.daedalus.presentation.common.WeightChartEntry
@@ -90,6 +91,7 @@ fun WeightDiagramScreen(
     viewModel: WeightDiagramViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    var isMenuExpanded by remember { mutableStateOf(false) }
 
     OverviewScreenContent(
         title = stringResource(R.string.navigation_top_bar_title_diagram),
@@ -101,6 +103,35 @@ fun WeightDiagramScreen(
                 Icon(
                     imageVector = Icons.Rounded.Add,
                     contentDescription = stringResource(R.string.weight_diagram_floating_action_button_content_description),
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = { isMenuExpanded = true }) {
+                Icon(
+                    imageVector = Icons.Rounded.MoreVert,
+                    contentDescription = stringResource(R.string.weight_diagram_overflow_menu_content_description),
+                )
+            }
+            DropdownMenu(
+                expanded = isMenuExpanded,
+                onDismissRequest = { isMenuExpanded = false },
+            ) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.weight_diagram_button_import_weights_title)) },
+                    onClick = {
+                        isMenuExpanded = false
+                        viewModel.onEvent(WeightDiagramViewModel.Event.ImportClicked)
+                    },
+                    enabled = !uiState.isImporting,
+                )
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.weight_diagram_button_export_weights_title)) },
+                    onClick = {
+                        isMenuExpanded = false
+                        viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked)
+                    },
+                    enabled = !uiState.isExporting,
                 )
             }
         },
@@ -226,27 +257,6 @@ fun WeightDiagramScreen(
                         .horizontalSpacingM(),
                 )
                 Spacer(Modifier.weight(1f))
-            }
-
-            VerticalSpacerL()
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .horizontalSpacingM(),
-                horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
-            ) {
-                OutlinedButton(
-                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ImportClicked) },
-                    modifier = Modifier.weight(1f),
-                    content = { Text(stringResource(R.string.weight_diagram_button_import_weights_title)) },
-                    enabled = !uiState.isImporting,
-                )
-                OutlinedButton(
-                    onClick = { viewModel.onEvent(WeightDiagramViewModel.Event.ExportClicked) },
-                    modifier = Modifier.weight(1f),
-                    content = { Text(stringResource(R.string.weight_diagram_button_export_weights_title)) },
-                    enabled = !uiState.isExporting,
-                )
             }
         }
     }
