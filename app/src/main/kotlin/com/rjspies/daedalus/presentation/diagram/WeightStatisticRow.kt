@@ -31,12 +31,12 @@ internal fun WeightStatisticRow(
             .horizontalSpacingM(),
         horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
     ) {
-        WeightStatisticCard(
+        WeightStatisticItem(
             label = stringResource(R.string.weight_diagram_statistic_thirty_day_average_label),
             value = thirtyDayAverage,
             modifier = Modifier.weight(1f),
         )
-        WeightStatisticCard(
+        WeightStatisticItem(
             label = stringResource(R.string.weight_diagram_statistic_latest_weight_label),
             value = latestWeight,
             modifier = Modifier.weight(1f),
@@ -45,7 +45,7 @@ internal fun WeightStatisticRow(
 }
 
 @Composable
-private fun WeightStatisticCard(
+private fun WeightStatisticItem(
     label: String,
     value: Float?,
     modifier: Modifier = Modifier,
