@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,12 +31,12 @@ internal fun WeightStatisticRow(
             .horizontalSpacingM(),
         horizontalArrangement = Arrangement.spacedBy(Spacings.XS),
     ) {
-        WeightStatisticCard(
+        WeightStatisticItem(
             label = stringResource(R.string.weight_diagram_statistic_thirty_day_average_label),
             value = thirtyDayAverage,
             modifier = Modifier.weight(1f),
         )
-        WeightStatisticCard(
+        WeightStatisticItem(
             label = stringResource(R.string.weight_diagram_statistic_latest_weight_label),
             value = latestWeight,
             modifier = Modifier.weight(1f),
@@ -46,32 +45,30 @@ internal fun WeightStatisticRow(
 }
 
 @Composable
-private fun WeightStatisticCard(
+private fun WeightStatisticItem(
     label: String,
     value: Float?,
     modifier: Modifier = Modifier,
 ) {
-    ElevatedCard(modifier = modifier) {
-        Column(modifier = Modifier.padding(Spacings.M)) {
+    Column(modifier = modifier.padding(Spacings.M)) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodySmall,
+        )
+        if (value != null) {
+            val unitStyle = MaterialTheme.typography.bodySmall.toSpanStyle()
             Text(
-                text = label,
-                style = MaterialTheme.typography.bodySmall,
+                text = buildAnnotatedString {
+                    append("%.1f".format(value))
+                    withStyle(unitStyle) { append(" kg") }
+                },
+                style = MaterialTheme.typography.headlineMedium,
             )
-            if (value != null) {
-                val unitStyle = MaterialTheme.typography.bodySmall.toSpanStyle()
-                Text(
-                    text = buildAnnotatedString {
-                        append("%.1f".format(value))
-                        withStyle(unitStyle) { append(" kg") }
-                    },
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-            } else {
-                Text(
-                    text = "\u2012",
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-            }
+        } else {
+            Text(
+                text = "\u2012",
+                style = MaterialTheme.typography.headlineMedium,
+            )
         }
     }
 }
