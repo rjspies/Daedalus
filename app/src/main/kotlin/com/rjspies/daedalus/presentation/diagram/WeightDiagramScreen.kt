@@ -43,6 +43,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -57,8 +59,12 @@ import com.patrykandpatrick.vico.compose.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.compose.cartesian.axis.VerticalAxis
 import com.patrykandpatrick.vico.compose.cartesian.data.CartesianChartModelProducer
 import com.patrykandpatrick.vico.compose.cartesian.data.CartesianLayerRangeProvider
+import com.patrykandpatrick.vico.compose.cartesian.data.CartesianValueFormatter
 import com.patrykandpatrick.vico.compose.cartesian.data.lineSeries
+import com.patrykandpatrick.vico.compose.cartesian.layer.LineCartesianLayer
+import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLine
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLayer
+import com.patrykandpatrick.vico.compose.cartesian.marker.CartesianMarker
 import com.patrykandpatrick.vico.compose.cartesian.marker.DefaultCartesianMarker
 import com.patrykandpatrick.vico.compose.cartesian.rememberCartesianChart
 import com.patrykandpatrick.vico.compose.cartesian.rememberVicoScrollState
@@ -78,11 +84,15 @@ import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingL
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
+import java.time.Year
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+import java.util.Locale
 import org.koin.androidx.compose.koinViewModel
 
 private const val FULL_CORNER_RADIUS_PERCENT = 50
+private const val CHART_Y_AXIS_PADDING = 5f
+private const val CHART_SINGLE_ENTRY_X_MIN = -0.5
+private const val CHART_SINGLE_ENTRY_X_MAX = 0.5
 
 @Suppress("LongMethod")
 @Composable
@@ -266,11 +276,26 @@ fun WeightDiagramScreen(
 private fun Chart(entries: List<WeightChartEntry>) {
     val vicoScrollState = rememberVicoScrollState(initialScroll = Scroll.Absolute.End)
     val modelProducer = remember { CartesianChartModelProducer() }
+    val colorScheme = MaterialTheme.colorScheme
     val axisText = rememberAxisText()
+    val bottomAxisText = rememberBottomAxisText()
+    val bottomAxisFormatter = remember(entries) {
+        CartesianValueFormatter { _, value, _ ->
+            val entry = entries.getOrNull(value.toInt())
+            entry?.let { e ->
+                val currentYear = Year.now().value
+                val pattern = if (e.dateTime.year == currentYear) "d. MMM" else "d. MMM yy"
+                e.dateTime.format(DateTimeFormatter.ofPattern(pattern, Locale.getDefault()))
+            }.orEmpty()
+        }
+    }
     val markerText = rememberMarkerText()
     val markerShape = rememberMarkerShape()
     val markerLine = rememberMarkerLine()
-    val maxY = remember(entries) { entries.map { it.y }.average() * 2.0 }
+    val minY = remember(entries) { (entries.minOf { it.y } - CHART_Y_AXIS_PADDING).coerceAtLeast(0f).toDouble() }
+    val maxY = remember(entries) { (entries.maxOf { it.y } + CHART_Y_AXIS_PADDING).toDouble() }
+    val isSingleEntry = entries.size == 1
+    val lineSpec = rememberLineSpec(colorScheme.primary)
 
     LaunchedEffect(entries) {
         modelProducer.runTransaction {
@@ -288,28 +313,32 @@ private fun Chart(entries: List<WeightChartEntry>) {
         chart = rememberCartesianChart(
             startAxis = VerticalAxis.rememberStart(
                 label = axisText,
+                guideline = null,
             ),
             bottomAxis = HorizontalAxis.rememberBottom(
-                label = axisText,
-                valueFormatter = { _, value, _ ->
-                    if (value.toInt() in entries.indices) {
-                        entries[value.toInt()]
-                    } else {
-                        entries.last()
-                    }.dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
-                },
-                itemPlacer = HorizontalAxis.ItemPlacer.segmented(),
+                label = bottomAxisText,
+                labelRotationDegrees = -45f,
+                valueFormatter = bottomAxisFormatter,
             ),
             layers = arrayOf(
                 rememberLineCartesianLayer(
-                    rangeProvider = CartesianLayerRangeProvider.fixed(maxY = maxY),
+                    lineProvider = LineCartesianLayer.LineProvider.series(lineSpec),
+                    rangeProvider = CartesianLayerRangeProvider.fixed(
+                        minX = if (isSingleEntry) CHART_SINGLE_ENTRY_X_MIN else null,
+                        maxX = if (isSingleEntry) CHART_SINGLE_ENTRY_X_MAX else null,
+                        minY = minY,
+                        maxY = maxY,
+                    ),
                 ),
             ),
-            marker = remember {
+            marker = remember(entries, markerText, markerShape, markerLine) {
                 DefaultCartesianMarker(
                     label = markerText,
                     indicator = { markerShape },
                     guideline = markerLine,
+                    valueFormatter = DefaultCartesianMarker.ValueFormatter { _, targets ->
+                        formatMarkerLabel(entries, targets)
+                    },
                 )
             },
             fadingEdges = remember { FadingEdges() },
@@ -320,22 +349,37 @@ private fun Chart(entries: List<WeightChartEntry>) {
 }
 
 @Composable
+private fun rememberLineSpec(color: Color): LineCartesianLayer.Line {
+    val pointComponent = rememberShapeComponent(fill = Fill(color), shape = CircleShape)
+    return LineCartesianLayer.rememberLine(
+        fill = remember(color) { LineCartesianLayer.LineFill.single(Fill(color)) },
+        stroke = remember { LineCartesianLayer.LineStroke.Continuous(thickness = 2.dp) },
+        areaFill = remember(color) {
+            LineCartesianLayer.AreaFill.single(
+                Fill(Brush.verticalGradient(listOf(color.copy(alpha = 0.3f), Color.Transparent))),
+            )
+        },
+        interpolator = remember { LineCartesianLayer.Interpolator.cubic() },
+        pointProvider = remember(pointComponent) {
+            LineCartesianLayer.PointProvider.single(LineCartesianLayer.Point(pointComponent, size = 6.dp))
+        },
+    )
+}
+
+@Composable
 private fun rememberMarkerShape() = rememberShapeComponent(
     fill = Fill(MaterialTheme.colorScheme.tertiary),
     shape = CircleShape,
-    strokeThickness = 6.dp,
 )
 
 @Composable
 private fun rememberMarkerText() = rememberTextComponent(
     style = MaterialTheme.typography.labelSmall.copy(
-        color = MaterialTheme.colorScheme.onTertiary,
+        color = MaterialTheme.colorScheme.onTertiaryContainer,
         textAlign = TextAlign.Center,
     ),
     background = rememberShapeComponent(
-        fill = Fill.Transparent,
-        strokeFill = Fill(MaterialTheme.colorScheme.tertiary),
-        strokeThickness = 1.dp,
+        fill = Fill(MaterialTheme.colorScheme.tertiaryContainer),
         shape = MarkerCornerBasedShape(RoundedCornerShape(FULL_CORNER_RADIUS_PERCENT)),
     ),
     padding = Insets(
@@ -354,3 +398,19 @@ private fun rememberMarkerLine() = rememberLineComponent(
 private fun rememberAxisText() = rememberTextComponent(
     style = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onBackground),
 )
+
+@Composable
+private fun rememberBottomAxisText() = rememberTextComponent(
+    style = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onBackground),
+)
+
+private fun formatMarkerLabel(
+    entries: List<WeightChartEntry>,
+    targets: List<CartesianMarker.Target>,
+): String {
+    val target = targets.firstOrNull()
+    val entry = target?.let { entries.getOrNull(it.x.toInt()) }
+    return entry?.let { e ->
+        "${String.format(Locale.getDefault(), "%.1f", e.y)} kg"
+    }.orEmpty()
+}
