@@ -411,8 +411,6 @@ private fun formatMarkerLabel(
     val target = targets.firstOrNull()
     val entry = target?.let { entries.getOrNull(it.x.toInt()) }
     return entry?.let { e ->
-        val currentYear = Year.now().value
-        val pattern = if (e.dateTime.year == currentYear) "d. MMM" else "d. MMM yy"
-        "${String.format(Locale.getDefault(), "%.1f", e.y)}\n${e.dateTime.format(DateTimeFormatter.ofPattern(pattern, Locale.getDefault()))}"
+        "${String.format(Locale.getDefault(), "%.1f", e.y)}\n${e.dateTime.format(DateTimeFormatter.ofPattern("d. MMM", Locale.getDefault()))}"
     }.orEmpty()
 }
