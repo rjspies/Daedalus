@@ -59,6 +59,7 @@ import com.patrykandpatrick.vico.compose.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.compose.cartesian.axis.VerticalAxis
 import com.patrykandpatrick.vico.compose.cartesian.data.CartesianChartModelProducer
 import com.patrykandpatrick.vico.compose.cartesian.data.CartesianLayerRangeProvider
+import com.patrykandpatrick.vico.compose.cartesian.data.CartesianValueFormatter
 import com.patrykandpatrick.vico.compose.cartesian.data.lineSeries
 import com.patrykandpatrick.vico.compose.cartesian.layer.LineCartesianLayer
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLine
@@ -74,7 +75,6 @@ import com.patrykandpatrick.vico.compose.common.MarkerCornerBasedShape
 import com.patrykandpatrick.vico.compose.common.component.rememberLineComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberShapeComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberTextComponent
-import com.patrykandpatrick.vico.compose.cartesian.data.CartesianValueFormatter
 import com.rjspies.daedalus.R
 import com.rjspies.daedalus.presentation.common.EmptyScreen
 import com.rjspies.daedalus.presentation.common.OverviewScreenContent
@@ -84,10 +84,10 @@ import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingL
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
+import org.koin.androidx.compose.koinViewModel
 import java.time.Year
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import org.koin.androidx.compose.koinViewModel
 
 private const val FULL_CORNER_RADIUS_PERCENT = 50
 private const val CHART_Y_AXIS_PADDING = 5f
