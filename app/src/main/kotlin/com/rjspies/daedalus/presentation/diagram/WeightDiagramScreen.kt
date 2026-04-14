@@ -84,10 +84,10 @@ import com.rjspies.daedalus.presentation.common.WeightChartEntry
 import com.rjspies.daedalus.presentation.common.horizontalSpacingM
 import com.rjspies.daedalus.presentation.common.verticalSpacingL
 import com.rjspies.daedalus.presentation.common.verticalSpacingM
-import org.koin.androidx.compose.koinViewModel
 import java.time.Year
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import org.koin.androidx.compose.koinViewModel
 
 private const val FULL_CORNER_RADIUS_PERCENT = 50
 private const val CHART_Y_AXIS_PADDING = 5f
