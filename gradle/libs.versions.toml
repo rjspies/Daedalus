@@ -22,7 +22,7 @@ detekt = "1.23.8"
 
 # Raise these two together
 kotlin = "2.3.20"
-ksp = "2.3.6"
+ksp = "2.3.7"
 
 # App config
 compileSdk = "36"
