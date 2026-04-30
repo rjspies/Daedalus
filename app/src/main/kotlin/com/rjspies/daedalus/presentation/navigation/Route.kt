@@ -2,6 +2,7 @@ package com.rjspies.daedalus.presentation.navigation
 
 import kotlinx.serialization.Serializable
 
+@Serializable
 sealed class Route {
     @Serializable
     data object Diagram : Route()
