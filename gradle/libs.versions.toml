@@ -25,8 +25,8 @@ kotlin = "2.3.21"
 ksp = "2.3.7"
 
 # App config
-compileSdk = "36"
-targetSdk = "35"
+compileSdk = "37"
+targetSdk = "36"
 minSdk = "29"
 versionName = "2.5.0"
 versionCodeOffset = "200000"
