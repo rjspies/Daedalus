@@ -22,3 +22,6 @@
 
 -printusage r8-usage-report.txt
 -printseeds r8-seeds-report.txt
+
+-keep class com.rjspies.daedalus.presentation.navigation.Route { *; }
+-keep class com.rjspies.daedalus.presentation.navigation.Route$* { *; }
