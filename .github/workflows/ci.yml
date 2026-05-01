@@ -37,7 +37,7 @@ jobs:
 
       - name: Decode keystore
         id: decode_keystore
-        uses: timheuer/base64-to-file@v1
+        uses: timheuer/base64-to-file@v2
         with:
           fileName: "release.jks"
           fileDir: "${{ github.workspace }}/app/keystore"
