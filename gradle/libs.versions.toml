@@ -21,7 +21,7 @@ haze = "1.7.2"
 detekt = "1.23.8"
 
 # Raise these two together
-kotlin = "2.3.21"
+kotlin = "2.4.0"
 ksp = "2.3.9"
 
 # App config
